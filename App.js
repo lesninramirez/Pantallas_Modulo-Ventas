@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import Axios from './src/componentes/Axios';
+import UsuarioState from './src/contexto/UsuarioState';
+
+import Login from './src/pantalla/Login';
+
+import Navigation from './src/pantalla/Navigation';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    return(
+      <UsuarioState>
+      <Navigation>
+        <Login/>
+      </Navigation>
+      </UsuarioState>
+    )
+}
