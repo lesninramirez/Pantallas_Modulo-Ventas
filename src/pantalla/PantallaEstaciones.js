@@ -1,116 +1,102 @@
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView, FlatList } from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
 import Axios from '../componentes/Axios';
+import UsuarioContext from '../contexto/UsuarioContext';
+import Mensaje from '../componentes/Mensaje';
+import CardEstaciones from '../componentes/CardEstaciones';
 
 
 export default function PantallaEstaciones() {
-  const [estaciones, setEstaciones] = useState([]);
+  const [estaciones, setEstaciones] = useState("");
+  const [lista, setLista]= useState("");
+  var jsonList;
+  const {token}= useContext(UsuarioContext);
+    const titulo = 'Lista de Estaciones'
+    var textoMensaje = "";
 
-  const titulo = 'Pantalla Estaciones';  
 
-  useEffect(()=>{
+    
 
-    const listar = async () => {
-      const respuesta= await Axios.get('estacion/listar');  
-
-      setEstaciones(respuesta.data) //Contiene la respuesta de la peticion
-  };
-
-    try{ 
-    listar();
-  }
-  catch(error){
-    console.log(error);
-  }
-  },[])
+    useEffect(() => {
+      MostrarEstaciones();
+  }, [setLista] );
 
 
 
 
+    const EstacionesRender = ({item}) => {
+        
+        return(
+            <CardEstaciones nombre={item.nombre} activo={item.activo} vistaprevia={item.vistaprevia} 
+            tecladovirtual={item.tecladovirtual} nombretipo={item.nombretipo} nombreproducto={item.nombreproducto}
+            administracion={item.administracion}/>
+
+
+        );
+    };
+
+
+
+    const MostrarEstaciones = async () => {
+
+
+      //console.log(token);
+      if (!token) {
+        textoMensaje = "Debe iniciar sesion";
+    }
+    else {
+            try {
+                await Axios.get('estacion/listar', {
+                  
+          
+                })
+                    .then((data) => {
+
+                        setEstaciones(data.data);
+
+                        console.log(lista);
+
+                        /*else {
+                            textoMensaje = '';
+                            json.errores.forEach(element => {
+                                textoMensaje += element.mensaje + '. ';
+                            });
+                            //Mensaje({ titulo: titulo, msj: textoMensaje });
+                        }*/
+                    })
+                    .catch((error) => {
+                        /*textoMensaje = error;
+                        Mensaje({ titulo: titulo, msj: textoMensaje });*/
+                    });
+            } catch (error) {
+                /*textoMensaje = error;
+                console.log(error);
+                Mensaje({ titulo: titulo, msj: error });*/
+            }
+        }
+      }
+        //Mensaje({ titulo: titulo, msj: textoMensaje });
+      
+       
+      
   return (
 
-    <>{estaciones.map((estacion) => { //Llamar una arreglo
-      return(
-        
-        <View style={styles.contenedor}>
-          <Text style={styles.tituloLogin}>
-          Registro 1
-        </Text>
-      <ScrollView >  
-      <View style={styles.contenedorLogin}>
-        <View style={[styles.contenedorControles, styles.sombraControles]}>
-          <View 
-          key={estacion?.NumeroEstacion}
-          style={styles.controles}>
-            <TextInput
-              placeholder="Numero de Estacion"
-              style={styles.entradas}
-              value={'Numero de Estación: ' + estacion?.NumeroEstacion}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre"
-              style={styles.entradas}
-              value={'Nombre: ' + estacion?.nombre}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Activo"
-              style={styles.entradas}
-              value={'Activo/Inactivo: ' + estacion?.activo}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Vista Previa"
-              style={styles.entradas}
-              value={'Vista Previa: ' + estacion?.vistaprevia}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Teclado Virtual"
-              style={styles.entradas}
-              value={'Teclado Virtual: ' + estacion?.tecladovirtual}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre Tipo"
-              style={styles.entradas}
-              value={'Tipo: ' + estacion?.nombretipo}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre del producto"
-              style={styles.entradas}
-              value={'Producto: ' + estacion?.nombreproducto}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Administracion"
-              style={styles.entradas}
-              value={'Administracion: ' + estacion?.administracion}
-            >
-            </TextInput>
 
 
-          </View>
 
-        </View>
-      </View>
-      </ScrollView>    
-    </View>
-      );
-    })}
-    </>
+                    
+                    <View style= {styles.contenedorBotones}>
+                        <FlatList
+                            data={estaciones}
+                            renderItem={EstacionesRender}
+                            /*keyExtractor={item=>item.NumeroEstacion}*/
+                            >
+                            </FlatList>
+                    </View>
 
+              
 
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -134,12 +120,12 @@ const styles = StyleSheet.create({
     height: 450,
     width: 360,
   },
-  contenedorTitulo: {
+  /*contenedorTitulo: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-end",
-  },
+  },*/
   contenedorControles: {
     flex: 2.5,
     flexDirection: "column",
@@ -170,10 +156,9 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   contenedorBotones: {
-    flex: 1,
-    padding: 10,
-    justifyContent: "space-evenly",
-    flexDirection: "row",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "yellow",
   },
   contenedorBotonesRedes: {
     flex: 2,
