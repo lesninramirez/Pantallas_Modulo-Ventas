@@ -11,28 +11,26 @@ import Login from "./Login";
 import Stack from "./Stack";
 
 
-import Cai from "./PantallaCai";
-import Clientes from "./PantallaClientes";
-import ClientesDirecciones from "./PantallaClientesDirecciones";
+import Cai from "./Cai/PantallaCai";
+import Clientes from "./Clientes/PantallaClientes";
+import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
 
-import DetalleVentas from "./PantallaDetalleVentas";
-import Ventas from "./PantallaVentas";
-import Anuladas from "./PantallaVentasAnuladas";
-import Constancia from "./PantallaVentasConstancia";
-import Exentas from "./PantallaVentasExentas";
-import Sag from "./PantallaVentasSag";
+import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
+import Ventas from "./Ventas/PantallaVentas";
+import Anuladas from "./VentasAnuladas/PantallaVentasAnuladas";
+import Constancia from "./VentasConstancia/PantallaVentasConstancia";
+import Exentas from "./VentasExentas/PantallaVentasExentas";
+import Sag from "./VentasSag/PantallaVentasSag";
 
-import PantallaEstaciones from "./PantallaEstaciones";
-import PantallaProductos from "./PantallaProductos";
+import PantallaEstaciones from "./Estaciones/PantallaEstaciones";
+import PantallaProductos from "./Productos/PantallaProductos";
 //import PantallaVentasPos from "./PantallaPos";
-import DetallePedido from "./PantallaDetallePedido";
-import PantallaDetallePedido from "./PantallaDetallePedido";
-import PantallaPedido from "./PantallaPedido";
+import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
+import PantallaPedido from "./Pedido/PantallaPedido";
+import PantallaPos from "./Pos/PantallaPos";
 
 
 //import Empleados from "./PantallaEmpleados";
-
-//import Pos from "./PantallaPos";
 //import Usuarios from "./PantallaUsuarios";
 
 
@@ -140,6 +138,17 @@ function Pantallas() {
                     name="PantallaPedido"
                     component={PantallaPedido}
             ></PantallasModulo.Screen> 
+
+            <PantallasModulo.Screen
+                    name="Productos"
+                    component={PantallaProductos}
+            ></PantallasModulo.Screen> 
+
+            <PantallasModulo.Screen
+                    name="PantallaPos"
+                    component={PantallaPos}
+            ></PantallasModulo.Screen> 
+
   
 
         </PantallasModulo.Navigator>

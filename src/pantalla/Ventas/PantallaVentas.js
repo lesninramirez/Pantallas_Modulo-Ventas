@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView 
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
     const [factura, setFactura] = useState("");

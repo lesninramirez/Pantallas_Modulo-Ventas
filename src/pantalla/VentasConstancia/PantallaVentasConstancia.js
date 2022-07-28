@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'reac
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
-    const [usuario, setUsuario] = useState("");
-    const [descripcion, setDesc] = useState("");
-    const [fecha, setFecha] = useState("");
-    const titulo = 'Ventas Anuladas';
+    const [numero, setNumero] = useState("");
+    const [constancia, setConstancia] = useState("");
+
+    const titulo = 'Pantalla Ventas Constancia';
     let MySwal = withReactContent(Swal);
 
     const agregar = async () => {
@@ -30,28 +30,18 @@ export default function App() {
                         <TextInput
                             placeholder="Ingrese el Usuario"
                             style={styles.entradas}
-                            value={usuario}
-                            onChangeText={setUsuario}
+                            value={numero}
+                            onChangeText={setNumero}
                             keyboardType='decimal-pad'
                         >
                         </TextInput>
 
                         <TextInput
-                            placeholder="Ingrese la Descripcion"
+                            placeholder="Ingrese el Usuario"
                             style={styles.entradas}
-                            value={descripcion}
-                            onChangeText={setDesc}
-                            maxLength={250}
-                        >
-                        </TextInput>
-
-                        <TextInput
-                            placeholder="Ingrese la Fecha"
-                            style={styles.entradas}
-                            value={fecha}
-                            onChangeText={setFecha}
-                            keyboardType='number-pad'
-                            maxLength={10}
+                            value={constancia}
+                            onChangeText={setConstancia}
+                            maxLength={20}
                         >
                         </TextInput>
                     </View>
@@ -90,7 +80,7 @@ const styles = StyleSheet.create({
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 440,
+      height: 330,
       width: 360,
     },
     contenedorTitulo: {
@@ -135,7 +125,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
     },
     contenedorBotonesRedes: {
-      flex: 2,
+      flex: 3,
       padding: 10,
       justifyContent: "space-evenly",
       flexDirection: "column",

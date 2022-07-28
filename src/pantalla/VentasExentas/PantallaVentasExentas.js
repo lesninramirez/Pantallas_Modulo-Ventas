@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'reac
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
     const [numerof, setNumerof] = useState("");
     const [numero, setNumero] = useState("");
 
-    const titulo = 'Pantalla Ventas Sag';
+    const titulo = 'Pantalla Ventas Exentas';
     let MySwal = withReactContent(Swal);
 
     const agregar = async () => {
@@ -33,20 +33,17 @@ export default function App() {
                             value={numerof}
                             onChangeText={setNumerof}
                             keyboardType='decimal-pad'
-                            
                         >
                         </TextInput>
 
                         <TextInput
-                            placeholder="Ingrese el Numero Sag"
+                            placeholder="Ingrese el Numero de Orden"
                             style={styles.entradas}
                             value={numero}
                             onChangeText={setNumero}
                             maxLength={20}
-                            
                         >
                         </TextInput>
-
                     </View>
 
                     <View style={styles.contenedorBotonesRedes}>

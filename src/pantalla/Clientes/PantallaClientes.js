@@ -3,14 +3,18 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView 
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
-  const [Identidad, setIdentidad] = useState("");
+  const [rtn, setRtn] = useState("");
+  const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
-  const [fecha, setFecha] = useState("");
-  const titulo = 'Pantalla Clientes Direcciones';
+  const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [imagen, setImagen] = useState("");
+  const [nombreimagen, setNombreI] = useState("");
+  const titulo = 'Pantalla Clientes';
   let MySwal = withReactContent(Swal);
 
   const agregar = async () => {
@@ -29,24 +33,33 @@ export default function App() {
 
   };
 
+
   return (
     <View style={styles.contenedor}>
-
+      <ScrollView >    
       <View style={styles.contenedorLogin}>
         <View style={[styles.contenedorControles, styles.sombraControles]}>
           <View style={styles.controles}>
-          <TextInput
-              placeholder="Identidad del Cliente"
+            <TextInput
+              placeholder="Ingrese el RTN"
               style={styles.entradas}
-              value={Identidad}
-              onChangeText={setIdentidad}
-              keyboardType=  'decimal-pad'
-              maxLength={13}
+              value={rtn}
+              onChangeText={setRtn}
+              keyboardType=  'number-pad'
             >
             </TextInput>
 
             <TextInput
-              placeholder="Dirección del Cliente"
+              placeholder="Ingrese el Nombre"
+              style={styles.entradas}
+              value={nombre}
+              onChangeText={setNombre}
+              keyboardType=  'default'
+            >
+            </TextInput>
+
+            <TextInput
+              placeholder="Ingrese la Direccion"
               style={styles.entradas}
               value={direccion}
               onChangeText={setDireccion}
@@ -54,12 +67,37 @@ export default function App() {
             </TextInput>
 
             <TextInput
-              placeholder="Fecha Creación AAAA-MM-DD"
+              placeholder="Ingrese el Telefono"
               style={styles.entradas}
-              value={fecha}
-              onChangeText={setFecha}
-              keyboardType=  'number-pad'
-              maxLength={10}
+              value={telefono}
+              onChangeText={setTelefono}
+              keyboardType=  'phone-pad'
+              maxLength={8}
+            >
+            </TextInput>
+
+            <TextInput
+              placeholder="Ingrese el Correo"
+              style={styles.entradas}
+              value={correo}
+              onChangeText={setCorreo}
+              keyboardType=  'email-address'
+            >
+            </TextInput>
+
+            <TextInput
+              placeholder="Imagen"
+              style={styles.entradas}
+              value={imagen}
+              onChangeText={setImagen}
+            >
+            </TextInput>
+
+            <TextInput
+              placeholder="Nombre de la Imagen"
+              style={styles.entradas}
+              value={nombreimagen}
+              onChangeText={setNombreI}
             >
             </TextInput>
           </View>
@@ -92,12 +130,11 @@ export default function App() {
                 onPress={listar}
               ></Button>
             </View>
-
           </View>
 
         </View>
       </View>
-
+      </ScrollView>   
     </View>
   );
 }
@@ -107,22 +144,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#e9ecef',
     alignItems: 'center',
     justifyContent: "center",
-    marginTop: 20,
-    padding: 10,
+    margin: 0,
+    padding: 15,
     width: "100%",
-    height: "70%",
+    height: "100%",
   },
   contenedorscroll:{
-    minHeight: 90,
-    height: "50%",
-    marginTop: 120,
-  },
+    minHeight: 400,
+    height:500,
+    height: "100%",
+    marginBottom: -200,
+},
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 560,
+    height: 690,
     width: 360,
-    marginTop: 135,
   },
   contenedorTitulo: {
     flex: 1,
@@ -149,11 +186,11 @@ const styles = StyleSheet.create({
   },
   tituloLogin: {
     color: "#495057",
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "500",
   },
   controles: {
-    flex: 3,
+    flex: 5,
     marginBottom: -5,
     paddingTop: -10,
     paddingLeft: 10,
@@ -166,8 +203,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   contenedorBotonesRedes: {
-    flex: 3,
-    padding: 5,
+    flex: 2,
+    padding: 10,
     justifyContent: "space-evenly",
     flexDirection: "column",
   },
@@ -180,12 +217,12 @@ const styles = StyleSheet.create({
   botonRedes: {
     flex: 1,
     alignItems: "stretch",
-    margin: 8,
+    margin: 4,
   },
   entradas: {
     flex: 1,
     alignItems: "stretch",
-    margin: 5,
+    margin: 10,
     padding: 10,
     fontSize: 20,
     fontWeight: "400",

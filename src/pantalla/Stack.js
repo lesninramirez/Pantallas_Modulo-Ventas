@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { Stack } from 'react-bootstrap';
 
-import Cai from "./PantallaCai";
+import Cai from "./Cai/PantallaCai";
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -106,21 +106,21 @@ const Prueba = () => {
                     <View style={styles.botonRedes}>
                         <Button
                             title="Productos"
-                        //onPress={()=> navigation.navigate("Productos")}
+                        onPress={()=> navigation.navigate("PantallaProductos")}
                         ></Button>
                     </View>
 
                     <View style={styles.botonRedes}>
                         <Button
-                            title="Ventas Pos"
-                        //onPress={()=> navigation.navigate("PantallaVentasPos")}
+                            title="Pos"
+                        onPress={()=> navigation.navigate("PantallaPos")}
                         ></Button>
                     </View>
 
                     <View style={styles.botonRedes}>
                         <Button
                             title="Detalle Pedido"
-                        //onPress={()=> navigation.navigate("PantallaDetallePedido")}
+                        onPress={()=> navigation.navigate("PantallaDetallePedido")}
                         ></Button>
                     </View>
 

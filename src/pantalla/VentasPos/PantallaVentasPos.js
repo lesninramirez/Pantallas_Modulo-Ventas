@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import Axios from '../componentes/Axios';
+import Axios from '../../componentes/Axios';
 
 
-export default function PantallaDetallePedido() {
-  const [detallepedido, setDetallePedido] = useState([]);
+export default function PantallaVentasPos() {
+  const [vpos, setPos] = useState([]);
 
-  const titulo = 'Pantalla Detalle Pedido';  
+  const titulo = 'Pantalla Ventas Pos';  
 
   useEffect(()=>{
 
     const listar = async () => {
-      const respuesta= await Axios.get('detallepedidos/listar');  
+      const respuesta= await Axios.get('pos/listar');  
 
-      setDetallePedido(respuesta.data) //Contiene la respuesta de la peticion
+      setPos(respuesta.data) //Contiene la respuesta de la peticion
   };
 
     try{ 
@@ -25,11 +25,9 @@ export default function PantallaDetallePedido() {
   },[])
 
 
-
-
   return (
 
-    <>{detallepedido.map((detalle) => { //Llamar una arreglo
+    <>{vpos.map((pos) => { //Llamar una arreglo
       return(
         
         <View style={styles.contenedor}>
@@ -40,75 +38,61 @@ export default function PantallaDetallePedido() {
       <View style={styles.contenedorLogin}>
         <View style={[styles.contenedorControles, styles.sombraControles]}>
           <View 
-          key={detalle?.idregistro}
+          key={pos?.idregistro}
           style={styles.controles}>
             <TextInput
-              placeholder="Id del Registro"
+              placeholder="Id Registro"
               style={styles.entradas}
-              value={'Id del Registro: ' + detalle?.idregistro}
+              value={'Id Registro: ' + pos?.idregistro}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Numero de Pedido"
+              placeholder="Id Venta"
               style={styles.entradas}
-              value={'Numero de Pedido: ' + detalle?.NumeroPedido}
+              value={'Id de la Venta: ' + pos?.id_venta}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Codigo de Pedido"
+              placeholder="Id Pos"
               style={styles.entradas}
-              value={'Codigo de Pedido: ' + detalle?.CodigoPedido}
+              value={'Id Pos: ' + pos?.idpos}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Cantidad"
+              placeholder="Referencia"
               style={styles.entradas}
-              value={'Cantidad: ' + detalle?.Cantidad}
+              value={'Referencia: ' + pos?.referencia}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Cancelado"
+              placeholder="Numero Tarjeta"
               style={styles.entradas}
-              value={'Cancelado: ' + detalle?.Cancelado}
-            >
-            </TextInput>
-            
-            <TextInput
-              placeholder="Notas"
-              style={styles.entradas}
-              value={'Notas: ' + detalle?.Notas}
+              value={'Numero de Tarjeta: ' + pos?.numerotarjeta}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Elaborado"
+              placeholder="Valor"
               style={styles.entradas}
-              value={'Elaborado: ' + detalle?.Elaborado}
+              value={'Valor: ' + pos?.valor}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Entregado"
+              placeholder="Nombre del Propietario"
               style={styles.entradas}
-              value={'Entregado: ' + detalle?.Entregado}
+              value={'Propietario: ' + pos?.nombrepropietario}
             >
             </TextInput>
 
             <TextInput
-              placeholder="Facturado"
+              placeholder="Id Marca"
               style={styles.entradas}
-              value={'Facturado: ' + detalle?.Facturado}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Sub Producto"
-              style={styles.entradas}
-              value={'Sub Producto: ' + detalle?.subproducto}
+              value={'Id de la Marca: ' + pos?.idmarca}
             >
             </TextInput>
 

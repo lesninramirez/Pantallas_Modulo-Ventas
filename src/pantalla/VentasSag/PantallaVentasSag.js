@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'reac
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
+    const [numerof, setNumerof] = useState("");
     const [numero, setNumero] = useState("");
-    const [constancia, setConstancia] = useState("");
 
-    const titulo = 'Pantalla Ventas Constancia';
+    const titulo = 'Pantalla Ventas Sag';
     let MySwal = withReactContent(Swal);
 
     const agregar = async () => {
@@ -28,22 +28,25 @@ export default function App() {
                 <View style={[styles.contenedorControles, styles.sombraControles]}>
                     <View style={styles.controles}>
                         <TextInput
-                            placeholder="Ingrese el Usuario"
+                            placeholder="Ingrese el Numero de Factura"
                             style={styles.entradas}
-                            value={numero}
-                            onChangeText={setNumero}
+                            value={numerof}
+                            onChangeText={setNumerof}
                             keyboardType='decimal-pad'
+                            
                         >
                         </TextInput>
 
                         <TextInput
-                            placeholder="Ingrese el Usuario"
+                            placeholder="Ingrese el Numero Sag"
                             style={styles.entradas}
-                            value={constancia}
-                            onChangeText={setConstancia}
+                            value={numero}
+                            onChangeText={setNumero}
                             maxLength={20}
+                            
                         >
                         </TextInput>
+
                     </View>
 
                     <View style={styles.contenedorBotonesRedes}>
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 330,
+      height: 340,
       width: 360,
     },
     contenedorTitulo: {

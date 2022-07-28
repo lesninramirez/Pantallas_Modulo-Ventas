@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'reac
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Axios from '../componentes/Axios';
-import Mensaje from '../componentes/Mensaje';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
 export default function App() {
-    const [numerof, setNumerof] = useState("");
-    const [numero, setNumero] = useState("");
-
-    const titulo = 'Pantalla Ventas Exentas';
+    const [usuario, setUsuario] = useState("");
+    const [descripcion, setDesc] = useState("");
+    const [fecha, setFecha] = useState("");
+    const titulo = 'Ventas Anuladas';
     let MySwal = withReactContent(Swal);
 
     const agregar = async () => {
@@ -28,20 +28,30 @@ export default function App() {
                 <View style={[styles.contenedorControles, styles.sombraControles]}>
                     <View style={styles.controles}>
                         <TextInput
-                            placeholder="Ingrese el Numero de Factura"
+                            placeholder="Ingrese el Usuario"
                             style={styles.entradas}
-                            value={numerof}
-                            onChangeText={setNumerof}
+                            value={usuario}
+                            onChangeText={setUsuario}
                             keyboardType='decimal-pad'
                         >
                         </TextInput>
 
                         <TextInput
-                            placeholder="Ingrese el Numero de Orden"
+                            placeholder="Ingrese la Descripcion"
                             style={styles.entradas}
-                            value={numero}
-                            onChangeText={setNumero}
-                            maxLength={20}
+                            value={descripcion}
+                            onChangeText={setDesc}
+                            maxLength={250}
+                        >
+                        </TextInput>
+
+                        <TextInput
+                            placeholder="Ingrese la Fecha"
+                            style={styles.entradas}
+                            value={fecha}
+                            onChangeText={setFecha}
+                            keyboardType='number-pad'
+                            maxLength={10}
                         >
                         </TextInput>
                     </View>
@@ -80,7 +90,7 @@ const styles = StyleSheet.create({
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 340,
+      height: 440,
       width: 360,
     },
     contenedorTitulo: {
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
     },
     contenedorBotonesRedes: {
-      flex: 3,
+      flex: 2,
       padding: 10,
       justifyContent: "space-evenly",
       flexDirection: "column",

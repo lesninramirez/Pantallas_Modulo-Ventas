@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import Axios from '../componentes/Axios';
+import Axios from '../../componentes/Axios';
 
 
 export default function PantallaEmpleados() {
