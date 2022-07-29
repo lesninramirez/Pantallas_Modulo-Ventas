@@ -3,48 +3,47 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardUsuarios from '../../componentes/CardUsuarios';
+import CardDirecciones from '../../componentes/CardClientesDirecciones';
 
 
-export default function PantallaUsuarios() {
-  const [usuarios, setUsuarios] = useState("");
+export default function PantallaClientesDirecciones() {
+  const [direcciones, setDirecciones] = useState("");
   const { token } = useContext(UsuarioContext);
-  const titulo = 'Lista de Usuarios'
+  var jsonList;
+  const titulo = 'Lista Clientes Direcciones'
   var textoMensaje = "";
 
 
   useEffect(() => {
-    MostrarUsuarios();
-  }, [setUsuarios]);
+    MostrarDirecciones();
+  }, [setDirecciones]);
 
 
 
 
-  const UsuariosRender = ({ item }) => {
+  const ClientesDireccionesRender = ({ item }) => {
 
     return (
-      <CardUsuarios login={'Usuario: ' + item.login} idempleado={'Id del Empleado: ' + item.idempleado} 
-      contrasena={'Contrasena: ' + item.contrasena} accesototal={'Acceso Total: ' + item.accesototal} 
-      Habilitado={'Habilitado: ' + item.Habilitado} pin={'Pin: ' + item.pin} 
-      fallidos={'Fallidos: ' + item.fallidos} correo={'Correo: ' + item.correo}
-      estado={'Estado: ' + item.estado}/>
+      <CardDirecciones id_cliente={'Identidad del cliente: ' + item.id_cliente} direccion={'Dirección: ' + item.direccion} 
+      creada={'Creada en: ' + item.creada} />
 
     );
   };
 
-  const MostrarUsuarios = async () => {
+  const MostrarDirecciones = async () => {
 
     if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {
       try {
-        await Axios.get('usuarios/listar', {
+        await Axios.get('clientesdir/listar', {
 
 
         })
           .then((data) => {
-            setUsuarios(data.data);
+            setDirecciones(data.data);
+            console.log(jsonList);
 
           })
           .catch((error) => {
@@ -57,17 +56,14 @@ export default function PantallaUsuarios() {
   }
 
 
-
-
   return (
     <ScrollView >
       <View style={styles.contenedor}>
 
         <View style={styles.contenedorFlat}>
           <FlatList
-            data={usuarios}
-            renderItem={UsuariosRender}
-          /*keyExtractor={item=>item.NumeroEstacion}*/
+            data={direcciones}
+            renderItem={ClientesDireccionesRender}
           >
           </FlatList>
         </View>

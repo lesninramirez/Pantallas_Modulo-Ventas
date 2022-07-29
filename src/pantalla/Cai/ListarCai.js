@@ -3,48 +3,46 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardUsuarios from '../../componentes/CardUsuarios';
+import CardCai from '../../componentes/CardCai';
 
 
-export default function PantallaUsuarios() {
-  const [usuarios, setUsuarios] = useState("");
+export default function PantallaClientes() {
+  const [cai, setCai] = useState("");
   const { token } = useContext(UsuarioContext);
-  const titulo = 'Lista de Usuarios'
+  const titulo = 'Listar Cai'
   var textoMensaje = "";
 
 
   useEffect(() => {
-    MostrarUsuarios();
-  }, [setUsuarios]);
+    MostrarCai();
+  }, [setCai]);
 
 
 
 
-  const UsuariosRender = ({ item }) => {
+  const CaiRender = ({ item }) => {
 
     return (
-      <CardUsuarios login={'Usuario: ' + item.login} idempleado={'Id del Empleado: ' + item.idempleado} 
-      contrasena={'Contrasena: ' + item.contrasena} accesototal={'Acceso Total: ' + item.accesototal} 
-      Habilitado={'Habilitado: ' + item.Habilitado} pin={'Pin: ' + item.pin} 
-      fallidos={'Fallidos: ' + item.fallidos} correo={'Correo: ' + item.correo}
-      estado={'Estado: ' + item.estado}/>
+      <CardCai CAI={'CAI: ' + item.CAI} FechaLimite={'Fecha Limite: ' + item.FechaLimite} 
+      NumeroInicial={'Numero Inicial: ' + item.NumeroInicial} NumeroFinal={'Numero Final: ' + item.NumeroFinal} 
+      creado={'Creado en: ' + item.creado} activo={'Activo/Inactivo: ' + item.activo}  />
 
     );
   };
 
-  const MostrarUsuarios = async () => {
+  const MostrarCai = async () => {
 
     if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {
       try {
-        await Axios.get('usuarios/listar', {
+        await Axios.get('cai/listar', {
 
 
         })
           .then((data) => {
-            setUsuarios(data.data);
+            setCai(data.data);
 
           })
           .catch((error) => {
@@ -57,23 +55,20 @@ export default function PantallaUsuarios() {
   }
 
 
-
-
   return (
-    <ScrollView >
+
       <View style={styles.contenedor}>
 
         <View style={styles.contenedorFlat}>
           <FlatList
-            data={usuarios}
-            renderItem={UsuariosRender}
-          /*keyExtractor={item=>item.NumeroEstacion}*/
+            data={cai}
+            renderItem={CaiRender}
           >
           </FlatList>
         </View>
       </View>
 
-    </ScrollView>
+
 
 
   )

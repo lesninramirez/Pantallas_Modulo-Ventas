@@ -1,116 +1,81 @@
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView, FlatList } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
+import UsuarioContext from '../../contexto/UsuarioContext';
+import Mensaje from '../../componentes/Mensaje';
+import CardEmpleados from '../../componentes/CardEmpleados';
 
 
 export default function PantallaEmpleados() {
-  const [empleados, setEmpleados] = useState([]);
+  const [empleados, setEmpleados] = useState("");
+  const { token } = useContext(UsuarioContext);
+  const titulo = 'Lista de Empleados'
+  var textoMensaje = "";
 
-  const titulo = 'Pantalla Empleados';  
 
-  useEffect(()=>{
+  useEffect(() => {
+    MostrarEmpleados();
+  }, [setEmpleados]);
 
-    const listar = async () => {
-      const respuesta= await Axios.get('empleados/listar');  
 
-      setEmpleados(respuesta.data) //Contiene la respuesta de la peticion
+
+
+  const EmpleadoRender = ({ item }) => {
+
+    return (
+      <CardEmpleados NumeroIdentidad={'Numero de Identidad: ' + item.NumeroIdentidad} NombreEmpleado={'Nombre del Empleado: ' + item.NombreEmpleado} 
+      ApellidoEmpleado={'Apellido del Empleado: ' + item.ApellidoEmpleado} CargoEmpleado={'Cargo del Empleado: ' + item.CargoEmpleado} 
+      FechaIngreso={'Fecha de Ingreso: ' + item.FechaIngreso} Salario={'Salario: ' + item.Salario} 
+      nombreImagen={'nombre de la Imagen: ' + item.nombreImagen} />
+
+    );
   };
 
-    try{ 
-    listar();
+  const MostrarEmpleados = async () => {
+
+    if (!token) {
+      textoMensaje = "Debe iniciar sesion";
+    }
+    else {
+      try {
+        await Axios.get('empleados/listar', {
+
+
+        })
+          .then((data) => {
+            setEmpleados(data.data);
+
+          })
+          .catch((error) => {
+
+          });
+      } catch (error) {
+
+      }
+    }
   }
-  catch(error){
-    console.log(error);
-  }
-  },[])
 
 
 
 
   return (
+    <ScrollView >
+      <View style={styles.contenedor}>
 
-    <>{empleados.map((empleado) => { //Llamar una arreglo
-      return(
-        
-        <View style={styles.contenedor}>
-          <Text style={styles.tituloLogin}>
-          Registro 1
-        </Text>
-      <ScrollView >  
-      <View style={styles.contenedorLogin}>
-        <View style={[styles.contenedorControles, styles.sombraControles]}>
-          <View 
-          key={empleado?.NumeroEstacion}
-          style={styles.controles}>
-            <TextInput
-              placeholder="Numero de Estacion"
-              style={styles.entradas}
-              value={'Numero de Estación: ' + empleado?.NumeroEstacion}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre"
-              style={styles.entradas}
-              value={'Nombre: ' + empleado?.nombre}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Activo"
-              style={styles.entradas}
-              value={'Activo/Inactivo: ' + empleado?.activo}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Vista Previa"
-              style={styles.entradas}
-              value={'Vista Previa: ' + empleado?.vistaprevia}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Teclado Virtual"
-              style={styles.entradas}
-              value={'Teclado Virtual: ' + empleado?.tecladovirtual}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre Tipo"
-              style={styles.entradas}
-              value={'Tipo: ' + empleado?.nombretipo}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre del producto"
-              style={styles.entradas}
-              value={'Producto: ' + empleado?.nombreproducto}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Administracion"
-              style={styles.entradas}
-              value={'Administracion: ' + empleado?.administracion}
-            >
-            </TextInput>
-
-
-          </View>
-
+        <View style={styles.contenedorFlat}>
+          <FlatList
+            data={empleados}
+            renderItem={EmpleadoRender}
+          /*keyExtractor={item=>item.NumeroEstacion}*/
+          >
+          </FlatList>
         </View>
       </View>
-      </ScrollView>    
-    </View>
-      );
-    })}
-    </>
+
+    </ScrollView>
 
 
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -123,87 +88,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  contenedorscroll:{
-    minHeight: 90,
-    height: "50%",
-    marginTop: -10,
-},
-  contenedorLogin: {
-    alignItems: "stretch",
-    justifyContent: 'center',
-    height: 450,
-    width: 360,
-  },
-  contenedorTitulo: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  contenedorControles: {
-    flex: 2.5,
-    flexDirection: "column",
-    alignItems: "stretch",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#dedede",
-    borderRadius: 25,
-    backgroundColor: "#B7B5B4",
-    padding: 4,
-  },
-  sombraControles: {
-    shadowColor: '#171717',
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  tituloLogin: {
-    color: "#495057",
-    fontSize: 40,
-    fontWeight: "500",
-  },
-  controles: {
-    flex: 5,
-    marginBottom: -5,
-    paddingTop: -10,
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  contenedorBotones: {
-    flex: 1,
+  contenedorFlat:{
+    flex:1,
     padding: 10,
-    justifyContent: "space-evenly",
+    justifyContent:"space-evenly",
     flexDirection: "row",
+    width: "100%",
   },
-  contenedorBotonesRedes: {
-    flex: 2,
-    padding: 10,
-    justifyContent: "space-evenly",
-    flexDirection: "column",
-  },
-  boton: {
-    flex: 1,
-    alignItems: "stretch",
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  botonRedes: {
-    flex: 1,
-    alignItems: "stretch",
-    margin: 4,
-  },
-  entradas: {
-    flex: 1,
-    alignItems: "stretch",
-    margin: 5,
-    padding: 5,
-    fontSize: 20,
-    fontWeight: "400",
-    color: "#495057",
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#ced4da",
-    borderRadius: 15,
-  }
 });

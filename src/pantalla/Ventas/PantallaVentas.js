@@ -6,6 +6,8 @@ import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function App() {
     const [factura, setFactura] = useState("");
     const [cai, setCai] = useState("");
@@ -30,6 +32,8 @@ export default function App() {
     const [exonerado, setExonerado] = useState("");
     const titulo = 'Pantalla Ventas';
     let MySwal = withReactContent(Swal);
+
+    const navigation = useNavigation();
 
     const agregar = async () => {
 
@@ -251,7 +255,7 @@ export default function App() {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Listar" color={"#2BB509"}
-                                onPress={listar}
+                                onPress={() => navigation.navigate("ListarVentas")}
                             ></Button>
                         </View>
 

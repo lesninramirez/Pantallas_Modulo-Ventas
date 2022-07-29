@@ -3,48 +3,48 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardUsuarios from '../../componentes/CardUsuarios';
+import CardDetalleVentas from '../../componentes/CardDetalleVentas';
 
 
-export default function PantallaUsuarios() {
-  const [usuarios, setUsuarios] = useState("");
+export default function PantallaDetalleVentas() {
+  const [dventas, setDVentas] = useState("");
   const { token } = useContext(UsuarioContext);
-  const titulo = 'Lista de Usuarios'
+  const titulo = 'Lista Detalle Ventas'
   var textoMensaje = "";
 
 
   useEffect(() => {
-    MostrarUsuarios();
-  }, [setUsuarios]);
+    MostrarDVentas();
+  }, [setDVentas]);
 
 
 
 
-  const UsuariosRender = ({ item }) => {
+  const DetalleVentasRender = ({ item }) => {
 
     return (
-      <CardUsuarios login={'Usuario: ' + item.login} idempleado={'Id del Empleado: ' + item.idempleado} 
-      contrasena={'Contrasena: ' + item.contrasena} accesototal={'Acceso Total: ' + item.accesototal} 
-      Habilitado={'Habilitado: ' + item.Habilitado} pin={'Pin: ' + item.pin} 
-      fallidos={'Fallidos: ' + item.fallidos} correo={'Correo: ' + item.correo}
-      estado={'Estado: ' + item.estado}/>
+      <CardDetalleVentas NumeroFactura={'Numero de Factura: ' + item.NumeroFactura} CodigoProducto={'Codigo de Producto: ' + item.CodigoProducto} 
+      Cantidad={'Cantidad: ' + item.Cantidad} Precio={'Precio: ' + item.Precio} 
+      preciooriginal={'Precio Original: ' + item.preciooriginal} impuesto={'Impuesto: ' + item.impuesto} 
+      grabadoExento={'Grabado Exento: ' + item.grabadoExento} />
+
 
     );
   };
 
-  const MostrarUsuarios = async () => {
+  const MostrarDVentas = async () => {
 
     if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {
       try {
-        await Axios.get('usuarios/listar', {
+        await Axios.get('detalleventas/listar', {
 
 
         })
           .then((data) => {
-            setUsuarios(data.data);
+            setDVentas(data.data);
 
           })
           .catch((error) => {
@@ -57,17 +57,14 @@ export default function PantallaUsuarios() {
   }
 
 
-
-
   return (
     <ScrollView >
       <View style={styles.contenedor}>
 
         <View style={styles.contenedorFlat}>
           <FlatList
-            data={usuarios}
-            renderItem={UsuariosRender}
-          /*keyExtractor={item=>item.NumeroEstacion}*/
+            data={dventas}
+            renderItem={DetalleVentasRender}
           >
           </FlatList>
         </View>
