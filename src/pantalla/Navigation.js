@@ -11,7 +11,7 @@ import Login from "./Login";
 import Stack from "./Stack";
 
 
-import Cai from "./Cai/PantallaCai";
+import Cai from "./Cai/AgregarCai";
 import Clientes from "./Clientes/PantallaClientes";
 import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
 

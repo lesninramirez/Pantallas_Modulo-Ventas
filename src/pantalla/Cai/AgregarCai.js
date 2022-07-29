@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+
+import {useNavigation} from '@react-navigation/native'
+
 
 const AgregarCai = () => {
   const { token } = useContext(UsuarioContext);
@@ -14,6 +17,7 @@ const AgregarCai = () => {
   const [numero_ini, setNumini] = useState("");
   const [numero_fin, setNumfin] = useState("");
   const [activoCai, setActivo] = useState("");
+  const [lista, setLista] = useState("");
   const titulo = 'Pantalla Cai';
 
   var textoMensaje = "";
@@ -23,9 +27,11 @@ const AgregarCai = () => {
   const [selected, setSelected] = React.useState("");
   let MySwal = withReactContent(Swal);
 
-  /*const state = "Activo"
+  //const navigation= useNavigation();
 
-  const agregar = async () => {
+  activoCai = "Activo"
+
+  /*const agregar = async () => {
 
   };
 
@@ -52,8 +58,7 @@ const AgregarCai = () => {
     }
     else {
       try {
-        await Axios.get('estacion/listar', {
-
+        await Axios.get('cai/listar', {
 
         })
           .then((data) => {
@@ -92,10 +97,10 @@ const AgregarCai = () => {
   };
   //Mensaje({ titulo: titulo, msj: textoMensaje });
   const guardarCai = async () => {
-    if (!token) {
+    /*if (!token) {
       textoMensaje = "Debe iniciar sesion";
       console.log(token);
-    } else {
+    } else {*/
       console.log(token);
       const bodyParameters = {
         cai: cai,
@@ -105,9 +110,9 @@ const AgregarCai = () => {
         activoCai: activoCai
       };
       const config = {
-        headers: { Authorization: `Bearer ${token}` },
+        //headers: { Authorization: `Bearer ${token}` },
       };
-      await Axios.post("/cai/agregar", bodyParameters, config)
+      await Axios.post("/cai/agregar", bodyParameters /*config*/)
         .then((data) => {
           const json = data.data;
           if (json.errores.length == 0) {
@@ -116,6 +121,7 @@ const AgregarCai = () => {
               titulo: "Registro Cai",
               msj: "Su registro fue guardado con exito",
             });
+            //navigation.navigate("ListaCai");
           } else {
             textoMensaje = "";
             json.errores.forEach((element) => {
@@ -127,7 +133,7 @@ const AgregarCai = () => {
         .catch((error) => {
           textoMensaje = error;
         });
-    }
+    //}
     console.log(textoMensaje);
   };
 
@@ -198,21 +204,21 @@ const AgregarCai = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-                onPress={editar}
+                //onPress={editar}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-                onPress={eliminar}
+                //onPress={eliminar}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                onPress={listar}
+                //onPress={listar}
               ></Button>
             </View>
 
@@ -320,3 +326,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   }
 });
+
+export default AgregarCai;
