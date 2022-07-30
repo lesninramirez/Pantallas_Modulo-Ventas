@@ -1,16 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
 const VentasSag = () => {
-  const { token } = useContext(UsuarioContext);
-  const [nomfact, setNomfact] = useState("");
+  const [numfac, setNumfact] = useState("");
   const [numsag, setNumSag] = useState("");
   var textoMensaje = "";
   const [open, setOpen] = useState(false);
@@ -42,7 +38,7 @@ const VentasSag = () => {
   const ListarVentasSag = async () => {
 
       try {
-        await Axios.get('VentasSag/listar', {
+        await Axios.get('ventas/listar', {
 
         })
           .then((data) => {
@@ -50,10 +46,10 @@ const VentasSag = () => {
             let jsonitems = [];
             json.forEach((element) => {
                 jsonitems.push({
-                  label: element.idregistro.toString(),
-                  value: element.idregistro.toString(),
+                  label: element.NumeroFactura.toString(),
+                  value: element.NumeroFactura.toString(),
                 });
-                console.log(typeof element.idregistro.toString());
+                console.log(typeof element.NumeroFactura.toString());
               });
               setItems(jsonitems);
           })
@@ -66,18 +62,19 @@ const VentasSag = () => {
         console.log(error);
         Mensaje({ titulo: "Error en el registro", msj: error });
       }
-    //}
   };
   
   const guardarVentasSag = async () => {
       //console.log(token);
       const bodyParameters = {
-        nomfact: nomfact,
+        numfac: numfac,
         numsag: numsag
       };
-      await Axios.post("/VentasSag/agregar", bodyParameters)
+      console.log(bodyParameters);
+      await Axios.post("sag/agregar", bodyParameters)
         .then((data) => {
           const json = data.data;
+          //console.log(json);
           if (json.errores.length == 0) {
             console.log("Solicitud Realizada");
             Mensaje({
@@ -94,6 +91,7 @@ const VentasSag = () => {
         })
         .catch((error) => {
           textoMensaje = error;
+          //console.error(error.response.data);   
         });
     console.log(textoMensaje);
   };
@@ -101,10 +99,10 @@ const VentasSag = () => {
 
   return (
     <View style={styles.contenedor}>
+    <View style={styles.contenedorLogin}>
 
-      <View style={styles.contenedorLogin}>
-        <View style={[styles.contenedorControles, styles.sombraControles]}>
-          <View style={styles.controles}>
+      <View style={[styles.contenedorControles, styles.sombraControles]}>
+        <View style={styles.controles}>
           <DropDownPicker
             searchable={true}
             style={styles.dropdown}
@@ -113,7 +111,7 @@ const VentasSag = () => {
             value={value}
             //onSelectItem={setCliente}
             onChangeValue={(value) => {
-                setNomfact(value);
+              setNumfact(value);
             }}
             items={items}
             setOpen={setOpen}
@@ -121,51 +119,37 @@ const VentasSag = () => {
             setItems={setItems}
           />
 
-            <TextInput
-              placeholder="Numero Sag"
-              style={styles.entradas}
-              value={numsag}
-              onChangeText={setNumSag}
-              keyboardType=  'default'
-            >
-            </TextInput>
-          </View>
 
-          <View style={styles.contenedorBotonesRedes}>
-            <View style={styles.botonRedes}>
-              <Button
-                title="Agregar"
-                onPress={guardarVentasSag}
-              ></Button>
-            </View>
+          <TextInput
+            placeholder="Ingrese el Numero Sag"
+            style={styles.entradas}
+            value={numsag}
+            onChangeText={setNumSag}
+            keyboardType=  'default'
 
-            <View style={styles.botonRedes}>
-              <Button
-                title="Editar" color={"#FF7D00"}
-               // onPress={editar}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Eliminar" color={"#dc3545"}
-               // onPress={eliminar}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Listar" color={"#2BB509"}
-               // onPress={listar}
-              ></Button>
-            </View>
-
-          </View>
+          >
+          </TextInput>
 
         </View>
-      </View>
 
+        <View style={styles.contenedorBotonesRedes}>
+          <View style={styles.botonRedes}>
+            <Button
+              title="Agregar"
+              onPress={guardarVentasSag}
+            ></Button>
+          </View>
+
+          <View style={styles.botonRedes}>
+            <Button
+              title="Listar" color={"#2BB509"}
+              //onPress={listar}
+            ></Button>
+          </View>
+        </View>
+      </View>
     </View>
+  </View>
   );
 }
 

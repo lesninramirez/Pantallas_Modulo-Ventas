@@ -20,7 +20,7 @@ import Ventas from "./Ventas/PantallaVentas";
 import Anuladas from "./VentasAnuladas/PantallaVentasAnuladas";
 import Constancia from "./VentasConstancia/PantallaVentasConstancia";
 import Exentas from "./VentasExentas/PantallaVentasExentas";
-import Sag from "./VentasSag/PantallaVentasSag";
+import Sag from "./VentasSag/AgregarVentasSag";
 
 import PantallaEstaciones from "./Estaciones/PantallaEstaciones";
 import PantallaProductos from "./Productos/PantallaProductos";
