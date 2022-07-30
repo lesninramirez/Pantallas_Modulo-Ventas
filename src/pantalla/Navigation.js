@@ -149,6 +149,7 @@ function Pantallas() {
                     component={PantallaPos}
             ></PantallasModulo.Screen> 
 
+             
   
 
         </PantallasModulo.Navigator>

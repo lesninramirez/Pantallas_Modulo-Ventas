@@ -1,26 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
-import UsuarioContext from '../../contexto/UsuarioContext';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import DropDownPicker from "react-native-dropdown-picker";
 
-const AgregarClientes = () => {
-  const { token } = useContext(UsuarioContext);  
-  const [rtn, setRtn] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [imagen, setImagen] = useState("");
-  const [nombreimagen, setNombreI] = useState("");
-  const [lista, setLista] = useState("");
-  const titulo = 'Pantalla Clientes';
-  //let MySwal = withReactContent(Swal);
+const ClientesDirecciones = () => {
+  const { token } = useContext(UsuarioContext);
+  const [cliente, setCliente] = useState("");
+  const [direc, setDireccion] = useState("");
+  var textoMensaje = "";
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([{ label: " ", value: " " }]);
 
-  /*const agregar = async () => {
+  const titulo = 'Pantalla Clientes Direcciones';
+
+ /* const agregar = async () => {
 
   };
 
@@ -35,20 +34,13 @@ const AgregarClientes = () => {
   const listar = async () => {
 
   };*/
-
-  var textoMensaje = "";
-  const [items, setItems] = useState([{ label: " ", value: " " }]);
-
+  
   useEffect(() => {
     ListarClientes();
   }, [setItems]);
 
   const ListarClientes = async () => {
 
-    if (!token) {
-      textoMensaje = "Debe iniciar sesion";
-    }
-    else {
       try {
         await Axios.get('clientes/listar', {
 
@@ -56,7 +48,6 @@ const AgregarClientes = () => {
           .then((data) => {
             const json = data.data;
             let jsonitems = [];
-            console.log(lista);
             json.forEach((element) => {
                 jsonitems.push({
                   label: element.idregistro.toString(),
@@ -75,25 +66,22 @@ const AgregarClientes = () => {
         console.log(error);
         Mensaje({ titulo: "Error en el registro", msj: error });
       }
-    }
+    //}
   };
   
-  const guardarClientes = async () => {
+  const guardarClientesDirecciones = async () => {
       //console.log(token);
       const bodyParameters = {
-        rtn: rtn,
-        nombre: nombre,
-        direccion: direccion,
-        telefono: telefono,
-        correo:correo
+        cliente: cliente,
+        direc: direc
       };
-      await Axios.post("/clientes/agregar", bodyParameters)
+      await Axios.post("/clientesdir/agregar", bodyParameters)
         .then((data) => {
           const json = data.data;
           if (json.errores.length == 0) {
             console.log("Solicitud Realizada");
             Mensaje({
-              titulo: "Registro Cliente",
+              titulo: "Registro Cliente Direccion",
               msj: "Registro guardado con éxito",
             });
           } else {
@@ -113,62 +101,40 @@ const AgregarClientes = () => {
 
   return (
     <View style={styles.contenedor}>
-      <ScrollView >    
+
       <View style={styles.contenedorLogin}>
         <View style={[styles.contenedorControles, styles.sombraControles]}>
           <View style={styles.controles}>
-            <TextInput
-              placeholder="Ingrese el RTN"
-              style={styles.entradas}
-              value={rtn}
-              onChangeText={setRtn}
-              keyboardType=  'number-pad'
-            >
-            </TextInput>
+          <DropDownPicker
+            searchable={true}
+            style={styles.dropdown}
+            placeholder="Seleccione un id del cliente"
+            open={open}
+            value={value}
+            //onSelectItem={setCliente}
+            onChangeValue={(value) => {
+                setCliente(value);
+            }}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+          />
 
             <TextInput
-              placeholder="Ingrese el Nombre"
+              placeholder="Dirección del Cliente"
               style={styles.entradas}
-              value={nombre}
-              onChangeText={setNombre}
-              keyboardType=  'default'
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Ingrese la Direccion"
-              style={styles.entradas}
-              value={direccion}
+              value={direc}
               onChangeText={setDireccion}
             >
             </TextInput>
-
-            <TextInput
-              placeholder="Ingrese el Telefono"
-              style={styles.entradas}
-              value={telefono}
-              onChangeText={setTelefono}
-              keyboardType=  'phone-pad'
-              maxLength={8}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Ingrese el Correo"
-              style={styles.entradas}
-              value={correo}
-              onChangeText={setCorreo}
-              keyboardType=  'email-address'
-            >
-            </TextInput>
-
           </View>
 
           <View style={styles.contenedorBotonesRedes}>
             <View style={styles.botonRedes}>
               <Button
                 title="Agregar"
-                onPress={guardarClientes}
+                onPress={guardarClientesDirecciones}
               ></Button>
             </View>
 
@@ -192,11 +158,12 @@ const AgregarClientes = () => {
                // onPress={listar}
               ></Button>
             </View>
+
           </View>
 
         </View>
       </View>
-      </ScrollView>   
+
     </View>
   );
 }
@@ -206,22 +173,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#e9ecef',
     alignItems: 'center',
     justifyContent: "center",
-    margin: 0,
-    padding: 15,
+    marginTop: 20,
+    padding: 10,
     width: "100%",
-    height: "100%",
+    height: "70%",
   },
   contenedorscroll:{
-    minHeight: 400,
-    height:500,
-    height: "100%",
-    marginBottom: -200,
-},
+    minHeight: 90,
+    height: "50%",
+    marginTop: 120,
+  },
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 690,
+    height: 560,
     width: 360,
+    marginTop: 135,
   },
   contenedorTitulo: {
     flex: 1,
@@ -248,11 +215,11 @@ const styles = StyleSheet.create({
   },
   tituloLogin: {
     color: "#495057",
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "500",
   },
   controles: {
-    flex: 5,
+    flex: 3,
     marginBottom: -5,
     paddingTop: -10,
     paddingLeft: 10,
@@ -265,8 +232,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   contenedorBotonesRedes: {
-    flex: 2,
-    padding: 10,
+    flex: 3,
+    padding: 5,
     justifyContent: "space-evenly",
     flexDirection: "column",
   },
@@ -279,12 +246,12 @@ const styles = StyleSheet.create({
   botonRedes: {
     flex: 1,
     alignItems: "stretch",
-    margin: 4,
+    margin: 8,
   },
   entradas: {
     flex: 1,
     alignItems: "stretch",
-    margin: 10,
+    margin: 5,
     padding: 10,
     fontSize: 20,
     fontWeight: "400",
@@ -294,6 +261,11 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: "#ced4da",
     borderRadius: 15,
-  }
+  },
+  dropdown: {
+    
+    zIndex: 1000
+  },
 });
-export default AgregarClientes;
+
+export default ClientesDirecciones;
