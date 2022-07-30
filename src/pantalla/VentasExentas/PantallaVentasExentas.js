@@ -8,14 +8,78 @@ import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function App() {
-    const [numerof, setNumerof] = useState("");
-    const [numero, setNumero] = useState("");
+    const [numfactura, setNumfactura] = useState("");
+    const [numorden, setNumorden] = useState("");
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    var textoMensaje = "";
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
 
     const titulo = 'Pantalla Ventas Exentas';
     let MySwal = withReactContent(Swal);
 
-    const agregar = async () => {
+    useEffect(() => {
+      ListarVentasExentas();
+    }, [setItems]);
 
+    const ListarVentasExentas = async () => {
+
+      try {
+        await Axios.get('exentas/listar', {
+  
+        })
+          .then((data) => {
+            const json = data.data;
+            let jsonitems = [];
+            json.forEach((element) => {
+                jsonitems.push({
+                  label: element.NumeroFactura.toString(),
+                  value: element.NumeroFactura.toString(),
+                });
+                console.log(typeof element.NumeroFactura.toString());
+              });
+              setItems(jsonitems);
+          })
+          .catch((error) => {
+            textoMensaje = error;
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+      } catch (error) {
+        textoMensaje = error;
+        console.log(error);
+        Mensaje({ titulo: "Error en el registro", msj: error });
+      }
+    //}
+  };
+
+    const agregarExentas = async () => {
+         //console.log(token);
+      const bodyParameters = {
+        numfactura: numfactura,
+        numorden: numorden
+      };
+      await Axios.post("exentas/agregar", bodyParameters)
+        .then((data) => {
+          const json = data.data;
+          console.log(json);
+          if (json.errores.length == 0) {
+            console.log("Solicitud Realizada");
+            Mensaje({
+              titulo: "Registro Ventas Exentas",
+              msj: "Registro guardado con éxito",
+            });
+          } else {
+            textoMensaje = "";
+            json.errores.forEach((element) => {
+              textoMensaje += element.mensaje + ". ";
+              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+            });
+          }
+        })
+        .catch((error) => {
+          textoMensaje = error;
+        });
+    console.log(textoMensaje);
     };
 
     const listar = async () => {
@@ -28,21 +92,29 @@ export default function App() {
 
                 <View style={[styles.contenedorControles, styles.sombraControles]}>
                     <View style={styles.controles}>
-                        <TextInput
-                            placeholder="Ingrese el Numero de Factura"
-                            style={styles.entradas}
-                            value={numerof}
-                            onChangeText={setNumerof}
-                            keyboardType='decimal-pad'
-                        >
-                        </TextInput>
+                        <DropDownPicker
+                             searchable={true}
+                             style={styles.dropdown}
+                             placeholder="Seleccione un id factura"
+                             open={open}
+                             value={value}
+                             //onSelectItem={setCliente}
+                             onChangeValue={(value) => {
+                              setNumfactura(value);
+                             }}
+                             items={items}
+                             setOpen={setOpen}
+                             setValue={setValue}
+                             setItems={setItems}
+                        />
+                    
 
                         <TextInput
                             placeholder="Ingrese el Numero de Orden"
                             style={styles.entradas}
-                            value={numero}
-                            onChangeText={setNumero}
-                            maxLength={20}
+                            value={numorden}
+                            onChangeText={setNumorden}
+                            keyboardType=  'default'
                         >
                         </TextInput>
                     </View>
@@ -51,7 +123,7 @@ export default function App() {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Agregar"
-                                onPress={agregar}
+                                onPress={agregarExentas}
                             ></Button>
                         </View>
 
