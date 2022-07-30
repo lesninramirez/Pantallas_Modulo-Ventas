@@ -12,7 +12,7 @@ import Stack from "./Stack";
 
 
 import Cai from "./Cai/AgregarCai";
-import Clientes from "./Clientes/PantallaClientes";
+import Clientes from "./Clientes/AgregarClientes";
 import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
 
 import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
