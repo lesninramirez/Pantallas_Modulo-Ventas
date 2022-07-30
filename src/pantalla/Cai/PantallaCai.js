@@ -16,23 +16,6 @@ export default function App() {
 
   const state = "Activo"
 
-  const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };
-
-
   return (
 
     <View style={styles.contenedor}>

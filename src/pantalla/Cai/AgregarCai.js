@@ -16,7 +16,7 @@ const AgregarCai = () => {
   const [ fecha_limite, setLimite] = useState("");
   const [numero_ini, setNumini] = useState("");
   const [numero_fin, setNumfin] = useState("");
-  const [activoCai, setActivo] = useState("");
+  let [activoCai, setActivo] = useState("");
   const [lista, setLista] = useState("");
   const titulo = 'Pantalla Cai';
 
