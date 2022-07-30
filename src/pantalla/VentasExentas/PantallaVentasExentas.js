@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function App() {
     const [numerof, setNumerof] = useState("");
