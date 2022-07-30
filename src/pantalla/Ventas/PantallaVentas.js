@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import DropDownPicker from "react-native-dropdown-picker";
 
 export default function App() {
     const [factura, setFactura] = useState("");
@@ -20,16 +21,111 @@ export default function App() {
     const [anular, setAnular] = useState("");
     const [cierre, setCierre] = useState("");
     const [estacion, setEstacion] = useState("");
-    const [horaini, setIni] = useState("");
-    const [fecha, setFecha] = useState("");
     const [propina, setPropina] = useState("");
     const [total, setTotal] = useState("");
     const [exento, setExento] = useState("");
     const [imp15, setImp15] = useState("");
     const [imp18, setImp18] = useState("");
     const [exonerado, setExonerado] = useState("");
+
+    var textoMensaje = "";
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
     let MySwal = withReactContent(Swal);
+
+    useEffect(() => {
+        ListarClientes();
+        MostrarCai();
+      }, [setItems]);
+    
+      const ListarClientes = async () => {
+    
+          try {
+            await Axios.get('clientes/listar', {
+    
+            })
+              .then((data) => {
+                const json = data.data;
+                let jsonitems = [];
+                json.forEach((element) => {
+                    jsonitems.push({
+                      label: element.idregistro.toString(),
+                      value: element.idregistro.toString(),
+                    });
+                    console.log(typeof element.idregistro.toString());
+                  });
+                  setItems(jsonitems);
+              })
+              .catch((error) => {
+                textoMensaje = error;
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+          } catch (error) {
+            textoMensaje = error;
+            console.log(error);
+            Mensaje({ titulo: "Error en el registro", msj: error });
+          }
+      };
+
+      const MostrarCai = async () => {
+
+          try {
+            await Axios.get('cai/listar', {
+    
+            })
+              .then((data) => {
+                const json = data.data;
+                let jsonitems = [];
+                json.forEach((element) => {
+                    jsonitems.push({
+                      label: element.idregistro.toString(),
+                      value: element.idregistro.toString(),
+                    });
+                    console.log(typeof element.idregistro.toString());
+                  });
+                  setItems(jsonitems);
+              })
+              .catch((error) => {
+                textoMensaje = error;
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+          } catch (error) {
+            textoMensaje = error;
+            console.log(error);
+            Mensaje({ titulo: "Error en el registro", msj: error });
+          }
+      };
+
+      const MostrarEstaciones = async () => {
+
+        try {
+          await Axios.get('estacion/listar', {
+  
+          })
+            .then((data) => {
+              const json = data.data;
+              let jsonitems = [];
+              json.forEach((element) => {
+                  jsonitems.push({
+                    label: element.NumeroEstacion.toString(),
+                    value: element.NumeroEstacion.toString(),
+                  });
+                  console.log(typeof element.NumeroEstacion.toString());
+                });
+                setItems(jsonitems);
+            })
+            .catch((error) => {
+              textoMensaje = error;
+              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+            });
+        } catch (error) {
+          textoMensaje = error;
+          console.log(error);
+          Mensaje({ titulo: "Error en el registro", msj: error });
+        }
+    };
 
     const agregar = async () => {
 
@@ -160,28 +256,6 @@ export default function App() {
                             value={estacion}
                             onChangeText={setEstacion}
                             keyboardType='decimal-pad'
-                        >
-                        </TextInput>
-
-                        <TextInput
-                            placeholder="Fecha Inicial"
-                            style={styles.entradas}
-                            value={horaini}
-                            onChangeText={setIni}
-                            keyboardType= 'number-pad'
-                            maxLength={10}
-                        >
-                        </TextInput>
-
-                        
-
-                        <TextInput
-                            placeholder="Fecha y Hora"
-                            style={styles.entradas}
-                            value={fecha}
-                            onChangeText={setFecha}
-                            keyboardType= 'number-pad'
-                            maxLength={10}
                         >
                         </TextInput>
 

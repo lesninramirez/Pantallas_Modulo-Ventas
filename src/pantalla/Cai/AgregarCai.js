@@ -6,8 +6,7 @@ import withReactContent from 'sweetalert2-react-content';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
-
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
 
 const AgregarCai = () => {
@@ -27,7 +26,7 @@ const AgregarCai = () => {
   const [selected, setSelected] = React.useState("");
   let MySwal = withReactContent(Swal);
 
-  //const navigation= useNavigation();
+  const navigation= useNavigation();
 
   activoCai = "Activo"
 
@@ -204,7 +203,7 @@ const AgregarCai = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-                //onPress={editar}
+                onPress={() => navigation.navigate("EditarCai")}
               ></Button>
             </View>
 
