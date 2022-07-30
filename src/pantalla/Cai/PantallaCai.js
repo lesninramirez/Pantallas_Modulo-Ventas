@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView 
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import editarcai from "./EditarCai"
+
 
 export default function App() {
   const [cai, setCai] = useState("");
@@ -16,12 +18,14 @@ export default function App() {
 
   const state = "Activo"
 
+  //const prueba = editarcai();
+
   const agregar = async () => {
 
   };
 
   const editar = async () => {
-
+    
   };
 
   const eliminar = async () => {
@@ -102,28 +106,28 @@ export default function App() {
             <View style={styles.botonRedes}>
               <Button
                 title="Agregar"
-                onPress={agregar}
+                //onPress={agregar}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-                onPress={editar}
+                onPress={editarcai}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-                onPress={eliminar}
+                //onPress={Presshandler}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                onPress={listar}
+                //onPress={listar}
               ></Button>
             </View>
 
