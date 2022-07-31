@@ -1,13 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Alert, ScrollView } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
-export default function App() {
+const VentasExentas = () => {
     const [numfactura, setNumfactura] = useState("");
     const [numorden, setNumorden] = useState("");
     const [open, setOpen] = useState(false);
@@ -16,7 +14,7 @@ export default function App() {
     const [items, setItems] = useState([{ label: " ", value: " " }]);
 
     const titulo = 'Pantalla Ventas Exentas';
-    let MySwal = withReactContent(Swal);
+
 
     useEffect(() => {
       ListarVentasExentas();
@@ -25,7 +23,7 @@ export default function App() {
     const ListarVentasExentas = async () => {
 
       try {
-        await Axios.get('exentas/listar', {
+        await Axios.get('/ventas/listar', {
   
         })
           .then((data) => {
@@ -39,6 +37,7 @@ export default function App() {
                 console.log(typeof element.NumeroFactura.toString());
               });
               setItems(jsonitems);
+              console.log(jsonitems);
           })
           .catch((error) => {
             textoMensaje = error;
@@ -53,33 +52,42 @@ export default function App() {
   };
 
     const agregarExentas = async () => {
-         //console.log(token);
-      const bodyParameters = {
-        numfactura: numfactura,
-        numorden: numorden
-      };
-      await Axios.post("exentas/agregar", bodyParameters)
-        .then((data) => {
-          const json = data.data;
-          console.log(json);
-          if (json.errores.length == 0) {
-            console.log("Solicitud Realizada");
-            Mensaje({
-              titulo: "Registro Ventas Exentas",
-              msj: "Registro guardado con éxito",
-            });
-          } else {
-            textoMensaje = "";
-            json.errores.forEach((element) => {
-              textoMensaje += element.mensaje + ". ";
-              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-            });
-          }
-        })
-        .catch((error) => {
-          textoMensaje = error;
+
+      if(!numfactura || !numorden){
+        Mensaje({
+          titulo: "Registro Cai",
+          msj: "Datos Incompletos",
         });
-    console.log(textoMensaje);
+      }
+      else{
+
+        const bodyParameters = {
+          numfactura: numfactura,
+          numorden: numorden
+        };
+        await Axios.post("/exentas/agregar", bodyParameters)
+          .then((data) => {
+            const json = data.data;
+            if (json.errores.length == 0) {
+              console.log("Solicitud Realizada");
+              Mensaje({
+                titulo: "Registro Ventas Exentas",
+                msj: "Registro guardado con éxito",
+              });
+            } else {
+              json.errores.forEach((element) => {
+                textoMensaje += element.mensaje + ". ";
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+            }
+          })
+          .catch((error) => {
+           textoMensaje = error;
+          });
+      console.log(textoMensaje);
+
+      }
+     
     };
 
     const listar = async () => {
@@ -88,6 +96,8 @@ export default function App() {
 
     return (
         <View style={styles.contenedor}>
+          <ScrollView>
+
             <View style={styles.contenedorLogin}>
 
                 <View style={[styles.contenedorControles, styles.sombraControles]}>
@@ -98,7 +108,6 @@ export default function App() {
                              placeholder="Seleccione un id factura"
                              open={open}
                              value={value}
-                             //onSelectItem={setCliente}
                              onChangeValue={(value) => {
                               setNumfactura(value);
                              }}
@@ -136,6 +145,7 @@ export default function App() {
                     </View>
                 </View>
             </View>
+            </ScrollView>
         </View>
     );
 }
@@ -145,16 +155,22 @@ const styles = StyleSheet.create({
       backgroundColor: '#e9ecef',
       alignItems: 'center',
       justifyContent: "center",
-      margin: 0,
+      marginTop: 20,
       padding: 10,
       width: "100%",
       height: "100%",
     },
+    contenedorscroll:{
+      minHeight: 90,
+      height: "50%",
+      marginTop: -10,
+  },
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 340,
+      height: 500,
       width: 360,
+      marginTop: 135,
     },
     contenedorTitulo: {
       flex: 1,
@@ -227,5 +243,10 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderColor: "#ced4da",
       borderRadius: 15,
+    },
+    dropdown: {
+    
+      zIndex: 1000
     }
   });
+  export default VentasExentas;

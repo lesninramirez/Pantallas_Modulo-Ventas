@@ -20,31 +20,10 @@ const AgregarCai = () => {
   const titulo = 'Pantalla Cai';
 
   var textoMensaje = "";
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([{ label: " ", value: " " }]);
-  const [selected, setSelected] = React.useState("");
-  let MySwal = withReactContent(Swal);
-
   const navigation= useNavigation();
 
   activoCai = "Activo"
 
-  /*const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };*/
 
   useEffect(() => {
     MostrarCai();
@@ -63,9 +42,6 @@ const AgregarCai = () => {
           .then((data) => {
             const json = data.data;
             let jsonitems = [];
-            console.log(json[1]);
-            //setEstaciones(data.data);
-            console.log(lista);
             json.forEach((element) => {
                 jsonitems.push({
                   label: element.idregistro.toString(),
@@ -74,14 +50,6 @@ const AgregarCai = () => {
                 console.log(typeof element.idregistro.toString());
               });
               setItems(jsonitems);
-
-            /*else {
-                textoMensaje = '';
-                json.errores.forEach(element => {
-                    textoMensaje += element.mensaje + '. ';
-                });
-                //Mensaje({ titulo: titulo, msj: textoMensaje });
-            }*/
           })
           .catch((error) => {
             textoMensaje = error;
@@ -94,7 +62,7 @@ const AgregarCai = () => {
       }
     }
   };
-  //Mensaje({ titulo: titulo, msj: textoMensaje });
+ 
   const guardarCai = async () => {
 
       if(!cai || !fecha_limite || !numero_ini || !numero_fin){
@@ -111,7 +79,6 @@ const AgregarCai = () => {
           fecha_limite: fecha_limite,
           numero_ini: numero_ini,
           numero_fin: numero_fin,
-          activoCai: activoCai
         };
 
         await Axios.post("/cai/agregar", bodyParameters)
@@ -140,6 +107,15 @@ const AgregarCai = () => {
      
   };
 
+  const handleChange = event => {
+    setCodigoCai(event.target.value);
+  };
+
+  const handleClick = () => {
+    // 👇️ clear input value
+    setMessage("Ingrese el Codigo Cai");
+  };
+
   return (
 
     <View style={styles.contenedor}>
@@ -153,6 +129,8 @@ const AgregarCai = () => {
               value={cai}
               onChangeText={setCai}
               autoFocus={false}
+              name = "codigocai"
+              onChange={handleChange}
             >
             </TextInput>
 
@@ -182,6 +160,7 @@ const AgregarCai = () => {
               value={numero_fin}
               onChangeText={setNumfin}
               keyboardType='decimal-pad'
+             // name="final"
             >
             </TextInput>
 

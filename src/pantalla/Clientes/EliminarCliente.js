@@ -25,10 +25,6 @@ const EliminarCliente = () => {
 
   const MostrarCliente = async () => {
 
-   /* if (!token) {
-      textoMensaje = "Debe iniciar sesion";
-    }
-    else {*/
       try {
         await Axios.get('clientes/listar', {
 

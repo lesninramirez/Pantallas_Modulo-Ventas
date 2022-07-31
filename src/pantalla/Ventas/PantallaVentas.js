@@ -42,7 +42,7 @@ const Ventas = () => {
     const [items2, setItems2] = useState([{ label: " ", value: " " }]);
     const [items3, setItems3] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
-    let MySwal = withReactContent(Swal);
+ 
 
 
       useEffect(() => {
@@ -140,48 +140,59 @@ const Ventas = () => {
 
     const agregar = async () => {
 
-        const bodyParameters = {
-           num_fact:num_fact,
-           cai: cai,
-           cliente: cliente,
-           tipopago: tipopago,
-           usu: usu,
-           efectivo: efectivo,
-           tarjeta: tarjeta,
-           mesero: mesero,
-           estacion: estacion,
-           tercera: tercera,
-           desc: desc,
-           anular: anular,
-           Cierre: Cierre,
-           Propina: Propina,
-           total: total,
-           exento: exento,
-           impuesto15: impuesto15,
-           impuesto18: impuesto18,
-           exonerado: exonerado
-          };
-          await Axios.post("/ventas/agregar", bodyParameters)
-            .then((data) => {
-              const json = data.data;
-              if (json.errores.length == 0) {
-                console.log("Solicitud Realizada");
-                Mensaje({
-                  titulo: "Registro Ventas",
-                  msj: "Registro guardado con éxito",
-                });
-              } else {
-                textoMensaje = "";
-                json.errores.forEach((element) => {
-                  textoMensaje += element.mensaje + ". ";
-                  Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-                });
-              }
-            })
-            .catch((error) => {
-              textoMensaje = error;
-            });
-        console.log(textoMensaje);
+
+        if(!num_fact || !cai || !cliente || !tipopago || !usu || !efectivo || !tarjeta || !mesero || !estacion || !tercera || !desc || !anular || !Cierre || !Propina || !total || !exento || !impuesto15 || !impuesto18 || !exonerado){
+            Mensaje({
+                titulo: "Registro Ventas",
+                msj: "Datos incompletos",
+              });
+        }
+        else{
+            const bodyParameters = {
+                num_fact:num_fact,
+                cai: cai,
+                cliente: cliente,
+                tipopago: tipopago,
+                usu: usu,
+                efectivo: efectivo,
+                tarjeta: tarjeta,
+                mesero: mesero,
+                estacion: estacion,
+                tercera: tercera,
+                desc: desc,
+                anular: anular,
+                Cierre: Cierre,
+                Propina: Propina,
+                total: total,
+                exento: exento,
+                impuesto15: impuesto15,
+                impuesto18: impuesto18,
+                exonerado: exonerado
+               };
+               await Axios.post("/ventas/agregar", bodyParameters)
+                 .then((data) => {
+                   const json = data.data;
+                   if (json.errores.length == 0) {
+                     console.log("Solicitud Realizada");
+                     Mensaje({
+                       titulo: "Registro Ventas",
+                       msj: "Registro guardado con éxito",
+                     });
+                   } else {
+                     textoMensaje = "";
+                     json.errores.forEach((element) => {
+                       textoMensaje += element.mensaje + ". ";
+                       Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+                     });
+                   }
+                 })
+                 .catch((error) => {
+                   textoMensaje = error;
+                 });
+             console.log(textoMensaje);
+        }
+
+       
 
     };
 

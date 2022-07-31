@@ -3,9 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView 
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { Stack } from 'react-bootstrap';
 
-import Cai from "./Cai/PantallaCai";
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 

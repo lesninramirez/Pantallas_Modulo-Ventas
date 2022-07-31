@@ -73,7 +73,16 @@ const ClientesDirecciones = () => {
   };
   
   const guardarClientesDirecciones = async () => {
-      //console.log(token);
+      
+    if(!cliente || !direc){
+      Mensaje({
+        titulo: "Registro Cai",
+        msj: "Datos Incompletos",
+      });
+
+    }
+    else{
+
       const bodyParameters = {
         cliente: cliente,
         direc: direc
@@ -99,6 +108,9 @@ const ClientesDirecciones = () => {
           textoMensaje = error;
         });
     console.log(textoMensaje);
+
+    }
+      
   };
 
 

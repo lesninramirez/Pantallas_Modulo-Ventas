@@ -15,57 +15,49 @@ const VentasSag = () => {
 
   const titulo = 'Pantalla Ventas Sag';
 
- /* const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };*/
-  
   useEffect(() => {
     ListarVentasSag();
   }, [setItems]);
 
   const ListarVentasSag = async () => {
 
-      try {
-        await Axios.get('ventas/listar', {
+    try {
+      await Axios.get('ventas/listar', {
 
-        })
-          .then((data) => {
-            const json = data.data;
-            let jsonitems = [];
-            json.forEach((element) => {
-                jsonitems.push({
-                  label: element.NumeroFactura.toString(),
-                  value: element.NumeroFactura.toString(),
-                });
-                console.log(typeof element.NumeroFactura.toString());
-              });
-              setItems(jsonitems);
-          })
-          .catch((error) => {
-            textoMensaje = error;
-            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+      })
+        .then((data) => {
+          const json = data.data;
+          let jsonitems = [];
+          json.forEach((element) => {
+            jsonitems.push({
+              label: element.NumeroFactura.toString(),
+              value: element.NumeroFactura.toString(),
+            });
+            console.log(typeof element.NumeroFactura.toString());
           });
-      } catch (error) {
-        textoMensaje = error;
-        console.log(error);
-        Mensaje({ titulo: "Error en el registro", msj: error });
-      }
+          setItems(jsonitems);
+        })
+        .catch((error) => {
+          textoMensaje = error;
+          Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+        });
+    } catch (error) {
+      textoMensaje = error;
+      console.log(error);
+      Mensaje({ titulo: "Error en el registro", msj: error });
+    }
   };
-  
+
   const guardarVentasSag = async () => {
-      //console.log(token);
+
+    if (!numfac || !numsag) {
+      Mensaje({
+        titulo: "Registro Cai",
+        msj: "Datos Incompletos",
+      });
+    }
+    else {
+
       const bodyParameters = {
         numfac: numfac,
         numsag: numsag
@@ -91,65 +83,67 @@ const VentasSag = () => {
         })
         .catch((error) => {
           textoMensaje = error;
-          //console.error(error.response.data);   
         });
-    console.log(textoMensaje);
+      console.log(textoMensaje);
+
+    }
+
   };
 
 
   return (
     <View style={styles.contenedor}>
-    <View style={styles.contenedorLogin}>
+      <View style={styles.contenedorLogin}>
 
-      <View style={[styles.contenedorControles, styles.sombraControles]}>
-        <View style={styles.controles}>
-          <DropDownPicker
-            searchable={true}
-            style={styles.dropdown}
-            placeholder="Seleccione un id factura"
-            open={open}
-            value={value}
-            //onSelectItem={setCliente}
-            onChangeValue={(value) => {
-              setNumfact(value);
-            }}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-          />
+        <View style={[styles.contenedorControles, styles.sombraControles]}>
+          <View style={styles.controles}>
+            <DropDownPicker
+              searchable={true}
+              style={styles.dropdown}
+              placeholder="Seleccione un id factura"
+              open={open}
+              value={value}
+              //onSelectItem={setCliente}
+              onChangeValue={(value) => {
+                setNumfact(value);
+              }}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+            />
 
 
-          <TextInput
-            placeholder="Ingrese el Numero Sag"
-            style={styles.entradas}
-            value={numsag}
-            onChangeText={setNumSag}
-            keyboardType=  'default'
+            <TextInput
+              placeholder="Ingrese el Numero Sag"
+              style={styles.entradas}
+              value={numsag}
+              onChangeText={setNumSag}
+              keyboardType='default'
 
-          >
-          </TextInput>
+            >
+            </TextInput>
 
-        </View>
-
-        <View style={styles.contenedorBotonesRedes}>
-          <View style={styles.botonRedes}>
-            <Button
-              title="Agregar"
-              onPress={guardarVentasSag}
-            ></Button>
           </View>
 
-          <View style={styles.botonRedes}>
-            <Button
-              title="Listar" color={"#2BB509"}
+          <View style={styles.contenedorBotonesRedes}>
+            <View style={styles.botonRedes}>
+              <Button
+                title="Agregar"
+                onPress={guardarVentasSag}
+              ></Button>
+            </View>
+
+            <View style={styles.botonRedes}>
+              <Button
+                title="Listar" color={"#2BB509"}
               //onPress={listar}
-            ></Button>
+              ></Button>
+            </View>
           </View>
         </View>
       </View>
     </View>
-  </View>
   );
 }
 
@@ -163,7 +157,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "70%",
   },
-  contenedorscroll:{
+  contenedorscroll: {
     minHeight: 90,
     height: "50%",
     marginTop: 120,
@@ -248,7 +242,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   dropdown: {
-    
+
     zIndex: 1000
   },
 });
