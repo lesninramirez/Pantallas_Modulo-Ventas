@@ -58,7 +58,13 @@ const EditarCliente = () => {
   };
 
   const modificarCliente = async () => {
-
+    if(!rtn || !nombre || !direccion || !telefono || !correo){
+      Mensaje({
+        titulo: "Registro Cliente",
+        msj: "Datos incompletos",
+      });
+    }
+    else{
       await Axios.put('/clientes/editar?idcliente=' + idcliente,{
         rtn: rtn,
         nombre: nombre,
@@ -75,6 +81,8 @@ const EditarCliente = () => {
       }).catch((error)=>{
         console.log(error);
       });
+    }
+      
   };
 
 

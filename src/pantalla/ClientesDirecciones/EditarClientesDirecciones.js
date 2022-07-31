@@ -95,10 +95,16 @@ const EditarClientesDirecciones = () => {
        };
   
     const modificarClienteDireccion = async () => {
-  
+      if(!cliente || !direc){
+        Mensaje({
+          titulo: "Registro Cliente",
+          msj: "Datos incompletos",
+        });
+      }
+      else{
         await Axios.put('/clientesdir/editar?idClienteDireccion=' + idClienteDireccion,{
-            cliente:cliente,
-            direc:direc
+          cliente:cliente,
+          direc:direc
         }
         ).then((respuesta)=>{
           console.log(respuesta.data);
@@ -109,6 +115,8 @@ const EditarClientesDirecciones = () => {
         }).catch((error)=>{
           console.log(error);
         });
+      }
+        
     };
   
       return (
