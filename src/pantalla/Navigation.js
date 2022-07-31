@@ -29,7 +29,11 @@ import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
 import PantallaPedido from "./Pedido/PantallaPedido";
 import PantallaPos from "./Pos/PantallaPos";
 import EditarCai from "./Cai/EditarCai";
+import EditarCliente from "./Clientes/EditarCliente";
+import EditarClientesDirecciones from "./ClientesDirecciones/EditarClientesDirecciones";
 import EliminarCai from "./Cai/EliminarCai";
+import EliminarCliente from "./Clientes/EliminarCliente";
+import EliminarClienteDireccion from "./ClientesDirecciones/EliminarClientesDirecciones";
 
 
 //import Empleados from "./PantallaEmpleados";
@@ -169,6 +173,16 @@ function Pantallas() {
             <PantallasModulo.Screen
                     name="EditarCliente"
                     component={EditarCliente}
+            ></PantallasModulo.Screen> 
+
+              <PantallasModulo.Screen
+                    name="EliminarCliente"
+                    component={EliminarCliente}
+            ></PantallasModulo.Screen> 
+
+              <PantallasModulo.Screen
+                    name="EliminarClienteDireccion"
+                    component={EliminarClienteDireccion}
             ></PantallasModulo.Screen> 
 
              

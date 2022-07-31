@@ -121,7 +121,7 @@ const EditarClientesDirecciones = () => {
           <DropDownPicker
               searchable={true}
               style={styles.dropdown}
-              placeholder="Seleccione un id de Cliente Direccion"
+              placeholder="Seleccione un id de cliente direccion"
               open={open2}
               value={value2}
               //onSelectItem={setCliente}
@@ -133,9 +133,7 @@ const EditarClientesDirecciones = () => {
               setValue={setValue2}
               setItems={setItems2}
             />
-          
-          
-          
+            
           <DropDownPicker
               searchable={true}
               style={styles.dropdown}

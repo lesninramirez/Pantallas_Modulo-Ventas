@@ -147,11 +147,11 @@ const ClientesDirecciones = () => {
                 onPress={() => navigation.navigate("EditarClientesDirecciones")}
               ></Button>
             </View>
-
+            
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-               // onPress={eliminar}
+                onPress={() => navigation.navigate("EliminarClienteDireccion")}
               ></Button>
             </View>
 

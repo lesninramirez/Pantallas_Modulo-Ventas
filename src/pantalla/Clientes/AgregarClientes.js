@@ -185,7 +185,7 @@ const AgregarClientes = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-               // onPress={eliminar}
+                onPress={() => navigation.navigate("EliminarCliente")}
               ></Button>
             </View>
 
