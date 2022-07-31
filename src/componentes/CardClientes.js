@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image  } from 'react-native';
 import React from 'react';
-const CardClientes = ({ RTN, Nombre, Direccion, Telefono, Correo, Imagen, nombreImagen }) => {
+const CardClientes = ({ RTN, Nombre, Direccion, Telefono, Correo, Imagen, nombreImagen}) => {
     return (
         <View style={styles.contenedor}>
+            <Image
+                style={styles.imagen}
+                source={{ uri: Imagen }}
+            />
             <View style={styles.contenedorTexto}>
                 <Text>{RTN}</Text>
                 <Text>{Nombre}</Text>
                 <Text>{Direccion}</Text>
                 <Text>{Telefono}</Text>
                 <Text>{Correo}</Text>
-                <Text>{Imagen}</Text>
                 <Text>{nombreImagen}</Text>
             </View>
         </View>
