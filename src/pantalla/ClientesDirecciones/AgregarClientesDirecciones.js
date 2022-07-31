@@ -69,7 +69,6 @@ const ClientesDirecciones = () => {
         console.log(error);
         Mensaje({ titulo: "Error en el registro", msj: error });
       }
-    //}
   };
   
   const guardarClientesDirecciones = async () => {
