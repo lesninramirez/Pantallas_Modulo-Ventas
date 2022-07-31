@@ -15,6 +15,7 @@ import Cai from "./Cai/AgregarCai";
 import Clientes from "./Clientes/AgregarClientes";
 import ClientesDirecciones from "./ClientesDirecciones/AgregarClientesDirecciones";
 
+
 import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
 import Ventas from "./Ventas/PantallaVentas";
 import Anuladas from "./VentasAnuladas/PantallaVentasAnuladas";
@@ -34,6 +35,19 @@ import EditarClientesDirecciones from "./ClientesDirecciones/EditarClientesDirec
 import EliminarCai from "./Cai/EliminarCai";
 import EliminarCliente from "./Clientes/EliminarCliente";
 import EliminarClienteDireccion from "./ClientesDirecciones/EliminarClientesDirecciones";
+
+
+//import ListarVentasPos from "../pantalla/VentasPos/PantallaVentasPos";
+import ListarVentasSag from "./VentasSag/ListarVentasSag";
+import ListarVentasExentas from "./VentasExentas/ListarVentasExentas";
+import ListarVentasConstancia from "./VentasConstancia/ListarVentasConstancia";
+import ListarVentasAnuladas from "./VentasAnuladas/ListarVentasAnuladas";
+import ListarVentas from "./Ventas/ListarVentas";
+import ListarDetalleVentas from "./DetalleVentas/ListarDetalleVentas";
+import ListarClientesDirecciones from "./ClientesDirecciones/ListarClientesDirecciones";
+import ListarClientes from "./Clientes/ListarClientes";
+import ListarCai from "./Cai/ListarCai";
+
 
 
 //import Empleados from "./PantallaEmpleados";
@@ -184,6 +198,55 @@ function Pantallas() {
                     name="EliminarClienteDireccion"
                     component={EliminarClienteDireccion}
             ></PantallasModulo.Screen> 
+
+
+                        <PantallasModulo.Screen
+                                name="ListarVentasSag"
+                                component={ListarVentasSag}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarVentasExentas"
+                                component={ListarVentasExentas}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarVentasConstancia"
+                                component={ListarVentasConstancia}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarVentasAnuladas"
+                                component={ListarVentasAnuladas}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarVentas"
+                                component={ListarVentas}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarDetalleVentas"
+                                component={ListarDetalleVentas}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarClientesDirecciones"
+                                component={ListarClientesDirecciones}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarClientes"
+                                component={ListarClientes}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="ListarCai"
+                                component={ListarCai}
+                        ></PantallasModulo.Screen>
+
+
+
 
              
   

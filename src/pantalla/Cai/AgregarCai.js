@@ -200,7 +200,7 @@ const AgregarCai = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                //onPress={listar}
+                onPress={() => navigation.navigate("ListarCai")}
               ></Button>
             </View>
 
