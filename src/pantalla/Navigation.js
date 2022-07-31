@@ -13,7 +13,7 @@ import Stack from "./Stack";
 
 import Cai from "./Cai/AgregarCai";
 import Clientes from "./Clientes/AgregarClientes";
-import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
+import ClientesDirecciones from "./ClientesDirecciones/AgregarClientesDirecciones";
 
 import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
 import Ventas from "./Ventas/PantallaVentas";
@@ -29,7 +29,8 @@ import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
 import PantallaPedido from "./Pedido/PantallaPedido";
 import PantallaPos from "./Pos/PantallaPos";
 import EditarCai from "./Cai/EditarCai";
-
+import EditarClientesDirecciones from "./ClientesDirecciones/EditarClientesDirecciones";
+import EditarCliente from "./Clientes/EditarCliente";
 
 //import Empleados from "./PantallaEmpleados";
 //import Usuarios from "./PantallaUsuarios";
@@ -153,6 +154,16 @@ function Pantallas() {
             <PantallasModulo.Screen
                     name="EditarCai"
                     component={EditarCai}
+            ></PantallasModulo.Screen> 
+
+              <PantallasModulo.Screen
+                    name="EditarClientesDirecciones"
+                    component={EditarClientesDirecciones}
+            ></PantallasModulo.Screen> 
+
+            <PantallasModulo.Screen
+                    name="EditarCliente"
+                    component={EditarCliente}
             ></PantallasModulo.Screen> 
 
              

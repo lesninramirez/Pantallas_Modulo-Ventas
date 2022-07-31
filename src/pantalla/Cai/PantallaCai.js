@@ -18,28 +18,6 @@ export default function App() {
 
   const state = "Activo"
 
-<<<<<<< HEAD
-  //const prueba = editarcai();
-
-  const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-    
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };
-
-
-=======
->>>>>>> bb062b3fb67d2e2e6a76338986562cee1e9b5a5b
   return (
 
     <View style={styles.contenedor}>

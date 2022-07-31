@@ -5,32 +5,32 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import { useNavigation } from '@react-navigation/native';
 
-const EditarCai = () => {
+const EditarCliente = () => {
 
   const navigation= useNavigation();
-  const [cai, setCai] = useState("");
-  const [ fecha_limite, setLimite] = useState("");
-  const [numero_ini, setNumini] = useState("");
-  const [numero_fin, setNumfin] = useState("");
-  const [activoCai, setActivo] = useState("");
-  const [idCai, setidCai] = useState("");
+  const [rtn, setRtn] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [idcliente, setidCliente] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([{ label: " ", value: " " }]);
   var textoMensaje = "";
 
   useEffect(() => {
-    MostrarCai();
+    MostrarCliente();
   }, [setItems]);
 
-  const MostrarCai = async () => {
+  const MostrarCliente = async () => {
 
    /* if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {*/
       try {
-        await Axios.get('cai/listar', {
+        await Axios.get('clientes/listar', {
 
         })
           .then((data) => {
@@ -57,25 +57,27 @@ const EditarCai = () => {
     //}
   };
 
-  const modificarCai = async () => {
+  const modificarCliente = async () => {
 
-      await Axios.put('/cai/editar/?idCai=' + idCai,{
-        cai: cai,
-        fecha_limite: fecha_limite,
-        numero_ini: numero_ini,
-        numero_fin: numero_fin,
-        activoCai: activoCai
+      await Axios.put('/clientes/editar?idcliente=' + idcliente,{
+        rtn: rtn,
+        nombre: nombre,
+        direccion: direccion,
+        telefono: telefono,
+        correo: correo
       }
       ).then((respuesta)=>{
         console.log(respuesta.data);
         Mensaje({
-          titulo: "Registro Cai",
+          titulo: "Registro Cliente",
           msj: "Su registro fue guardado con exito",
         });
       }).catch((error)=>{
         console.log(error);
       });
   };
+
+
 
     return (
        
@@ -87,12 +89,12 @@ const EditarCai = () => {
         <DropDownPicker
             searchable={true}
             style={styles.dropdown}
-            placeholder="Seleccione un id de Cai"
+            placeholder="Seleccione un id de Cliente"
             open={open}
             value={value}
             //onSelectItem={setCliente}
             onChangeValue={(value) => {
-              setidCai(value);
+                setidCliente(value);
             }}
             items={items}
             setOpen={setOpen}
@@ -101,51 +103,53 @@ const EditarCai = () => {
           />
 
           <TextInput
-            placeholder="Ingrese el Codigo Cai"
+            placeholder="Ingrese el RTN"
             style={styles.entradas}
-            value={cai}
-            onChangeText={setCai}
-            autoFocus={false}
+            value={rtn}
+            onChangeText={setRtn}
+            keyboardType=  'number-pad'
           >
           </TextInput>
 
           <TextInput
-            placeholder="Fecha Limite / AAAA-MM-DD"
+            placeholder="Ingrese el Nombre"
             style={styles.entradas}
-            value={fecha_limite}
-            onChangeText={setLimite}
-            //keyboardType='number-pad'
+            value={nombre}
+            onChangeText={setNombre}
+            keyboardType='default'
             maxLength={10}
           >
           </TextInput>
 
           <TextInput
-            placeholder="Ingrese el Numero Inicial"
+            placeholder="Ingrese la direccion"
             style={styles.entradas}
-            value={numero_ini}
-            onChangeText={setNumini}
-            keyboardType='decimal-pad'
+            value={direccion}
+            onChangeText={setDireccion}
+           
 
           >
           </TextInput>
 
           <TextInput
-            placeholder="Ingrese el Numero Final"
-            style={styles.entradas}
-            value={numero_fin}
-            onChangeText={setNumfin}
-            keyboardType='decimal-pad'
-          >
-          </TextInput>
+              placeholder="Ingrese el Telefono"
+              style={styles.entradas}
+              value={telefono}
+              onChangeText={setTelefono}
+              keyboardType=  'phone-pad'
+              maxLength={8}
+            >
+            </TextInput>
+
 
           <TextInput
-            placeholder="Activo o Inactivo"
-            style={styles.entradas}
-            value={activoCai}
-            onChangeText={setActivo}
-           // editable={false}
-          >
-          </TextInput>
+              placeholder="Ingrese el Correo"
+              style={styles.entradas}
+              value={correo}
+              onChangeText={setCorreo}
+              keyboardType=  'email-address'
+            >
+            </TextInput>
 
         </View>
 
@@ -153,14 +157,14 @@ const EditarCai = () => {
           <View style={styles.botonRedes}>
             <Button
               title="Guardar"
-             onPress={modificarCai}
+             onPress={modificarCliente}
             ></Button>
           </View>
 
           <View style={styles.botonRedes}>
             <Button
               title="Cancelar" color={"#FF7D00"}
-              onPress={() => navigation.navigate("Cai")}
+              onPress={() => navigation.navigate("Clientes")}
             ></Button>
           </View>
 
@@ -272,4 +276,4 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
 });
-export default EditarCai;
+export default EditarCliente;

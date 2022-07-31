@@ -7,6 +7,7 @@ import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
+import { useNavigation } from '@react-navigation/native';
 
 const ClientesDirecciones = () => {
   const { token } = useContext(UsuarioContext);
@@ -18,6 +19,8 @@ const ClientesDirecciones = () => {
   const [items, setItems] = useState([{ label: " ", value: " " }]);
 
   const titulo = 'Pantalla Clientes Direcciones';
+
+  const navigation= useNavigation();
 
  /* const agregar = async () => {
 
@@ -141,7 +144,7 @@ const ClientesDirecciones = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-               // onPress={editar}
+                onPress={() => navigation.navigate("EditarClientesDirecciones")}
               ></Button>
             </View>
 
