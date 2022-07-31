@@ -59,7 +59,7 @@ const EditarCai = () => {
 
   const modificarCai = async () => {
 
-      await Axios.put('/cai/editar/?idCai=' + idCai,{
+      await Axios.put('/cai/editar?idCai=' + idCai,{
         cai: cai,
         fecha_limite: fecha_limite,
         numero_ini: numero_ini,

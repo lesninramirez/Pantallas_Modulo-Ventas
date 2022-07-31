@@ -29,6 +29,7 @@ import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
 import PantallaPedido from "./Pedido/PantallaPedido";
 import PantallaPos from "./Pos/PantallaPos";
 import EditarCai from "./Cai/EditarCai";
+import EliminarCai from "./Cai/EliminarCai";
 
 
 //import Empleados from "./PantallaEmpleados";
@@ -153,6 +154,11 @@ function Pantallas() {
             <PantallasModulo.Screen
                     name="EditarCai"
                     component={EditarCai}
+            ></PantallasModulo.Screen> 
+            
+            <PantallasModulo.Screen
+                    name="EliminarCai"
+                    component={EliminarCai}
             ></PantallasModulo.Screen> 
 
              
