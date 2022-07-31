@@ -7,7 +7,13 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
+<<<<<<< HEAD
 const Ventas = () => {
+=======
+import { useNavigation } from '@react-navigation/native';
+
+export default function App() {
+>>>>>>> isaac
     const [factura, setFactura] = useState("");
     const [cai, setCai] = useState("");
     const [idcliente, setCliente] = useState("");
@@ -345,7 +351,7 @@ const Ventas = () => {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Listar" color={"#2BB509"}
-                                onPress={listar}
+                                onPress={() => navigation.navigate("ListarVentas")}
                             ></Button>
                         </View>
 

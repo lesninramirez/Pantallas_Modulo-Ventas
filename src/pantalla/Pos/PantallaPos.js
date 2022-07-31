@@ -7,14 +7,16 @@ import CardPos from '../../componentes/CardPos'
 
 export default function PantallaPos() {
   const [pos, setPos] = useState("");
-  const { token } = useContext(UsuarioContext);
+  const { token } = useContext(UsuarioContext); 
   const titulo = 'Lista Pos'
   var textoMensaje = "";
+
+  const [lista, setLista] = useState("");
 
 
   useEffect(() => {
     MostrarPos();
-  }, []);
+  }, [setLista]);
 
 
 
@@ -34,12 +36,14 @@ export default function PantallaPos() {
     }
     else {
       try {
-        await Axios.get('pos/listar', {
+        await Axios.get('rutapos/listar', {
 
 
         })
           .then((data) => {
             setPos(data.data);
+
+            console.log(lista);
 
           })
           .catch((error) => {

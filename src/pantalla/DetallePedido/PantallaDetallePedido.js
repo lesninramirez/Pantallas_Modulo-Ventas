@@ -15,7 +15,7 @@ export default function PantallaDetallePedido() {
 
   useEffect(() => {
     MostrarDetallePedidos();
-  }, []);
+  }, [setDetalleP]);
 
 
 

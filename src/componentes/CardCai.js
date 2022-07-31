@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-const CardCai = ({ CAI, FechaLimite, NumeroInicial, NumeroFinal, creado,  activo }) => {
+const CardCai = ({ CAI, FechaLimite, NumeroInicial, NumeroFinal, creado, activo }) => {
     return (
         <View style={styles.contenedor}>
             <View style={styles.contenedorTexto}>

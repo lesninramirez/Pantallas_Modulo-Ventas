@@ -7,17 +7,27 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
+
+import { useNavigation } from '@react-navigation/native';
+
+
 export default function App() {
+<<<<<<< HEAD
   const [numfac, setNumfact] = useState("");
   const [numsag, setNumSag] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   var textoMensaje = "";
   const [items, setItems] = useState([{ label: " ", value: " " }]);
+=======
+  const [numerof, setNumerof] = useState("");
+  const [numero, setNumero] = useState("");
+>>>>>>> isaac
 
   const titulo = 'Pantalla Ventas Sag';
   let MySwal = withReactContent(Swal);
 
+<<<<<<< HEAD
     
   useEffect(() => {
     ListarVentasSag();
@@ -82,6 +92,12 @@ export default function App() {
           textoMensaje = error;
         });
     console.log(textoMensaje);
+=======
+  const navigation = useNavigation();
+
+
+  const agregar = async () => {
+>>>>>>> isaac
 
   };
 
@@ -95,6 +111,7 @@ export default function App() {
 
         <View style={[styles.contenedorControles, styles.sombraControles]}>
           <View style={styles.controles}>
+<<<<<<< HEAD
             <DropDownPicker
               searchable={true}
               style={styles.dropdown}
@@ -111,13 +128,30 @@ export default function App() {
               setItems={setItems}
             />
 
+=======
+            <TextInput
+              placeholder="Ingrese el Numero de Factura"
+              style={styles.entradas}
+              value={numerof}
+              onChangeText={setNumerof}
+              keyboardType='decimal-pad'
+
+            >
+            </TextInput>
+>>>>>>> isaac
 
             <TextInput
               placeholder="Ingrese el Numero Sag"
               style={styles.entradas}
+<<<<<<< HEAD
               value={numsag}
               onChangeText={setNumSag}
               keyboardType=  'default'
+=======
+              value={numero}
+              onChangeText={setNumero}
+              maxLength={20}
+>>>>>>> isaac
 
             >
             </TextInput>
@@ -135,9 +169,16 @@ export default function App() {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
+<<<<<<< HEAD
                 onPress={listar}
               ></Button>
             </View>
+=======
+                onPress={() => navigation.navigate("ListarVentasSag")}
+              ></Button>
+            </View>
+
+>>>>>>> isaac
           </View>
         </View>
       </View>
@@ -232,9 +273,13 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: "#ced4da",
     borderRadius: 15,
+<<<<<<< HEAD
   },
   dropdown: {
     
     zIndex: 1000
   },
+=======
+  }
+>>>>>>> isaac
 });

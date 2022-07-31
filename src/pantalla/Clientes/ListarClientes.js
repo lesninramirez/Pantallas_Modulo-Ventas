@@ -3,48 +3,49 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardUsuarios from '../../componentes/CardUsuarios';
+import CardClientes from '../../componentes/CardClientes';
 
 
-export default function PantallaUsuarios() {
-  const [usuarios, setUsuarios] = useState("");
+export default function PantallaClientes() {
+  const [clientes, setClientes] = useState("");
   const { token } = useContext(UsuarioContext);
-  const titulo = 'Lista de Usuarios'
+  const titulo = 'Listar Clientes'
   var textoMensaje = "";
 
 
   useEffect(() => {
-    MostrarUsuarios();
-  }, [setUsuarios]);
+    MostrarClientes();
+  }, [setClientes]);
 
 
 
 
-  const UsuariosRender = ({ item }) => {
+  const ClientesRender = ({ item }) => {
+    var imagen = "https://reactnative.dev/img/tiny_logo.png";
 
     return (
-      <CardUsuarios login={'Usuario: ' + item.login} idempleado={'Id del Empleado: ' + item.idempleado} 
-      contrasena={'Contrasena: ' + item.contrasena} accesototal={'Acceso Total: ' + item.accesototal} 
-      Habilitado={'Habilitado: ' + item.Habilitado} pin={'Pin: ' + item.pin} 
-      fallidos={'Fallidos: ' + item.fallidos} correo={'Correo: ' + item.correo}
-      estado={'Estado: ' + item.estado}/>
+      <CardClientes RTN={'RTN: ' + item.RTN} Nombre={'Nombre: ' + item.Nombre} 
+      Direccion={'Direccion: ' + item.Direccion} Telefono={'Telefono: ' + item.Telefono} 
+      Correo={'Correo: ' + item.Correo} Imagen={imagen}
+      nombreImagen={'Nombre de la Imagen: ' + item.nombreImagen} />
+
 
     );
   };
 
-  const MostrarUsuarios = async () => {
+  const MostrarClientes = async () => {
 
     if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {
       try {
-        await Axios.get('usuarios/listar', {
+        await Axios.get('clientes/listar', {
 
 
         })
           .then((data) => {
-            setUsuarios(data.data);
+            setClientes(data.data);
 
           })
           .catch((error) => {
@@ -57,17 +58,14 @@ export default function PantallaUsuarios() {
   }
 
 
-
-
   return (
     <ScrollView >
       <View style={styles.contenedor}>
 
         <View style={styles.contenedorFlat}>
           <FlatList
-            data={usuarios}
-            renderItem={UsuariosRender}
-          /*keyExtractor={item=>item.NumeroEstacion}*/
+            data={clientes}
+            renderItem={ClientesRender}
           >
           </FlatList>
         </View>

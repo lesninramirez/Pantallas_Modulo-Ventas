@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function App() {
   const [cai, setCai] = useState("");
   const [limite, setLimite] = useState("");
@@ -13,6 +15,8 @@ export default function App() {
   const [estado, setEstado] = useState("");
   const titulo = 'Pantalla Cai';
   let MySwal = withReactContent(Swal);
+
+  const navigation = useNavigation();
 
   const state = "Activo"
 
@@ -73,7 +77,7 @@ export default function App() {
             <TextInput
               placeholder="Activo o Inactivo"
               style={styles.entradas}
-              value={state}
+              value={estado}
               onChangeText={setEstado}
               editable={false}
             >
@@ -106,7 +110,7 @@ export default function App() {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                onPress={listar}
+                onPress={() => navigation.navigate("ListarCai")}
               ></Button>
             </View>
 
