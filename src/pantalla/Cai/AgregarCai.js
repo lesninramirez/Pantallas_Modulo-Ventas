@@ -96,44 +96,48 @@ const AgregarCai = () => {
   };
   //Mensaje({ titulo: titulo, msj: textoMensaje });
   const guardarCai = async () => {
-    /*if (!token) {
-      textoMensaje = "Debe iniciar sesion";
-      console.log(token);
-    } else {*/
-      console.log(token);
-      const bodyParameters = {
-        cai: cai,
-        fecha_limite: fecha_limite,
-        numero_ini: numero_ini,
-        numero_fin: numero_fin,
-        activoCai: activoCai
-      };
-      const config = {
-        //headers: { Authorization: `Bearer ${token}` },
-      };
-      await Axios.post("/cai/agregar", bodyParameters /*config*/)
-        .then((data) => {
-          const json = data.data;
-          if (json.errores.length == 0) {
-            console.log("Solicitud Realizada");
-            Mensaje({
-              titulo: "Registro Cai",
-              msj: "Su registro fue guardado con exito",
-            });
-            //navigation.navigate("ListaCai");
-          } else {
-            textoMensaje = "";
-            json.errores.forEach((element) => {
-              textoMensaje += element.mensaje + ". ";
-              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-            });
-          }
-        })
-        .catch((error) => {
-          textoMensaje = error;
+
+      if(!cai || !fecha_limite || !numero_ini || !numero_fin){
+        Mensaje({
+          titulo: "Registro Cai",
+          msj: "Datos Incompletos",
         });
-    //}
-    console.log(textoMensaje);
+
+      }
+      else{
+
+        const bodyParameters = {
+          cai: cai,
+          fecha_limite: fecha_limite,
+          numero_ini: numero_ini,
+          numero_fin: numero_fin,
+          activoCai: activoCai
+        };
+
+        await Axios.post("/cai/agregar", bodyParameters)
+          .then((data) => {
+            const json = data.data;
+            if (json.errores.length == 0) {
+              console.log("Solicitud Realizada");
+              Mensaje({
+                titulo: "Registro Cai",
+                msj: "Su registro fue guardado con exito",
+              });
+            } else {
+              textoMensaje = "";
+              json.errores.forEach((element) => {
+                textoMensaje += element.mensaje + ". ";
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+            }
+          })
+          .catch((error) => {
+            textoMensaje = error;
+          });
+      console.log(textoMensaje);
+
+      }
+     
   };
 
   return (
