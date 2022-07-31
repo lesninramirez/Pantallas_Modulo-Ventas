@@ -96,19 +96,30 @@ const EditarClientesDirecciones = () => {
   
     const modificarClienteDireccion = async () => {
   
-        await Axios.put('/clientesdir/editar?idClienteDireccion=' + idClienteDireccion,{
-            cliente:cliente,
-            direc:direc
-        }
-        ).then((respuesta)=>{
-          console.log(respuesta.data);
-          Mensaje({
-            titulo: "Registro Clientes Direcciones",
-            msj: "Su registro fue editado con exito",
-          });
-        }).catch((error)=>{
-          console.log(error);
+      if(!cliente || !direc){
+        Mensaje({
+          titulo: "Registro Cai",
+          msj: "Datos Incompletos",
         });
+  
+      }
+      else{
+        await Axios.put('/clientesdir/editar?idClienteDireccion=' + idClienteDireccion,{
+          cliente:cliente,
+          direc:direc
+      }
+      ).then((respuesta)=>{
+        console.log(respuesta.data);
+        Mensaje({
+          titulo: "Registro Clientes Direcciones",
+          msj: "Su registro fue editado con exito",
+        });
+      }).catch((error)=>{
+        console.log(error);
+      });
+
+      }
+       
     };
   
       return (

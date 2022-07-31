@@ -21,23 +21,6 @@ const AgregarClientes = () => {
   const titulo = 'Pantalla Clientes';
 
   const navigation= useNavigation();
-  //let MySwal = withReactContent(Swal);
-
-  /*const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };*/
 
   var textoMensaje = "";
   const [items, setItems] = useState([{ label: " ", value: " " }]);
@@ -82,7 +65,14 @@ const AgregarClientes = () => {
   };
   
   const guardarClientes = async () => {
-      //console.log(token);
+     
+    if(!rtn || !nombre || !direccion || !telefono || !correo){
+      Mensaje({
+        titulo: "Registro Cliente",
+        msj: "Datos incompletos",
+      });
+    }
+    else{
       const bodyParameters = {
         rtn: rtn,
         nombre: nombre,
@@ -111,6 +101,8 @@ const AgregarClientes = () => {
           textoMensaje = error;
         });
     console.log(textoMensaje);
+    }
+      
   };
 
 
