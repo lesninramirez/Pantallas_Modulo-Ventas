@@ -1,69 +1,80 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
-export default function App() {
+const VentasSag = () => {
   const [numfac, setNumfact] = useState("");
   const [numsag, setNumSag] = useState("");
+  var textoMensaje = "";
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  var textoMensaje = "";
   const [items, setItems] = useState([{ label: " ", value: " " }]);
 
   const titulo = 'Pantalla Ventas Sag';
-  let MySwal = withReactContent(Swal);
 
-    
+ /* const agregar = async () => {
+
+  };
+
+  const editar = async () => {
+
+  };
+
+  const eliminar = async () => {
+
+  };
+
+  const listar = async () => {
+
+  };*/
+  
   useEffect(() => {
     ListarVentasSag();
   }, [setItems]);
 
   const ListarVentasSag = async () => {
 
-    try {
-      await Axios.get('ventas/listar', {
+      try {
+        await Axios.get('ventas/listar', {
 
-      })
-        .then((data) => {
-          const json = data.data;
-          let jsonitems = [];
-          json.forEach((element) => {
-              jsonitems.push({
-                label: element.NumeroFactura.toString(),
-                value: element.NumeroFactura.toString(),
-              });
-              console.log(typeof element.NumeroFactura.toString());
-            });
-            setItems(jsonitems);
         })
-        .catch((error) => {
-          textoMensaje = error;
-          Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-        });
-    } catch (error) {
-      textoMensaje = error;
-      console.log(error);
-      Mensaje({ titulo: "Error en el registro", msj: error });
-    }
-  //}
-};
-
-
-  const agregar = async () => {
+          .then((data) => {
+            const json = data.data;
+            let jsonitems = [];
+            json.forEach((element) => {
+                jsonitems.push({
+                  label: element.NumeroFactura.toString(),
+                  value: element.NumeroFactura.toString(),
+                });
+                console.log(typeof element.NumeroFactura.toString());
+              });
+              setItems(jsonitems);
+          })
+          .catch((error) => {
+            textoMensaje = error;
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+      } catch (error) {
+        textoMensaje = error;
+        console.log(error);
+        Mensaje({ titulo: "Error en el registro", msj: error });
+      }
+  };
+  
+  const guardarVentasSag = async () => {
       //console.log(token);
       const bodyParameters = {
         numfac: numfac,
         numsag: numsag
       };
+      console.log(bodyParameters);
       await Axios.post("sag/agregar", bodyParameters)
         .then((data) => {
           const json = data.data;
-          console.log(json);
+          //console.log(json);
           if (json.errores.length == 0) {
             console.log("Solicitud Realizada");
             Mensaje({
@@ -80,68 +91,65 @@ export default function App() {
         })
         .catch((error) => {
           textoMensaje = error;
+          //console.error(error.response.data);   
         });
     console.log(textoMensaje);
-
   };
 
-  const listar = async () => {
-
-  };
 
   return (
     <View style={styles.contenedor}>
-      <View style={styles.contenedorLogin}>
+    <View style={styles.contenedorLogin}>
 
-        <View style={[styles.contenedorControles, styles.sombraControles]}>
-          <View style={styles.controles}>
-            <DropDownPicker
-              searchable={true}
-              style={styles.dropdown}
-              placeholder="Seleccione un id factura"
-              open={open}
-              value={value}
-              //onSelectItem={setCliente}
-              onChangeValue={(value) => {
-                setNumfact(value);
-              }}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-            />
+      <View style={[styles.contenedorControles, styles.sombraControles]}>
+        <View style={styles.controles}>
+          <DropDownPicker
+            searchable={true}
+            style={styles.dropdown}
+            placeholder="Seleccione un id factura"
+            open={open}
+            value={value}
+            //onSelectItem={setCliente}
+            onChangeValue={(value) => {
+              setNumfact(value);
+            }}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+          />
 
 
-            <TextInput
-              placeholder="Ingrese el Numero Sag"
-              style={styles.entradas}
-              value={numsag}
-              onChangeText={setNumSag}
-              keyboardType=  'default'
+          <TextInput
+            placeholder="Ingrese el Numero Sag"
+            style={styles.entradas}
+            value={numsag}
+            onChangeText={setNumSag}
+            keyboardType=  'default'
 
-            >
-            </TextInput>
+          >
+          </TextInput>
 
+        </View>
+
+        <View style={styles.contenedorBotonesRedes}>
+          <View style={styles.botonRedes}>
+            <Button
+              title="Agregar"
+              onPress={guardarVentasSag}
+            ></Button>
           </View>
 
-          <View style={styles.contenedorBotonesRedes}>
-            <View style={styles.botonRedes}>
-              <Button
-                title="Agregar"
-                onPress={agregar}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Listar" color={"#2BB509"}
-                onPress={listar}
-              ></Button>
-            </View>
+          <View style={styles.botonRedes}>
+            <Button
+              title="Listar" color={"#2BB509"}
+              //onPress={listar}
+            ></Button>
           </View>
         </View>
       </View>
     </View>
+  </View>
   );
 }
 
@@ -150,16 +158,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#e9ecef',
     alignItems: 'center',
     justifyContent: "center",
-    margin: 0,
+    marginTop: 20,
     padding: 10,
     width: "100%",
-    height: "100%",
+    height: "70%",
+  },
+  contenedorscroll:{
+    minHeight: 90,
+    height: "50%",
+    marginTop: 120,
   },
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 340,
+    height: 560,
     width: 360,
+    marginTop: 135,
   },
   contenedorTitulo: {
     flex: 1,
@@ -192,7 +206,7 @@ const styles = StyleSheet.create({
   controles: {
     flex: 3,
     marginBottom: -5,
-    paddingTop: 20,
+    paddingTop: -10,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -204,7 +218,7 @@ const styles = StyleSheet.create({
   },
   contenedorBotonesRedes: {
     flex: 3,
-    padding: 10,
+    padding: 5,
     justifyContent: "space-evenly",
     flexDirection: "column",
   },
@@ -217,12 +231,12 @@ const styles = StyleSheet.create({
   botonRedes: {
     flex: 1,
     alignItems: "stretch",
-    margin: 4,
+    margin: 8,
   },
   entradas: {
     flex: 1,
     alignItems: "stretch",
-    margin: 10,
+    margin: 5,
     padding: 10,
     fontSize: 20,
     fontWeight: "400",
@@ -238,3 +252,5 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
 });
+
+export default VentasSag;

@@ -1,10 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import UsuarioContext from '../../contexto/UsuarioContext';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
 
-export default function App() {
+const AgregarClientes = () => {
+  const { token } = useContext(UsuarioContext);  
   const [rtn, setRtn] = useState("");
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -12,10 +16,11 @@ export default function App() {
   const [correo, setCorreo] = useState("");
   const [imagen, setImagen] = useState("");
   const [nombreimagen, setNombreI] = useState("");
+  const [lista, setLista] = useState("");
   const titulo = 'Pantalla Clientes';
-  let MySwal = withReactContent(Swal);
+  //let MySwal = withReactContent(Swal);
 
-  const agregar = async () => {
+  /*const agregar = async () => {
 
   };
 
@@ -29,6 +34,80 @@ export default function App() {
 
   const listar = async () => {
 
+  };*/
+
+  var textoMensaje = "";
+  const [items, setItems] = useState([{ label: " ", value: " " }]);
+
+  useEffect(() => {
+    ListarClientes();
+  }, [setItems]);
+
+  const ListarClientes = async () => {
+
+    if (!token) {
+      textoMensaje = "Debe iniciar sesion";
+    }
+    else {
+      try {
+        await Axios.get('clientes/listar', {
+
+        })
+          .then((data) => {
+            const json = data.data;
+            let jsonitems = [];
+            console.log(lista);
+            json.forEach((element) => {
+                jsonitems.push({
+                  label: element.idregistro.toString(),
+                  value: element.idregistro.toString(),
+                });
+                console.log(typeof element.idregistro.toString());
+              });
+              setItems(jsonitems);
+          })
+          .catch((error) => {
+            textoMensaje = error;
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+      } catch (error) {
+        textoMensaje = error;
+        console.log(error);
+        Mensaje({ titulo: "Error en el registro", msj: error });
+      }
+    }
+  };
+  
+  const guardarClientes = async () => {
+      //console.log(token);
+      const bodyParameters = {
+        rtn: rtn,
+        nombre: nombre,
+        direccion: direccion,
+        telefono: telefono,
+        correo:correo
+      };
+      await Axios.post("/clientes/agregar", bodyParameters)
+        .then((data) => {
+          const json = data.data;
+          if (json.errores.length == 0) {
+            console.log("Solicitud Realizada");
+            Mensaje({
+              titulo: "Registro Cliente",
+              msj: "Registro guardado con éxito",
+            });
+          } else {
+            textoMensaje = "";
+            json.errores.forEach((element) => {
+              textoMensaje += element.mensaje + ". ";
+              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+            });
+          }
+        })
+        .catch((error) => {
+          textoMensaje = error;
+        });
+    console.log(textoMensaje);
   };
 
 
@@ -83,49 +162,34 @@ export default function App() {
             >
             </TextInput>
 
-            <TextInput
-              placeholder="Imagen"
-              style={styles.entradas}
-              value={imagen}
-              onChangeText={setImagen}
-            >
-            </TextInput>
-
-            <TextInput
-              placeholder="Nombre de la Imagen"
-              style={styles.entradas}
-              value={nombreimagen}
-              onChangeText={setNombreI}
-            >
-            </TextInput>
           </View>
 
           <View style={styles.contenedorBotonesRedes}>
             <View style={styles.botonRedes}>
               <Button
                 title="Agregar"
-                onPress={agregar}
+                onPress={guardarClientes}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-                onPress={editar}
+               // onPress={editar}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-                onPress={eliminar}
+               // onPress={eliminar}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                onPress={listar}
+               // onPress={listar}
               ></Button>
             </View>
           </View>
@@ -232,3 +296,4 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   }
 });
+export default AgregarClientes;

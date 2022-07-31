@@ -11,8 +11,8 @@ import Login from "./Login";
 import Stack from "./Stack";
 
 
-import Cai from "./Cai/PantallaCai";
-import Clientes from "./Clientes/PantallaClientes";
+import Cai from "./Cai/AgregarCai";
+import Clientes from "./Clientes/AgregarClientes";
 import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
 
 import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
@@ -20,7 +20,7 @@ import Ventas from "./Ventas/PantallaVentas";
 import Anuladas from "./VentasAnuladas/PantallaVentasAnuladas";
 import Constancia from "./VentasConstancia/PantallaVentasConstancia";
 import Exentas from "./VentasExentas/PantallaVentasExentas";
-import Sag from "./VentasSag/PantallaVentasSag";
+import Sag from "./VentasSag/AgregarVentasSag";
 
 import PantallaEstaciones from "./Estaciones/PantallaEstaciones";
 import PantallaProductos from "./Productos/PantallaProductos";
@@ -28,6 +28,7 @@ import PantallaProductos from "./Productos/PantallaProductos";
 import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
 import PantallaPedido from "./Pedido/PantallaPedido";
 import PantallaPos from "./Pos/PantallaPos";
+import EditarCai from "./Cai/EditarCai";
 
 
 //import Empleados from "./PantallaEmpleados";
@@ -148,7 +149,13 @@ function Pantallas() {
                     name="PantallaPos"
                     component={PantallaPos}
             ></PantallasModulo.Screen> 
+            
+            <PantallasModulo.Screen
+                    name="EditarCai"
+                    component={EditarCai}
+            ></PantallasModulo.Screen> 
 
+             
   
 
         </PantallasModulo.Navigator>

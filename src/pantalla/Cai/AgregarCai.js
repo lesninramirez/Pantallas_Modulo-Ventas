@@ -1,32 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import editarcai from "./EditarCai"
+import UsuarioContext from '../../contexto/UsuarioContext';
+import Axios from '../../componentes/Axios';
+import Mensaje from '../../componentes/Mensaje';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function App() {
+const AgregarCai = () => {
+  const { token } = useContext(UsuarioContext);
   const [cai, setCai] = useState("");
-  const [limite, setLimite] = useState("");
-  const [numini, setNumini] = useState("");
-  const [numfin, setNumfin] = useState("");
-  const [creacion, setCreacion] = useState("");
-  const [estado, setEstado] = useState("");
+  const [ fecha_limite, setLimite] = useState("");
+  const [numero_ini, setNumini] = useState("");
+  const [numero_fin, setNumfin] = useState("");
+  let [activoCai, setActivo] = useState("");
+  const [lista, setLista] = useState("");
   const titulo = 'Pantalla Cai';
+
+  var textoMensaje = "";
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([{ label: " ", value: " " }]);
+  const [selected, setSelected] = React.useState("");
   let MySwal = withReactContent(Swal);
 
-  const state = "Activo"
+  const navigation= useNavigation();
 
-<<<<<<< HEAD
-  //const prueba = editarcai();
+  activoCai = "Activo"
 
-  const agregar = async () => {
+  /*const agregar = async () => {
 
   };
 
   const editar = async () => {
-    
+
   };
 
   const eliminar = async () => {
@@ -35,11 +44,98 @@ export default function App() {
 
   const listar = async () => {
 
+  };*/
+
+  useEffect(() => {
+    MostrarCai();
+  }, [setLista]);
+
+  const MostrarCai = async () => {
+
+    if (!token) {
+      textoMensaje = "Debe iniciar sesion";
+    }
+    else {
+      try {
+        await Axios.get('cai/listar', {
+
+        })
+          .then((data) => {
+            const json = data.data;
+            let jsonitems = [];
+            console.log(json[1]);
+            //setEstaciones(data.data);
+            console.log(lista);
+            json.forEach((element) => {
+                jsonitems.push({
+                  label: element.idregistro.toString(),
+                  value: element.idregistro.toString(),
+                });
+                console.log(typeof element.idregistro.toString());
+              });
+              setItems(jsonitems);
+
+            /*else {
+                textoMensaje = '';
+                json.errores.forEach(element => {
+                    textoMensaje += element.mensaje + '. ';
+                });
+                //Mensaje({ titulo: titulo, msj: textoMensaje });
+            }*/
+          })
+          .catch((error) => {
+            textoMensaje = error;
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+      } catch (error) {
+        textoMensaje = error;
+        console.log(error);
+        Mensaje({ titulo: "Error en el registro", msj: error });
+      }
+    }
+  };
+  //Mensaje({ titulo: titulo, msj: textoMensaje });
+  const guardarCai = async () => {
+    /*if (!token) {
+      textoMensaje = "Debe iniciar sesion";
+      console.log(token);
+    } else {*/
+      console.log(token);
+      const bodyParameters = {
+        cai: cai,
+        fecha_limite: fecha_limite,
+        numero_ini: numero_ini,
+        numero_fin: numero_fin,
+        activoCai: activoCai
+      };
+      const config = {
+        //headers: { Authorization: `Bearer ${token}` },
+      };
+      await Axios.post("/cai/agregar", bodyParameters /*config*/)
+        .then((data) => {
+          const json = data.data;
+          if (json.errores.length == 0) {
+            console.log("Solicitud Realizada");
+            Mensaje({
+              titulo: "Registro Cai",
+              msj: "Su registro fue guardado con exito",
+            });
+            //navigation.navigate("ListaCai");
+          } else {
+            textoMensaje = "";
+            json.errores.forEach((element) => {
+              textoMensaje += element.mensaje + ". ";
+              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+            });
+          }
+        })
+        .catch((error) => {
+          textoMensaje = error;
+        });
+    //}
+    console.log(textoMensaje);
   };
 
-
-=======
->>>>>>> bb062b3fb67d2e2e6a76338986562cee1e9b5a5b
   return (
 
     <View style={styles.contenedor}>
@@ -52,15 +148,16 @@ export default function App() {
               style={styles.entradas}
               value={cai}
               onChangeText={setCai}
+              autoFocus={false}
             >
             </TextInput>
 
             <TextInput
               placeholder="Fecha Limite / AAAA-MM-DD"
               style={styles.entradas}
-              value={limite}
+              value={fecha_limite}
               onChangeText={setLimite}
-              keyboardType='number-pad'
+              //keyboardType='number-pad'
               maxLength={10}
             >
             </TextInput>
@@ -68,7 +165,7 @@ export default function App() {
             <TextInput
               placeholder="Ingrese el Numero Inicial"
               style={styles.entradas}
-              value={numini}
+              value={numero_ini}
               onChangeText={setNumini}
               keyboardType='decimal-pad'
 
@@ -78,27 +175,17 @@ export default function App() {
             <TextInput
               placeholder="Ingrese el Numero Final"
               style={styles.entradas}
-              value={numfin}
+              value={numero_fin}
               onChangeText={setNumfin}
               keyboardType='decimal-pad'
             >
             </TextInput>
 
             <TextInput
-              placeholder="Fecha Creacion AAAA-MM-DD"
-              style={styles.entradas}
-              value={creacion}
-              onChangeText={setCreacion}
-              keyboardType='number-pad'
-              maxLength={10}
-            >
-            </TextInput>
-
-            <TextInput
               placeholder="Activo o Inactivo"
               style={styles.entradas}
-              value={state}
-              onChangeText={setEstado}
+              value={activoCai}
+              onChangeText={setActivo}
               editable={false}
             >
             </TextInput>
@@ -109,21 +196,21 @@ export default function App() {
             <View style={styles.botonRedes}>
               <Button
                 title="Agregar"
-                //onPress={agregar}
+                onPress={guardarCai}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-                onPress={editarcai}
+                onPress={() => navigation.navigate("EditarCai")}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-                //onPress={Presshandler}
+                //onPress={eliminar}
               ></Button>
             </View>
 
@@ -238,3 +325,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   }
 });
+
+export default AgregarCai;

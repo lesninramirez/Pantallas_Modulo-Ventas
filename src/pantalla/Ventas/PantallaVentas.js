@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import DropDownPicker from "react-native-dropdown-picker";
 
-export default function App() {
+const Ventas = () => {
     const [factura, setFactura] = useState("");
     const [cai, setCai] = useState("");
     const [idcliente, setCliente] = useState("");
@@ -20,16 +21,121 @@ export default function App() {
     const [anular, setAnular] = useState("");
     const [cierre, setCierre] = useState("");
     const [estacion, setEstacion] = useState("");
-    const [horaini, setIni] = useState("");
-    const [fecha, setFecha] = useState("");
     const [propina, setPropina] = useState("");
     const [total, setTotal] = useState("");
     const [exento, setExento] = useState("");
     const [imp15, setImp15] = useState("");
     const [imp18, setImp18] = useState("");
     const [exonerado, setExonerado] = useState("");
+
+    var textoMensaje = "";
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
+    const [items1, setItems2] = useState([{ label: " ", value: " " }]);
+    const [items2, setItems3] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
     let MySwal = withReactContent(Swal);
+
+    useEffect(() => {
+        ListarClientes();
+      }, [setItems]);
+
+      useEffect(() => {
+        MostrarCai();
+      }, [setItems2]);
+
+      /*useEffect(() => {
+        ListarClientes();
+        MostrarCai();
+      }, [setItems], [setItems2]);*/
+    
+      const ListarClientes = async () => {
+    
+          try {
+            await Axios.get('clientes/listar', {
+    
+            })
+              .then((data) => {
+                const json = data.data;
+                let jsonitems = [];
+                json.forEach((element) => {
+                    jsonitems.push({
+                      label: element.idregistro.toString(),
+                      value: element.idregistro.toString(),
+                    });
+                    console.log(typeof element.idregistro.toString());
+                  });
+                  setItems(jsonitems);
+              })
+              .catch((error) => {
+                textoMensaje = error;
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+          } catch (error) {
+            textoMensaje = error;
+            console.log(error);
+            Mensaje({ titulo: "Error en el registro", msj: error });
+          }
+      };
+
+      const MostrarCai = async () => {
+
+          try {
+            await Axios.get('cai/listar', {
+    
+            })
+              .then((data) => {
+                const json = data.data;
+                let jsonitems = [];
+                json.forEach((element) => {
+                    jsonitems.push({
+                      label: element.idregistro.toString(),
+                      value: element.idregistro.toString(),
+                    });
+                    console.log(typeof element.idregistro.toString());
+                  });
+                  setItems2(jsonitems);
+              })
+              .catch((error) => {
+                textoMensaje = error;
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+          } catch (error) {
+            textoMensaje = error;
+            console.log(error);
+            Mensaje({ titulo: "Error en el registro", msj: error });
+          }
+      };
+
+      const MostrarEstaciones = async () => {
+
+        try {
+          await Axios.get('estacion/listar', {
+  
+          })
+            .then((data) => {
+              const json = data.data;
+              let jsonitems = [];
+              json.forEach((element) => {
+                  jsonitems.push({
+                    label: element.NumeroEstacion.toString(),
+                    value: element.NumeroEstacion.toString(),
+                  });
+                  console.log(typeof element.NumeroEstacion.toString());
+                });
+                setItems3(jsonitems);
+            })
+            .catch((error) => {
+              textoMensaje = error;
+              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+            });
+        } catch (error) {
+          textoMensaje = error;
+          console.log(error);
+          Mensaje({ titulo: "Error en el registro", msj: error });
+        }
+    };
 
     const agregar = async () => {
 
@@ -56,24 +162,34 @@ export default function App() {
                         >
                         </TextInput>
 
-                        <TextInput
-                            placeholder="Ingrese el Id de Cai"
-                            style={styles.entradas}
-                            value={cai}
-                            onChangeText={setCai}
-                            keyboardType='decimal-pad'
-                        >
-                        </TextInput>
-
-                        <TextInput
-                            placeholder="Ingrese la identidad del Cliente"
-                            style={styles.entradas}
-                            value={idcliente}
-                            onChangeText={setCliente}
-                            keyboardType='decimal-pad'
-                            maxLength={13}
-                        >
-                        </TextInput>
+                        <DropDownPicker
+                        searchable={true}
+                        style={styles.dropdown}
+                        placeholder="Seleccione un id de cai"
+                        open={open}
+                        value={value}
+                        onChangeValue={(value) => {
+                            setCai(value);
+                        }}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                    />
+                         <DropDownPicker
+                        searchable={true}
+                        style={styles.dropdown}
+                        placeholder="Seleccione un id del cliente"
+                        open={open}
+                        value={value}
+                        onChangeValue={(value) => {
+                            setCliente(value);
+                        }}
+                        items2={items2}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems2={setItems2}
+                    />
 
                         <TextInput
                             placeholder="Contado / Credito"
@@ -160,28 +276,6 @@ export default function App() {
                             value={estacion}
                             onChangeText={setEstacion}
                             keyboardType='decimal-pad'
-                        >
-                        </TextInput>
-
-                        <TextInput
-                            placeholder="Fecha Inicial"
-                            style={styles.entradas}
-                            value={horaini}
-                            onChangeText={setIni}
-                            keyboardType= 'number-pad'
-                            maxLength={10}
-                        >
-                        </TextInput>
-
-                        
-
-                        <TextInput
-                            placeholder="Fecha y Hora"
-                            style={styles.entradas}
-                            value={fecha}
-                            onChangeText={setFecha}
-                            keyboardType= 'number-pad'
-                            maxLength={10}
                         >
                         </TextInput>
 
@@ -360,5 +454,11 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: "#ced4da",
         borderRadius: 15,
-    }
+    },
+    dropdown: {
+    
+        zIndex: 1000
+      }
 });
+
+export default Ventas;
