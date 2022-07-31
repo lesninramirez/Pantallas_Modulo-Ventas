@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
-export default function App() {
+const Ventas = () => {
     const [factura, setFactura] = useState("");
     const [cai, setCai] = useState("");
     const [idcliente, setCliente] = useState("");
@@ -32,13 +32,23 @@ export default function App() {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([{ label: " ", value: " " }]);
+    const [items1, setItems2] = useState([{ label: " ", value: " " }]);
+    const [items2, setItems3] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
     let MySwal = withReactContent(Swal);
 
     useEffect(() => {
         ListarClientes();
-        MostrarCai();
       }, [setItems]);
+
+      useEffect(() => {
+        MostrarCai();
+      }, [setItems2]);
+
+      /*useEffect(() => {
+        ListarClientes();
+        MostrarCai();
+      }, [setItems], [setItems2]);*/
     
       const ListarClientes = async () => {
     
@@ -85,7 +95,7 @@ export default function App() {
                     });
                     console.log(typeof element.idregistro.toString());
                   });
-                  setItems(jsonitems);
+                  setItems2(jsonitems);
               })
               .catch((error) => {
                 textoMensaje = error;
@@ -114,7 +124,7 @@ export default function App() {
                   });
                   console.log(typeof element.NumeroEstacion.toString());
                 });
-                setItems(jsonitems);
+                setItems3(jsonitems);
             })
             .catch((error) => {
               textoMensaje = error;
@@ -152,24 +162,34 @@ export default function App() {
                         >
                         </TextInput>
 
-                        <TextInput
-                            placeholder="Ingrese el Id de Cai"
-                            style={styles.entradas}
-                            value={cai}
-                            onChangeText={setCai}
-                            keyboardType='decimal-pad'
-                        >
-                        </TextInput>
-
-                        <TextInput
-                            placeholder="Ingrese la identidad del Cliente"
-                            style={styles.entradas}
-                            value={idcliente}
-                            onChangeText={setCliente}
-                            keyboardType='decimal-pad'
-                            maxLength={13}
-                        >
-                        </TextInput>
+                        <DropDownPicker
+                        searchable={true}
+                        style={styles.dropdown}
+                        placeholder="Seleccione un id de cai"
+                        open={open}
+                        value={value}
+                        onChangeValue={(value) => {
+                            setCai(value);
+                        }}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems={setItems}
+                    />
+                         <DropDownPicker
+                        searchable={true}
+                        style={styles.dropdown}
+                        placeholder="Seleccione un id del cliente"
+                        open={open}
+                        value={value}
+                        onChangeValue={(value) => {
+                            setCliente(value);
+                        }}
+                        items2={items2}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        setItems2={setItems2}
+                    />
 
                         <TextInput
                             placeholder="Contado / Credito"
@@ -434,5 +454,11 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: "#ced4da",
         borderRadius: 15,
-    }
+    },
+    dropdown: {
+    
+        zIndex: 1000
+      }
 });
+
+export default Ventas;
