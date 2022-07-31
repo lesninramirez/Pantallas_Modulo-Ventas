@@ -5,32 +5,29 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import { useNavigation } from '@react-navigation/native';
 
-const EliminarCai = () => {
+const EliminarClientesDirecciones = () => {
 
-  const navigation= useNavigation();
-  const [cai, setCai] = useState("");
-  const [ fecha_limite, setLimite] = useState("");
-  const [numero_ini, setNumini] = useState("");
-  const [numero_fin, setNumfin] = useState("");
-  const [activoCai, setActivo] = useState("");
-  const [idCai, setidCai] = useState("");
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([{ label: " ", value: " " }]);
-  var textoMensaje = "";
+    const navigation= useNavigation();
+    const [direc, setDirec] = useState("");
+    const [cliente, setCliente] = useState("");
+    const [idClienteDireccion, setidClienteDireccion] = useState("");
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
+    var textoMensaje = "";
 
   useEffect(() => {
-    MostrarCai();
+    MostrarClientesDirecciones();
   }, [setItems]);
 
-  const MostrarCai = async () => {
+  const MostrarClientesDirecciones = async () => {
 
    /* if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {*/
       try {
-        await Axios.get('cai/listar', {
+        await Axios.get('clientesdir/listar', {
 
         })
           .then((data) => {
@@ -38,10 +35,10 @@ const EliminarCai = () => {
             let jsonitems = [];
             json.forEach((element) => {
                 jsonitems.push({
-                  label: element.idregistro.toString(),
-                  value: element.idregistro.toString(),
+                  label: element.id.toString(),
+                  value: element.id.toString(),
                 });
-                console.log(typeof element.idregistro.toString());
+                console.log(typeof element.id.toString());
               });
               setItems(jsonitems);
           })
@@ -57,13 +54,13 @@ const EliminarCai = () => {
     //}
   };
 
-  const EliminarCai = async () => {
+  const EliminarDirecciones = async () => {
 
-      await Axios.delete('/cai/eliminar?idCai=' + idCai,
+      await Axios.delete('/clientesdir/eliminar?idClienteDireccion=' + idClienteDireccion,
       ).then((respuesta)=>{
         console.log(respuesta.data);
         Mensaje({
-          titulo: "Registro Cai",
+          titulo: "Registro Cliente Direccion",
           msj: "Su registro fue eliminado con exito",
         });
       }).catch((error)=>{
@@ -81,11 +78,11 @@ const EliminarCai = () => {
         <DropDownPicker
             searchable={true}
             style={styles.dropdown}
-            placeholder="Seleccione un id de Cai"
+            placeholder="Seleccione un id de Cliente direccion"
             open={open}
             value={value}
             onChangeValue={(value) => {
-              setidCai(value);
+                setidClienteDireccion(value);
             }}
             items={items}
             setOpen={setOpen}
@@ -99,14 +96,14 @@ const EliminarCai = () => {
           <View style={styles.botonRedes}>
             <Button
               title="Eliminar"
-             onPress={EliminarCai}
+             onPress={EliminarDirecciones}
             ></Button>
           </View>
 
           <View style={styles.botonRedes}>
             <Button
               title="Cancelar" color={"#FF7D00"}
-              onPress={() => navigation.navigate("Cai")}
+              onPress={() => navigation.navigate("Direcciones")}
             ></Button>
           </View>
 
@@ -220,4 +217,4 @@ const styles = StyleSheet.create({
     marginTop: 200,
   },
 });
-export default EliminarCai;
+export default EliminarClientesDirecciones;

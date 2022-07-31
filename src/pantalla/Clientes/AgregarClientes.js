@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import { useNavigation } from '@react-navigation/native';
 
 const AgregarClientes = () => {
   const { token } = useContext(UsuarioContext);  
@@ -18,6 +19,8 @@ const AgregarClientes = () => {
   const [nombreimagen, setNombreI] = useState("");
   const [lista, setLista] = useState("");
   const titulo = 'Pantalla Clientes';
+
+  const navigation= useNavigation();
   //let MySwal = withReactContent(Swal);
 
   /*const agregar = async () => {
@@ -175,14 +178,14 @@ const AgregarClientes = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-               // onPress={editar}
+                onPress={() => navigation.navigate("EditarCliente")}
               ></Button>
             </View>
 
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-               // onPress={eliminar}
+                onPress={() => navigation.navigate("EliminarCliente")}
               ></Button>
             </View>
 

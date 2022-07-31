@@ -7,6 +7,7 @@ import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
+import { useNavigation } from '@react-navigation/native';
 
 const ClientesDirecciones = () => {
   const { token } = useContext(UsuarioContext);
@@ -18,6 +19,8 @@ const ClientesDirecciones = () => {
   const [items, setItems] = useState([{ label: " ", value: " " }]);
 
   const titulo = 'Pantalla Clientes Direcciones';
+
+  const navigation= useNavigation();
 
  /* const agregar = async () => {
 
@@ -70,7 +73,16 @@ const ClientesDirecciones = () => {
   };
   
   const guardarClientesDirecciones = async () => {
-      //console.log(token);
+      
+    if(!cliente || !direc){
+      Mensaje({
+        titulo: "Registro Cai",
+        msj: "Datos Incompletos",
+      });
+
+    }
+    else{
+
       const bodyParameters = {
         cliente: cliente,
         direc: direc
@@ -96,6 +108,9 @@ const ClientesDirecciones = () => {
           textoMensaje = error;
         });
     console.log(textoMensaje);
+
+    }
+      
   };
 
 
@@ -141,14 +156,14 @@ const ClientesDirecciones = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Editar" color={"#FF7D00"}
-               // onPress={editar}
+                onPress={() => navigation.navigate("EditarClientesDirecciones")}
               ></Button>
             </View>
-
+            
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-               // onPress={eliminar}
+                onPress={() => navigation.navigate("EliminarClienteDireccion")}
               ></Button>
             </View>
 

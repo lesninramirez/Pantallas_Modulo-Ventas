@@ -10,47 +10,48 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from '@react-navigation/native';
 
 const Ventas = () => {
-    const [factura, setFactura] = useState("");
+    const [num_fact, setFactura] = useState("");
     const [cai, setCai] = useState("");
-    const [idcliente, setCliente] = useState("");
+    const [cliente, setCliente] = useState("");
     const [tipopago, setTipopago] = useState("");
     const [usu, setUsu] = useState("");
-    const [tefectivo, setEfectivo] = useState("");
-    const [ttarjeta, setTarjeta] = useState("");
+    const [efectivo, setEfectivo] = useState("");
+    const [tarjeta, setTarjeta] = useState("");
     const [mesero, setMesero] = useState("");
-    const [tercera, setTercera] = useState("");
-    const [descuento, setDescuento] = useState("");
-    const [anular, setAnular] = useState("");
-    const [cierre, setCierre] = useState("");
     const [estacion, setEstacion] = useState("");
-    const [propina, setPropina] = useState("");
+    const [tercera, setTercera] = useState("");
+    const [desc, setDescuento] = useState("");
+    const [anular, setAnular] = useState("");
+    const [Cierre, setCierre] = useState("");
+    const [Propina, setPropina] = useState("");
     const [total, setTotal] = useState("");
     const [exento, setExento] = useState("");
-    const [imp15, setImp15] = useState("");
-    const [imp18, setImp18] = useState("");
+    const [impuesto15, setImp15] = useState("");
+    const [impuesto18, setImp18] = useState("");
     const [exonerado, setExonerado] = useState("");
 
     var textoMensaje = "";
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState([{ label: " ", value: " " }]);
-    const [items1, setItems2] = useState([{ label: " ", value: " " }]);
-    const [items2, setItems3] = useState([{ label: " ", value: " " }]);
-    const titulo = 'Pantalla Ventas';
-    let MySwal = withReactContent(Swal);
 
-    useEffect(() => {
-        ListarClientes();
-      }, [setItems]);
+    const [open2, setOpen2] = useState(false);
+    const [value2, setValue2] = useState(null);
+
+    const [open3, setOpen3] = useState(false);
+    const [value3, setValue3] = useState(null);
+
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
+    const [items2, setItems2] = useState([{ label: " ", value: " " }]);
+    const [items3, setItems3] = useState([{ label: " ", value: " " }]);
+    const titulo = 'Pantalla Ventas';
+ 
+
 
       useEffect(() => {
-        MostrarCai();
-      }, [setItems2]);
-
-      /*useEffect(() => {
         ListarClientes();
         MostrarCai();
-      }, [setItems], [setItems2]);*/
+        MostrarEstaciones();
+      }, [setItems], [setItems2], [setItems3]);
     
       const ListarClientes = async () => {
     
@@ -141,6 +142,60 @@ const Ventas = () => {
 
     const agregar = async () => {
 
+
+        if(!num_fact || !cai || !cliente || !tipopago || !usu || !efectivo || !tarjeta || !mesero || !estacion || !tercera || !desc || !anular || !Cierre || !Propina || !total || !exento || !impuesto15 || !impuesto18 || !exonerado){
+            Mensaje({
+                titulo: "Registro Ventas",
+                msj: "Datos incompletos",
+              });
+        }
+        else{
+            const bodyParameters = {
+                num_fact:num_fact,
+                cai: cai,
+                cliente: cliente,
+                tipopago: tipopago,
+                usu: usu,
+                efectivo: efectivo,
+                tarjeta: tarjeta,
+                mesero: mesero,
+                estacion: estacion,
+                tercera: tercera,
+                desc: desc,
+                anular: anular,
+                Cierre: Cierre,
+                Propina: Propina,
+                total: total,
+                exento: exento,
+                impuesto15: impuesto15,
+                impuesto18: impuesto18,
+                exonerado: exonerado
+               };
+               await Axios.post("/ventas/agregar", bodyParameters)
+                 .then((data) => {
+                   const json = data.data;
+                   if (json.errores.length == 0) {
+                     console.log("Solicitud Realizada");
+                     Mensaje({
+                       titulo: "Registro Ventas",
+                       msj: "Registro guardado con éxito",
+                     });
+                   } else {
+                     textoMensaje = "";
+                     json.errores.forEach((element) => {
+                       textoMensaje += element.mensaje + ". ";
+                       Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+                     });
+                   }
+                 })
+                 .catch((error) => {
+                   textoMensaje = error;
+                 });
+             console.log(textoMensaje);
+        }
+
+       
+
     };
 
     const listar = async () => {
@@ -158,7 +213,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Ingrese el Numero de Factura"
                             style={styles.entradas}
-                            value={factura}
+                            value={num_fact}
                             onChangeText={setFactura}
                             keyboardType='decimal-pad'
                         >
@@ -173,24 +228,25 @@ const Ventas = () => {
                         onChangeValue={(value) => {
                             setCai(value);
                         }}
-                        items={items}
+                        items={items2}
                         setOpen={setOpen}
                         setValue={setValue}
-                        setItems={setItems}
+                        setItems={setItems2}
                     />
-                         <DropDownPicker
+
+                    <DropDownPicker
                         searchable={true}
                         style={styles.dropdown}
-                        placeholder="Seleccione un id del cliente"
-                        open={open}
-                        value={value}
+                        placeholder="Seleccione un id de cliente"
+                        open={open2}
+                        value={value2}
                         onChangeValue={(value) => {
                             setCliente(value);
                         }}
-                        items2={items2}
-                        setOpen={setOpen}
-                        setValue={setValue}
-                        setItems2={setItems2}
+                        items={items}
+                        setOpen={setOpen2}
+                        setValue={setValue2}
+                        setItems={setItems}
                     />
 
                         <TextInput
@@ -213,7 +269,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Pago en Efectivo"
                             style={styles.entradas}
-                            value={tefectivo}
+                            value={efectivo}
                             onChangeText={setEfectivo}
                             keyboardType='decimal-pad'
                         >
@@ -222,7 +278,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Pago en Tarjeta"
                             style={styles.entradas}
-                            value={ttarjeta}
+                            value={tarjeta}
                             onChangeText={setTarjeta}
                             keyboardType='decimal-pad'
                         >
@@ -249,7 +305,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Descuento"
                             style={styles.entradas}
-                            value={descuento}
+                            value={desc}
                             onChangeText={setDescuento}
                             keyboardType='decimal-pad'
                         >
@@ -267,24 +323,30 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Cierre"
                             style={styles.entradas}
-                            value={cierre}
+                            value={Cierre}
                             onChangeText={setCierre}
                         >
                         </TextInput>
 
-                        <TextInput
-                            placeholder="Estacion"
-                            style={styles.entradas}
-                            value={estacion}
-                            onChangeText={setEstacion}
-                            keyboardType='decimal-pad'
-                        >
-                        </TextInput>
+                        <DropDownPicker
+                        searchable={true}
+                        style={styles.dropdown}
+                        placeholder="Seleccione un id de estaciones"
+                        open={open3}
+                        value={value3}
+                        onChangeValue={(value) => {
+                            setEstacion(value);
+                        }}
+                        items={items3}
+                        setOpen={setOpen3}
+                        setValue={setValue3}
+                        setItems={setItems3}
+                    />
 
                         <TextInput
                             placeholder="Propina"
                             style={styles.entradas}
-                            value={propina}
+                            value={Propina}
                             onChangeText={setPropina}
                             keyboardType='decimal-pad'
                         >
@@ -311,7 +373,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Impuesto 15"
                             style={styles.entradas}
-                            value={imp15}
+                            value={impuesto15}
                             onChangeText={setImp15}
                             keyboardType='decimal-pad'
                         >
@@ -320,7 +382,7 @@ const Ventas = () => {
                         <TextInput
                             placeholder="Impuesto 18"
                             style={styles.entradas}
-                            value={imp18}
+                            value={impuesto18}
                             onChangeText={setImp18}
                             keyboardType='decimal-pad'
                         >

@@ -20,31 +20,10 @@ const AgregarCai = () => {
   const titulo = 'Pantalla Cai';
 
   var textoMensaje = "";
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([{ label: " ", value: " " }]);
-  const [selected, setSelected] = React.useState("");
-  let MySwal = withReactContent(Swal);
-
   const navigation= useNavigation();
 
   activoCai = "Activo"
 
-  /*const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };*/
 
   useEffect(() => {
     MostrarCai();
@@ -63,9 +42,6 @@ const AgregarCai = () => {
           .then((data) => {
             const json = data.data;
             let jsonitems = [];
-            console.log(json[1]);
-            //setEstaciones(data.data);
-            console.log(lista);
             json.forEach((element) => {
                 jsonitems.push({
                   label: element.idregistro.toString(),
@@ -74,14 +50,6 @@ const AgregarCai = () => {
                 console.log(typeof element.idregistro.toString());
               });
               setItems(jsonitems);
-
-            /*else {
-                textoMensaje = '';
-                json.errores.forEach(element => {
-                    textoMensaje += element.mensaje + '. ';
-                });
-                //Mensaje({ titulo: titulo, msj: textoMensaje });
-            }*/
           })
           .catch((error) => {
             textoMensaje = error;
@@ -94,46 +62,58 @@ const AgregarCai = () => {
       }
     }
   };
-  //Mensaje({ titulo: titulo, msj: textoMensaje });
+ 
   const guardarCai = async () => {
-    /*if (!token) {
-      textoMensaje = "Debe iniciar sesion";
-      console.log(token);
-    } else {*/
-      console.log(token);
-      const bodyParameters = {
-        cai: cai,
-        fecha_limite: fecha_limite,
-        numero_ini: numero_ini,
-        numero_fin: numero_fin,
-        activoCai: activoCai
-      };
-      const config = {
-        //headers: { Authorization: `Bearer ${token}` },
-      };
-      await Axios.post("/cai/agregar", bodyParameters /*config*/)
-        .then((data) => {
-          const json = data.data;
-          if (json.errores.length == 0) {
-            console.log("Solicitud Realizada");
-            Mensaje({
-              titulo: "Registro Cai",
-              msj: "Su registro fue guardado con exito",
-            });
-            //navigation.navigate("ListaCai");
-          } else {
-            textoMensaje = "";
-            json.errores.forEach((element) => {
-              textoMensaje += element.mensaje + ". ";
-              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-            });
-          }
-        })
-        .catch((error) => {
-          textoMensaje = error;
+
+      if(!cai || !fecha_limite || !numero_ini || !numero_fin){
+        Mensaje({
+          titulo: "Registro Cai",
+          msj: "Datos Incompletos",
         });
-    //}
-    console.log(textoMensaje);
+
+      }
+      else{
+
+        const bodyParameters = {
+          cai: cai,
+          fecha_limite: fecha_limite,
+          numero_ini: numero_ini,
+          numero_fin: numero_fin,
+        };
+
+        await Axios.post("/cai/agregar", bodyParameters)
+          .then((data) => {
+            const json = data.data;
+            if (json.errores.length == 0) {
+              console.log("Solicitud Realizada");
+              Mensaje({
+                titulo: "Registro Cai",
+                msj: "Su registro fue guardado con exito",
+              });
+            } else {
+              textoMensaje = "";
+              json.errores.forEach((element) => {
+                textoMensaje += element.mensaje + ". ";
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+            }
+          })
+          .catch((error) => {
+            textoMensaje = error;
+          });
+      console.log(textoMensaje);
+
+      }
+     
+  };
+
+  const handleChange = event => {
+    setCodigoCai(event.target.value);
+  };
+
+  const handleClick = () => {
+    // 👇️ clear input value
+    setMessage("Ingrese el Codigo Cai");
   };
 
   return (
@@ -149,6 +129,8 @@ const AgregarCai = () => {
               value={cai}
               onChangeText={setCai}
               autoFocus={false}
+              name = "codigocai"
+              onChange={handleChange}
             >
             </TextInput>
 
@@ -178,6 +160,7 @@ const AgregarCai = () => {
               value={numero_fin}
               onChangeText={setNumfin}
               keyboardType='decimal-pad'
+             // name="final"
             >
             </TextInput>
 
@@ -210,7 +193,7 @@ const AgregarCai = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Eliminar" color={"#dc3545"}
-                //onPress={eliminar}
+                onPress={() => navigation.navigate("EliminarCai")}
               ></Button>
             </View>
 

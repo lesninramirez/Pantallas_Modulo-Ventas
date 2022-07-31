@@ -13,7 +13,7 @@ import Stack from "./Stack";
 
 import Cai from "./Cai/AgregarCai";
 import Clientes from "./Clientes/AgregarClientes";
-import ClientesDirecciones from "./ClientesDirecciones/PantallaClientesDirecciones";
+import ClientesDirecciones from "./ClientesDirecciones/AgregarClientesDirecciones";
 
 import DetalleVentas from "./DetalleVentas/PantallaDetalleVentas";
 import Ventas from "./Ventas/PantallaVentas";
@@ -31,6 +31,11 @@ import PantallaPos from "./Pos/PantallaPos";
 import EditarCai from "./Cai/EditarCai";
 import PantallaUsuarios from "./Usuarios/PantallaUsuarios";
 import PantallaEmpleados from "./Empleados/PantallaEmpleados";
+import EditarCliente from "./Clientes/EditarCliente";
+import EditarClientesDirecciones from "./ClientesDirecciones/EditarClientesDirecciones";
+import EliminarCai from "./Cai/EliminarCai";
+import EliminarCliente from "./Clientes/EliminarCliente";
+import EliminarClienteDireccion from "./ClientesDirecciones/EliminarClientesDirecciones";
 
 import ListarVentasPos from "./VentasPos/ListarVentasPos";
 import ListarVentasSag from "./VentasSag/ListarVentasSag";
@@ -71,99 +76,64 @@ export default function Navigation() {
 }
 
 function Pantallas() {
-    return (
-        <PantallasModulo.Navigator
-            initialRouteName="Login"
-        >
-            <PantallasModulo.Screen
-                name="Stack"
-                component={Stack}
-            ></PantallasModulo.Screen> 
+        return (
+                <PantallasModulo.Navigator
+                        initialRouteName="Login"
+                >
+                        <PantallasModulo.Screen
+                                name="Stack"
+                                component={Stack}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                name="Login"
-                component={Login}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Login"
+                                component={Login}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Cai"
-                    component={Cai}
-            ></PantallasModulo.Screen> 
+                        <PantallasModulo.Screen
+                                name="Cai"
+                                component={Cai}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Clientes"
-                    component={Clientes}
-            ></PantallasModulo.Screen>  
+                        <PantallasModulo.Screen
+                                name="Clientes"
+                                component={Clientes}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Direcciones"
-                    component={ClientesDirecciones}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Direcciones"
+                                component={ClientesDirecciones}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Detalle Ventas"
-                    component={DetalleVentas}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Detalle Ventas"
+                                component={DetalleVentas}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Ventas"
-                    component={Ventas}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Ventas"
+                                component={Ventas}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Ventas Anuladas"
-                    component={Anuladas}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Ventas Anuladas"
+                                component={Anuladas}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Ventas Constancia"
-                    component={Constancia}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Ventas Constancia"
+                                component={Constancia}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Ventas Exentas"
-                    component={Exentas}
-            ></PantallasModulo.Screen>   
+                        <PantallasModulo.Screen
+                                name="Ventas Exentas"
+                                component={Exentas}
+                        ></PantallasModulo.Screen>
 
-            <PantallasModulo.Screen
-                    name="Ventas Sag"
-                    component={Sag}
-            ></PantallasModulo.Screen>   
-
-            <PantallasModulo.Screen
-                    name="PantallaEstaciones"
-                    component={PantallaEstaciones}
-            ></PantallasModulo.Screen>  
-
-            <PantallasModulo.Screen
-                    name="PantallaProductos"
-                    component={PantallaProductos}
-            ></PantallasModulo.Screen>  
-
-            <PantallasModulo.Screen
-                    name="PantallaDetallePedido"
-                    component={PantallaDetallePedido}
-            ></PantallasModulo.Screen> 
-
-            <PantallasModulo.Screen
-                    name="PantallaPedido"
-                    component={PantallaPedido}
-            ></PantallasModulo.Screen> 
-
-            <PantallasModulo.Screen
-                    name="Productos"
-                    component={PantallaProductos}
-            ></PantallasModulo.Screen> 
-
-            <PantallasModulo.Screen
-                    name="PantallaPos"
-                    component={PantallaPos}
-            ></PantallasModulo.Screen> 
-            
-            <PantallasModulo.Screen
-                    name="EditarCai"
-                    component={EditarCai}
-            ></PantallasModulo.Screen> 
+                        <PantallasModulo.Screen
+                                name="Ventas Sag"
+                                component={Sag}
+                        ></PantallasModulo.Screen>
 
                         <PantallasModulo.Screen
                                 name="PantallaEstaciones"
@@ -186,13 +156,38 @@ function Pantallas() {
                         ></PantallasModulo.Screen>
 
                         <PantallasModulo.Screen
-                                name="Productos"
-                                component={PantallaProductos}
+                                name="PantallaPos"
+                                component={PantallaPos}
                         ></PantallasModulo.Screen>
 
                         <PantallasModulo.Screen
-                                name="PantallaPos"
-                                component={PantallaPos}
+                                name="EditarCai"
+                                component={EditarCai}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="EliminarCai"
+                                component={EliminarCai}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="EditarClientesDirecciones"
+                                component={EditarClientesDirecciones}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="EditarCliente"
+                                component={EditarCliente}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="EliminarCliente"
+                                component={EliminarCliente}
+                        ></PantallasModulo.Screen>
+
+                        <PantallasModulo.Screen
+                                name="EliminarClienteDireccion"
+                                component={EliminarClienteDireccion}
                         ></PantallasModulo.Screen>
 
                         <PantallasModulo.Screen
@@ -205,7 +200,7 @@ function Pantallas() {
                                 component={PantallaEmpleados}
                         ></PantallasModulo.Screen>
 
-                        
+
 
 
 
@@ -262,10 +257,10 @@ function Pantallas() {
                                 component={ListarCai}
                         ></PantallasModulo.Screen>
 
-             
-  
 
-        </PantallasModulo.Navigator>
-    );
-        
+
+
+                </PantallasModulo.Navigator>
+        );
+
 }
