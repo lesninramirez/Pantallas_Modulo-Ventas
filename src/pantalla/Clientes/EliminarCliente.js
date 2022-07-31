@@ -17,6 +17,7 @@ const EliminarCliente = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([{ label: " ", value: " " }]);
+
   var textoMensaje = "";
 
   useEffect(() => {
@@ -50,7 +51,6 @@ const EliminarCliente = () => {
         console.log(error);
         Mensaje({ titulo: "Error en el registro", msj: error });
       }
-    //}
   };
 
   const EliminarClientes = async () => {
@@ -65,6 +65,7 @@ const EliminarCliente = () => {
       }).catch((error)=>{
         console.log(error);
       });
+
   };
 
     return (
