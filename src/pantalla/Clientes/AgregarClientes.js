@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView, TouchableOpacity, Image } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Swal from 'sweetalert2';
@@ -8,8 +8,10 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import { useNavigation } from '@react-navigation/native';
 
+import * as ImagePicker from 'expo-image-picker';
+
 const AgregarClientes = () => {
-  const { token } = useContext(UsuarioContext);  
+  const { token } = useContext(UsuarioContext);
   const [rtn, setRtn] = useState("");
   const [nombre, setNombre] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -20,24 +22,8 @@ const AgregarClientes = () => {
   const [lista, setLista] = useState("");
   const titulo = 'Pantalla Clientes';
 
-  const navigation= useNavigation();
-  //let MySwal = withReactContent(Swal);
+  const navigation = useNavigation();
 
-  /*const agregar = async () => {
-
-  };
-
-  const editar = async () => {
-
-  };
-
-  const eliminar = async () => {
-
-  };
-
-  const listar = async () => {
-
-  };*/
 
   var textoMensaje = "";
   const [items, setItems] = useState([{ label: " ", value: " " }]);
@@ -61,13 +47,13 @@ const AgregarClientes = () => {
             let jsonitems = [];
             console.log(lista);
             json.forEach((element) => {
-                jsonitems.push({
-                  label: element.idregistro.toString(),
-                  value: element.idregistro.toString(),
-                });
-                console.log(typeof element.idregistro.toString());
+              jsonitems.push({
+                label: element.idregistro.toString(),
+                value: element.idregistro.toString(),
               });
-              setItems(jsonitems);
+              console.log(typeof element.idregistro.toString());
+            });
+            setItems(jsonitems);
           })
           .catch((error) => {
             textoMensaje = error;
@@ -80,126 +66,188 @@ const AgregarClientes = () => {
       }
     }
   };
-  
+
   const guardarClientes = async () => {
-      //console.log(token);
-      const bodyParameters = {
-        rtn: rtn,
-        nombre: nombre,
-        direccion: direccion,
-        telefono: telefono,
-        correo:correo
-      };
-      await Axios.post("/clientes/agregar", bodyParameters)
-        .then((data) => {
-          const json = data.data;
-          if (json.errores.length == 0) {
-            console.log("Solicitud Realizada");
-            Mensaje({
-              titulo: "Registro Cliente",
-              msj: "Registro guardado con éxito",
-            });
-          } else {
-            textoMensaje = "";
-            json.errores.forEach((element) => {
-              textoMensaje += element.mensaje + ". ";
-              Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
-            });
-          }
-        })
-        .catch((error) => {
-          textoMensaje = error;
-        });
+    //console.log(token);
+    const bodyParameters = {
+      rtn: rtn,
+      nombre: nombre,
+      direccion: direccion,
+      telefono: telefono,
+      correo: correo,
+      profileImage: profileImage
+      
+    };
+    await Axios.post("/clientes/agregar", bodyParameters)
+      .then((data) => {
+        const json = data.data;
+        if (json.errores.length == 0) {
+          console.log("Solicitud Realizada");
+          Mensaje({
+            titulo: "Registro Cliente",
+            msj: "Registro guardado con éxito",
+          });
+        } else {
+          textoMensaje = "";
+          json.errores.forEach((element) => {
+            textoMensaje += element.mensaje + ". ";
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+        }
+      })
+      .catch((error) => {
+        textoMensaje = error;
+      });
     console.log(textoMensaje);
   };
 
+  const [profileImage, setProfileImage] = useState('');
+
+  const openImageLibrary = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+
+
+    if (status !== 'granted') {
+      alert('lo siento, debes tener disponible una camara');
+    }
+
+    if (status === 'granted') {
+      const response = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+      });
+
+      if (!response.cancelled) {
+        setProfileImage(response.uri);
+      }
+    }
+  }
+
+  const uploadProfileImage = () => {
+    console.log(profileImage);
+  }
 
   return (
     <View style={styles.contenedor}>
-      <ScrollView >    
-      <View style={styles.contenedorLogin}>
-        <View style={[styles.contenedorControles, styles.sombraControles]}>
-          <View style={styles.controles}>
-            <TextInput
-              placeholder="Ingrese el RTN"
-              style={styles.entradas}
-              value={rtn}
-              onChangeText={setRtn}
-              keyboardType=  'number-pad'
-            >
-            </TextInput>
+      <ScrollView >
+        <View style={styles.contenedorLogin}>
+          <View style={[styles.contenedorControles, styles.sombraControles]}>
+            <View style={styles.controles}>
+              <TextInput
+                placeholder="Ingrese el RTN"
+                style={styles.entradas}
+                value={rtn}
+                onChangeText={setRtn}
+                keyboardType='number-pad'
+              >
+              </TextInput>
 
-            <TextInput
-              placeholder="Ingrese el Nombre"
-              style={styles.entradas}
-              value={nombre}
-              onChangeText={setNombre}
-              keyboardType=  'default'
-            >
-            </TextInput>
+              <TextInput
+                placeholder="Ingrese el Nombre"
+                style={styles.entradas}
+                value={nombre}
+                onChangeText={setNombre}
+                keyboardType='default'
+              >
+              </TextInput>
 
-            <TextInput
-              placeholder="Ingrese la Direccion"
-              style={styles.entradas}
-              value={direccion}
-              onChangeText={setDireccion}
-            >
-            </TextInput>
+              <TextInput
+                placeholder="Ingrese la Direccion"
+                style={styles.entradas}
+                value={direccion}
+                onChangeText={setDireccion}
+              >
+              </TextInput>
 
-            <TextInput
-              placeholder="Ingrese el Telefono"
-              style={styles.entradas}
-              value={telefono}
-              onChangeText={setTelefono}
-              keyboardType=  'phone-pad'
-              maxLength={8}
-            >
-            </TextInput>
+              <TextInput
+                placeholder="Ingrese el Telefono"
+                style={styles.entradas}
+                value={telefono}
+                onChangeText={setTelefono}
+                keyboardType='phone-pad'
+                maxLength={8}
+              >
+              </TextInput>
 
-            <TextInput
-              placeholder="Ingrese el Correo"
-              style={styles.entradas}
-              value={correo}
-              onChangeText={setCorreo}
-              keyboardType=  'email-address'
-            >
-            </TextInput>
+              <TextInput
+                placeholder="Ingrese el Correo"
+                style={styles.entradas}
+                value={correo}
+                onChangeText={setCorreo}
+                keyboardType='email-address'
+              >
+              </TextInput>
+
+              <TextInput
+                placeholder="Imagen"
+                style={styles.entradas}
+                value={profileImage}
+                onChangeText={setProfileImage}
+                editable= {false}
+              >
+              </TextInput>
+
+
+              <View>
+                <TouchableOpacity onPress={openImageLibrary} style={styles.uploadbtncontainer}>
+                  {profileImage ?
+
+                    <Image source={{ uri: profileImage }}
+                      style={{ width: '100%', height: '100%', borderRadius: 60 }}
+                    /> :
+                    <Text style={styles.uploadbtn}>
+                      Subir Imagen
+                    </Text>
+                  }
+                </TouchableOpacity>
+                <Text style={styles.skip}>
+
+                </Text>
+
+                {profileImage ? (
+
+                  <Text onPress={uploadProfileImage} style={[styles.skip.fontSize, { backgroundColor: 'black', color: 'white' }]}>
+                    Upload
+                  </Text>
+                ) : null}
+              </View>
+
+            </View>
+
+            <View style={styles.contenedorBotonesRedes}>
+              <View style={styles.botonRedes}>
+                <Button
+                  title="Agregar"
+                  onPress={guardarClientes}
+                ></Button>
+              </View>
+
+              <View style={styles.botonRedes}>
+                <Button
+                  title="Editar" color={"#FF7D00"}
+                  onPress={() => navigation.navigate("EditarCliente")}
+                ></Button>
+              </View>
+
+              <View style={styles.botonRedes}>
+                <Button
+                  title="Eliminar" color={"#dc3545"}
+                  onPress={() => navigation.navigate("EliminarCliente")}
+                ></Button>
+              </View>
+
+              <View style={styles.botonRedes}>
+                <Button
+                  title="Listar" color={"#2BB509"}
+                  onPress={() => navigation.navigate("ListarClientes")}
+                ></Button>
+              </View>
+            </View>
 
           </View>
-
-          <View style={styles.contenedorBotonesRedes}>
-            <View style={styles.botonRedes}>
-              <Button
-                title="Agregar"
-                onPress={guardarClientes}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Editar" color={"#FF7D00"}
-                onPress={() => navigation.navigate("EditarCliente")}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Eliminar" color={"#dc3545"}
-                onPress={() => navigation.navigate("EliminarCliente")}
-              ></Button>
-            </View>
-
-            <View style={styles.botonRedes}>
-              <Button
-                title="Listar" color={"#2BB509"}
-               // onPress={listar}
-              ></Button>
-            </View>
-          </View>
-
         </View>
-      </View>
-      </ScrollView>   
+      </ScrollView>
     </View>
   );
 }
@@ -214,16 +262,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  contenedorscroll:{
+  contenedorscroll: {
     minHeight: 400,
-    height:500,
+    height: 500,
     height: "100%",
     marginBottom: -200,
-},
+  },
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 690,
+    height: 830,
     width: 360,
   },
   contenedorTitulo: {
@@ -297,6 +345,34 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: "#ced4da",
     borderRadius: 15,
-  }
+  },
+  container:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  uploadbtn:{
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  uploadbtncontainer:{
+    height: 125,
+    width: 125,
+    borderRadius: 125/2,
+    justifyContent: 'center',
+    alignItems:'center',
+    borderStyle: 'dashed',
+    borderWidth: 1,
+  },
+  skip:{
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    opacity: 0.5,
+  },
 });
 export default AgregarClientes;

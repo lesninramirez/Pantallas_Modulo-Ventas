@@ -89,13 +89,6 @@ const Prueba = () => {
                             ></Button>
                         </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas Pos"
-                                onPress={() => navigation.navigate("PantallaVentasPos")}
-                            ></Button>
-                        </View>
-
 
                     <View style={styles.contenedorTitulo}>
                         <Text style={styles.tituloLogin}>Listar</Text>

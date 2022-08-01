@@ -205,7 +205,7 @@ const EditarClientesDirecciones = () => {
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 990,
+      height: 390,
       width: 360,
     },
     contenedorTitulo: {

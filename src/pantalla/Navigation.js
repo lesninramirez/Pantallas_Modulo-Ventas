@@ -24,7 +24,6 @@ import Sag from "./VentasSag/AgregarVentasSag";
 
 import PantallaEstaciones from "./Estaciones/PantallaEstaciones";
 import PantallaProductos from "./Productos/PantallaProductos";
-import PantallaVentasPos from "./VentasPos/PantallaVentasPos";
 import PantallaDetallePedido from "./DetallePedido/PantallaDetallePedido";
 import PantallaPedido from "./Pedido/PantallaPedido";
 import PantallaPos from "./Pos/PantallaPos";

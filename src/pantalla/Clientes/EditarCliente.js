@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 990,
+    height: 600,
     width: 360,
   },
   contenedorTitulo: {

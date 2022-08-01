@@ -21,12 +21,12 @@ export default function PantallaClientes() {
 
 
   const ClientesRender = ({ item }) => {
-    var imagen = "https://reactnative.dev/img/tiny_logo.png";
+    //var imagen = "https://reactnative.dev/img/tiny_logo.png"; 
 
     return (
       <CardClientes RTN={'RTN: ' + item.RTN} Nombre={'Nombre: ' + item.Nombre} 
       Direccion={'Direccion: ' + item.Direccion} Telefono={'Telefono: ' + item.Telefono} 
-      Correo={'Correo: ' + item.Correo} Imagen={imagen}
+      Correo={'Correo: ' + item.Correo} Imagen={item.Imagen}
       nombreImagen={'Nombre de la Imagen: ' + item.nombreImagen} />
 
 

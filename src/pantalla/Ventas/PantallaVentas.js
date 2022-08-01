@@ -45,6 +45,7 @@ const Ventas = () => {
     const [items3, setItems3] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
  
+    const navigation = useNavigation();
 
 
       useEffect(() => {

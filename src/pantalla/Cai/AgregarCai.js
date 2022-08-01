@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
+import { StyleSheet, View, TextInput, Button, ScrollView } from 'react-native';
 import React, { useEffect, useState, useContext } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
@@ -15,8 +13,8 @@ const AgregarCai = () => {
   const [ fecha_limite, setLimite] = useState("");
   const [numero_ini, setNumini] = useState("");
   const [numero_fin, setNumfin] = useState("");
+ const [items, setItems] = useState([{ label: " ", value: " " }]);
   let [activoCai, setActivo] = useState("");
-  const [lista, setLista] = useState("");
   const titulo = 'Pantalla Cai';
 
   var textoMensaje = "";
@@ -27,7 +25,7 @@ const AgregarCai = () => {
 
   useEffect(() => {
     MostrarCai();
-  }, [setLista]);
+  }, [setItems]);
 
   const MostrarCai = async () => {
 
@@ -107,14 +105,6 @@ const AgregarCai = () => {
      
   };
 
-  const handleChange = event => {
-    setCodigoCai(event.target.value);
-  };
-
-  const handleClick = () => {
-    // 👇️ clear input value
-    setMessage("Ingrese el Codigo Cai");
-  };
 
   return (
 
@@ -130,7 +120,7 @@ const AgregarCai = () => {
               onChangeText={setCai}
               autoFocus={false}
               name = "codigocai"
-              onChange={handleChange}
+              //onChange={setCai}
             >
             </TextInput>
 
@@ -200,7 +190,7 @@ const AgregarCai = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                //onPress={listar}
+                onPress={() => navigation.navigate("ListarCai")}
               ></Button>
             </View>
 
@@ -232,7 +222,7 @@ const styles = StyleSheet.create({
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 990,
+    height: 640,
     width: 360,
   },
   contenedorTitulo: {

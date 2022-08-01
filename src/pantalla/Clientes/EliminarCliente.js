@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
   contenedorscroll:{
     minHeight: 90,
     height: "50%",
-    marginTop: -10,
+    marginTop: 0,
 },
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 990,
+    height: 450,
     width: 360,
   },
   contenedorTitulo: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   contenedorControles: {
-    flex: 2.5,
+    flex: 1,
     flexDirection: "column",
     alignItems: "stretch",
     justifyContent: "center",
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderColor: "#dedede",
     borderRadius: 25,
     backgroundColor: "#B7B5B4",
-    padding: 4,
+    padding: 1,
   },
   sombraControles: {
     shadowColor: '#171717',
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-evenly",
     flexDirection: "column",
-    marginBottom: 500,
+    marginBottom: 100,
   },
   boton: {
     flex: 1,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   dropdown: {
     
     zIndex: 1000,
-    marginTop: 200,
+    marginTop: 100,
   },
 });
 export default EliminarCliente;
