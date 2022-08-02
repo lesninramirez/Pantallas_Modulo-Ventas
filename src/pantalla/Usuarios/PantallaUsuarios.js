@@ -25,7 +25,7 @@ export default function PantallaUsuarios() {
     return (
       <CardUsuarios login={'Usuario: ' + item.login} idempleado={'Id del Empleado: ' + item.idempleado} 
       contrasena={'Contrasena: ' + item.contrasena} accesototal={'Acceso Total: ' + item.accesototal} 
-      Habilitado={'Habilitado: ' + item.Habilitado} pin={'Pin: ' + item.pin} 
+      habilitado={'Habilitado: ' + item.habilitado} pin={'Pin: ' + item.pin} 
       fallidos={'Fallidos: ' + item.fallidos} correo={'Correo: ' + item.correo}
       estado={'Estado: ' + item.estado}/>
 

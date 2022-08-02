@@ -77,7 +77,7 @@ export default function Navigation() {
 function Pantallas() {
         return (
                 <PantallasModulo.Navigator
-                        initialRouteName="Login"
+                        
                 >
                         <PantallasModulo.Screen
                                 name="Stack"

@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, Alert, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import React, { useState, useContext } from 'react';
+import UsuarioContext from '../contexto/UsuarioContext';
 
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -10,140 +9,159 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Prueba = () => {
 
+    const { setCerrarSesion } = useContext(UsuarioContext);
+
     const navigation = useNavigation();
     const nav = createNativeStackNavigator();
 
+    const cerrarSesion = async () => {
+        await setCerrarSesion();
+        navigation.navigate('Login');
+    };
+
     return (
 
-            <ScrollView >
+        <ScrollView>
 
 
-                    <View style={styles.contenedorTitulo}>
-                        <Text style={styles.tituloLogin}>Agregar</Text>
-                    </View>
+            <View style={styles.contenedorTitulo}>
+                <Text style={styles.tituloLogin}>Agregar</Text>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Cai"
-                                onPress={() => navigation.navigate("Cai")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Cai"
+                    onPress={() => navigation.navigate("Cai")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Clientes"
-                                onPress={() => navigation.navigate("Clientes")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Clientes"
+                    onPress={() => navigation.navigate("Clientes")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Clientes Direcciones"
-                                onPress={() => navigation.navigate("Direcciones")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Clientes Direcciones"
+                    onPress={() => navigation.navigate("Direcciones")}
+                ></Button>
+            </View>
 
-                        <View style={styles.contenedorTitulo}>
-                            <Text style={styles.tituloLogin}>Agregar y Listar</Text>
-                        </View>
+            <View style={styles.contenedorTitulo}>
+                <Text style={styles.tituloLogin}>Agregar y Listar</Text>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Detalle Ventas"
-                                onPress={() => navigation.navigate("Detalle Ventas")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Detalle Ventas"
+                    onPress={() => navigation.navigate("Detalle Ventas")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas"
-                                onPress={() => navigation.navigate("Ventas")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Ventas"
+                    onPress={() => navigation.navigate("Ventas")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas Anuladas"
-                                onPress={() => navigation.navigate("Ventas Anuladas")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Ventas Anuladas"
+                    onPress={() => navigation.navigate("Ventas Anuladas")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas Constancia"
-                                onPress={() => navigation.navigate("Ventas Constancia")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Ventas Constancia"
+                    onPress={() => navigation.navigate("Ventas Constancia")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas Exentas"
-                                onPress={() => navigation.navigate("Ventas Exentas")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Ventas Exentas"
+                    onPress={() => navigation.navigate("Ventas Exentas")}
+                ></Button>
+            </View>
 
-                        <View style={styles.botonRedes}>
-                            <Button
-                                title="Ventas Sag"
-                                onPress={() => navigation.navigate("Ventas Sag")}
-                            ></Button>
-                        </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Ventas Sag"
+                    onPress={() => navigation.navigate("Ventas Sag")}
+                ></Button>
+            </View>
 
 
-                    <View style={styles.contenedorTitulo}>
-                        <Text style={styles.tituloLogin}>Listar</Text>
-                    </View>
+            <View style={styles.contenedorTitulo}>
+                <Text style={styles.tituloLogin}>Listar</Text>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Estaciones"
-                        onPress={()=> navigation.navigate("PantallaEstaciones")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Estaciones"
+                    onPress={() => navigation.navigate("PantallaEstaciones")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Productos"
-                        onPress={()=> navigation.navigate("PantallaProductos")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Productos"
+                    onPress={() => navigation.navigate("PantallaProductos")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Pos"
-                        onPress={()=> navigation.navigate("PantallaPos")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Pos"
+                    onPress={() => navigation.navigate("PantallaPos")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Detalle Pedido"
-                        onPress={()=> navigation.navigate("PantallaDetallePedido")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Detalle Pedido"
+                    onPress={() => navigation.navigate("PantallaDetallePedido")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Pedido"
-                        onPress={()=> navigation.navigate("PantallaPedido")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Pedido"
+                    onPress={() => navigation.navigate("PantallaPedido")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Usuarios"
-                        onPress={()=> navigation.navigate("PantallaUsuarios")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Usuarios"
+                    onPress={() => navigation.navigate("PantallaUsuarios")}
+                ></Button>
+            </View>
 
-                    <View style={styles.botonRedes}>
-                        <Button
-                            title="Empleados"
-                        onPress={()=> navigation.navigate("PantallaEmpleados")}
-                        ></Button>
-                    </View>
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Empleados"
+                    onPress={() => navigation.navigate("PantallaEmpleados")}
+                ></Button>
+            </View>
 
-            </ScrollView>
+            <View style={styles.contenedorTitulo}>
+                <Text style={styles.tituloLogin}>Cerrar Sesión</Text>
+            </View>
+
+            <View style={styles.botonRedes}>
+                <Button
+                    title="Cerrar Sesión"
+                    color={"#dc3545"}
+                    onPress={cerrarSesion}
+                ></Button>
+            </View>
+
+        </ScrollView>
 
     );
 
