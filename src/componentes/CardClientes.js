@@ -5,7 +5,7 @@ const CardClientes = ({ RTN, Nombre, Direccion, Telefono, Correo, Imagen, nombre
         <View style={styles.contenedor}>
             <Image
                 style={styles.imagen}
-                source={ Imagen }
+                source={{ uri: Imagen }}
             />
             <View style={styles.contenedorTexto}>
                 <Text>{RTN}</Text>

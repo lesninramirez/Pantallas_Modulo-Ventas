@@ -75,7 +75,7 @@ const AgregarClientes = () => {
       direccion: direccion,
       telefono: telefono,
       correo: correo,
-      profileImage: profileImage
+      nombre_imagen: nombre_imagen
       
     };
     await Axios.post("/clientes/agregar", bodyParameters)
@@ -101,11 +101,10 @@ const AgregarClientes = () => {
     console.log(textoMensaje);
   };
 
-  const [profileImage, setProfileImage] = useState('');
+  const [nombre_imagen, setProfileImage] = useState('');
 
   const openImageLibrary = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
 
 
     if (status !== 'granted') {
@@ -125,7 +124,7 @@ const AgregarClientes = () => {
   }
 
   const uploadProfileImage = () => {
-    console.log(profileImage);
+    console.log(nombre_imagen);
   }
 
   return (
@@ -182,7 +181,7 @@ const AgregarClientes = () => {
               <TextInput
                 placeholder="Imagen"
                 style={styles.entradas}
-                value={profileImage}
+                value={nombre_imagen}
                 onChangeText={setProfileImage}
                 editable= {false}
               >
@@ -191,9 +190,9 @@ const AgregarClientes = () => {
 
               <View>
                 <TouchableOpacity onPress={openImageLibrary} style={styles.uploadbtncontainer}>
-                  {profileImage ?
+                  {nombre_imagen ?
 
-                    <Image source={{ uri: profileImage }}
+                    <Image source={{ uri: nombre_imagen }}
                       style={{ width: '100%', height: '100%', borderRadius: 60 }}
                     /> :
                     <Text style={styles.uploadbtn}>
@@ -205,7 +204,7 @@ const AgregarClientes = () => {
 
                 </Text>
 
-                {profileImage ? (
+                {nombre_imagen ? (
 
                   <Text onPress={uploadProfileImage} style={[styles.skip.fontSize, { backgroundColor: 'black', color: 'white' }]}>
                     Upload

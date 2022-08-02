@@ -32,10 +32,6 @@ export default function PantallaClientes() {
 
   const MostrarCai = async () => {
 
-    if (!token) {
-      textoMensaje = "Debe iniciar sesion";
-    }
-    else {
       try {
         await Axios.get('cai/listar', {
 
@@ -50,7 +46,6 @@ export default function PantallaClientes() {
           });
       } catch (error) {
 
-      }
     }
   }
 
