@@ -3,48 +3,49 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardDetallePedido from '../../componentes/CardDetallePedido';
+import CardVentasPos from '../../componentes/CardVentasPos';
 
 
-export default function PantallaDetallePedido() {
-  const [detallep, setDetalleP] = useState("");
+export default function ListarVentasPos() {
+  const [ventaspos, setVentasPos] = useState("");
   const { token } = useContext(UsuarioContext);
-  const titulo = 'Lista Detalle Pedido'
+  const titulo = 'Lista Ventas Pos'
   var textoMensaje = "";
 
 
   useEffect(() => {
-    MostrarDetallePedidos();
-  }, [setDetalleP]);
+    MostrarVentasPos();
+  }, []);
 
 
 
 
-  const DetallePRender = ({ item }) => {
+  const VentasPosRender = ({ item }) => {
 
     return (
-      <CardDetallePedido NumeroPedido={'Numero de Pedido: ' + item.NumeroPedido} CodigoPedido={'Codigo de Pedido: ' + item.CodigoPedido} 
-      Cantidad={'Cantidad: ' + item.Cantidad} Cancelado={'Cancelado: ' + item.Cancelado} 
-      Notas={'Notas: ' + item.Notas} Elaborado={'Elaborado: ' + item.Elaborado} 
-      Entregado={'Entregado: ' + item.Entregado} Facturado={'Facturado: ' + item.Facturado} subproducto={'Sub Producto: ' + item.subproducto} />
+      <CardVentasPos id_venta={'Id de la Venta: ' + item.id_venta} idpos={'Id Pos: ' + item.idpos} 
+      referencia={'Referencia: ' + item.referencia} numerotarjeta={'Numero de Tarjeta: ' + item.numerotarjeta} 
+      valor={'Valor: ' + item.valor} nombrepropietario={'Nombre del Propietario: ' + item.nombrepropietario} 
+      idmarca={'Id Marca: ' + item.idmarca} />
 
 
     );
   };
 
-  const MostrarDetallePedidos = async () => {
+  const MostrarVentasPos = async () => {
 
     if (!token) {
       textoMensaje = "Debe iniciar sesion";
     }
     else {
       try {
-        await Axios.get('detallepedidos/listar', {
+        await Axios.get('pos/listar', {
 
 
         })
           .then((data) => {
-            setDetalleP(data.data);
+
+            setVentasPos(data.data);
 
           })
           .catch((error) => {
@@ -57,15 +58,16 @@ export default function PantallaDetallePedido() {
   }
 
 
+
+
   return (
     <ScrollView >
       <View style={styles.contenedor}>
 
         <View style={styles.contenedorFlat}>
           <FlatList
-            data={detallep}
-            renderItem={DetallePRender}
-          /*keyExtractor={item=>item.NumeroEstacion}*/
+            data={ventaspos}
+            renderItem={VentasPosRender}
           >
           </FlatList>
         </View>

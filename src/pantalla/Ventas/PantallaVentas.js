@@ -7,6 +7,8 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
+import { useNavigation } from '@react-navigation/native';
+
 const Ventas = () => {
     const [num_fact, setFactura] = useState("");
     const [cai, setCai] = useState("");
@@ -43,6 +45,7 @@ const Ventas = () => {
     const [items3, setItems3] = useState([{ label: " ", value: " " }]);
     const titulo = 'Pantalla Ventas';
  
+    const navigation = useNavigation();
 
 
       useEffect(() => {
@@ -407,7 +410,7 @@ const Ventas = () => {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Listar" color={"#2BB509"}
-                                onPress={listar}
+                                onPress={() => navigation.navigate("ListarVentas")}
                             ></Button>
                         </View>
 

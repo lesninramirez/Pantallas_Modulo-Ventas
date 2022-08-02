@@ -4,6 +4,7 @@ import UsuarioContext from '../../contexto/UsuarioContext';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
+import { useNavigation } from '@react-navigation/native';
 
 const VentasSag = () => {
   const [numfac, setNumfact] = useState("");
@@ -14,6 +15,8 @@ const VentasSag = () => {
   const [items, setItems] = useState([{ label: " ", value: " " }]);
 
   const titulo = 'Pantalla Ventas Sag';
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     ListarVentasSag();
@@ -137,7 +140,7 @@ const VentasSag = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-              //onPress={listar}
+                onPress={()=> navigation.navigate("ListarVentasSag")}
               ></Button>
             </View>
           </View>
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 560,
+    height: 300,
     width: 360,
     marginTop: 135,
   },

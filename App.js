@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 import Axios from './src/componentes/Axios';
 import UsuarioState from './src/contexto/UsuarioState';
 
-import Login from './src/pantalla/Login';
+import Pantallas from './src/componentes/Pantallas';
 
 import Navigation from './src/pantalla/Navigation';
 
@@ -13,7 +13,9 @@ export default function App() {
     return(
       <UsuarioState>
       <Navigation>
-        <Login/>
+        <Pantallas>
+          
+        </Pantallas>
       </Navigation>
       </UsuarioState>
     )

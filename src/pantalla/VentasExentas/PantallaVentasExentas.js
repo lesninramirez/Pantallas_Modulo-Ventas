@@ -5,6 +5,8 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
+import { useNavigation } from '@react-navigation/native';
+
 const VentasExentas = () => {
     const [numfactura, setNumfactura] = useState("");
     const [numorden, setNumorden] = useState("");
@@ -15,6 +17,8 @@ const VentasExentas = () => {
 
     const titulo = 'Pantalla Ventas Exentas';
 
+    const navigation = useNavigation();
+
 
     useEffect(() => {
       ListarVentasExentas();
@@ -23,7 +27,7 @@ const VentasExentas = () => {
     const ListarVentasExentas = async () => {
 
       try {
-        await Axios.get('/ventas/listar', {
+        await Axios.get('ventas/listar', {
   
         })
           .then((data) => {
@@ -37,7 +41,7 @@ const VentasExentas = () => {
                 console.log(typeof element.NumeroFactura.toString());
               });
               setItems(jsonitems);
-              console.log(jsonitems);
+              //console.log(jsonitems);
           })
           .catch((error) => {
             textoMensaje = error;
@@ -65,7 +69,7 @@ const VentasExentas = () => {
           numfactura: numfactura,
           numorden: numorden
         };
-        await Axios.post("/exentas/agregar", bodyParameters)
+        await Axios.post("exentas/agregar", bodyParameters)
           .then((data) => {
             const json = data.data;
             if (json.errores.length == 0) {
@@ -139,7 +143,7 @@ const VentasExentas = () => {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Listar" color={"#2BB509"}
-                                onPress={listar}
+                                onPress={()=> navigation.navigate("ListarVentasExentas")}
                             ></Button>
                         </View>
                     </View>
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 500,
+      height: 300,
       width: 360,
       marginTop: 135,
     },

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import UsuarioContext from '../../contexto/UsuarioContext';
 import Mensaje from '../../componentes/Mensaje';
-import CardVentasSag from '../../componentes/CardVentas.Sag';
+import CardVentasSag from '../../componentes/CardVentasSag';
 
 
 export default function ListarVentasSag() {

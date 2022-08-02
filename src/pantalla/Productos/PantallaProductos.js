@@ -16,13 +16,14 @@ export default function PantallaProductos() {
   }, []);
 
   const ProductosRender = ({ item }) => {
+    var imagen = "https://reactnative.dev/img/tiny_logo.png";
 
     return (
       <CardProductos Nombre={'Nombre: ' + item.Nombre} Descripcion={'Descripción: ' + item.Descripcion} 
       TipoProducto={'Tipo Producto: ' + item.TipoProducto} Existencia={'Existencia: ' + item.Existencia}
       Precio={'Precio: ' + item.Precio} Costo={'Costo: ' + item.Costo}
       CantidadMinima={'Cantidad Minima: ' + item.CantidadMinima} exento={'Exento: ' + item.exento}
-      Imagen={'Imagen: ' + item.Imagen} Habilitado={'Habilitado: ' + item.Habilitado}
+      Imagen={imagen} Habilitado={'Habilitado: ' + item.Habilitado}
       Tipo2={'Tipo: ' + item.Tipo2} orden={'Orden: ' + item.orden}
       impuestov={'Impuesto: ' + item.impuestov} impuestoValor={'Impuesto Valor: ' + item.impuestoValor} 
       ultimo={'Ultimo: ' + item.ultimo} nombreImagen={'Nombre Imagen: ' + item.nombreImagen}

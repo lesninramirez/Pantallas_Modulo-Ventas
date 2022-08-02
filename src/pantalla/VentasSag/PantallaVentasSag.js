@@ -7,6 +7,10 @@ import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
 import DropDownPicker from "react-native-dropdown-picker";
 
+
+import { useNavigation } from '@react-navigation/native';
+
+
 export default function App() {
   const [numfac, setNumfact] = useState("");
   const [numsag, setNumSag] = useState("");
@@ -135,9 +139,10 @@ export default function App() {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-                onPress={listar}
+                onPress={() => navigation.navigate("ListarVentasSag")}
               ></Button>
             </View>
+
           </View>
         </View>
       </View>

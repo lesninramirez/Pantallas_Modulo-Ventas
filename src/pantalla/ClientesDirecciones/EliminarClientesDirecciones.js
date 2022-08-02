@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
   contenedorscroll:{
     minHeight: 90,
     height: "50%",
-    marginTop: -10,
+    marginTop: 0,
 },
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 990,
+    height: 690,
     width: 360,
   },
   contenedorTitulo: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   controles: {
     flex: 5,
     marginBottom: -5,
-    paddingTop: -10,
+    paddingTop: 0,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-evenly",
     flexDirection: "column",
-    marginBottom: 500,
+    marginBottom: 300,
   },
   boton: {
     flex: 1,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   dropdown: {
     
     zIndex: 1000,
-    marginTop: 200,
+    marginTop: 100,
   },
 });
 export default EliminarClientesDirecciones;

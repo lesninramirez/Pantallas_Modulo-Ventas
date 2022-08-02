@@ -1,47 +1,130 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert, Platform } from 'react-native';
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import { StyleSheet, View, TextInput, Button, Alert, ScrollView } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
 import Axios from '../../componentes/Axios';
 import Mensaje from '../../componentes/Mensaje';
+import DropDownPicker from "react-native-dropdown-picker";
 
-export default function App() {
-    const [numero, setNumero] = useState("");
-    const [constancia, setConstancia] = useState("");
+import { useNavigation } from '@react-navigation/native';
+
+const VentasConstancia = () => {
+    const [numfactura, setNumfactura] = useState("");
+    const [numcons, setNumcons] = useState("");
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    var textoMensaje = "";
+    const [items, setItems] = useState([{ label: " ", value: " " }]);
 
     const titulo = 'Pantalla Ventas Constancia';
-    let MySwal = withReactContent(Swal);
 
-    const agregar = async () => {
+    const navigation = useNavigation();
 
-    };
 
-    const listar = async () => {
-        
+    useEffect(() => {
+      ListarVentas();
+    }, [setItems]);
+
+    const ListarVentas = async () => {
+
+      try {
+        await Axios.get('/ventas/listar', {
+  
+        })
+          .then((data) => {
+            const json = data.data;
+            let jsonitems = [];
+            json.forEach((element) => {
+                jsonitems.push({
+                  label: element.NumeroFactura.toString(),
+                  value: element.NumeroFactura.toString(),
+                });
+                console.log(typeof element.NumeroFactura.toString());
+              });
+              setItems(jsonitems);
+          })
+          .catch((error) => {
+            textoMensaje = error;
+            Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+          });
+      } catch (error) {
+        textoMensaje = error;
+        console.log(error);
+        Mensaje({ titulo: "Error en el registro", msj: error });
+      }
+    //}
+  };
+
+    const agregarConstancia = async () => {
+
+      if(!numfactura || !numcons){
+        Mensaje({
+          titulo: "Registro Ventas Constancia",
+          msj: "Datos Incompletos",
+        });
+      }
+      else{
+
+        const bodyParameters = {
+          numfactura: numfactura,
+          numcons: numcons
+
+        };
+        await Axios.post("constancia/agregar", bodyParameters)
+          .then((data) => {
+            const json = data.data;
+            if (json.errores.length == 0) {
+              console.log("Solicitud Realizada");
+              Mensaje({
+                titulo: "Registro Ventas Exentas",
+                msj: "Registro guardado con éxito",
+              });
+            } else {
+              json.errores.forEach((element) => {
+                textoMensaje= "";
+                textoMensaje += element.mensaje + ". ";
+                Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
+              });
+            }
+          })
+          .catch((error) => {
+           textoMensaje = error;
+          });
+      console.log(textoMensaje);
+
+      }
+     
     };
 
     return (
         <View style={styles.contenedor}>
+          <ScrollView>
+
             <View style={styles.contenedorLogin}>
 
                 <View style={[styles.contenedorControles, styles.sombraControles]}>
                     <View style={styles.controles}>
-                        <TextInput
-                            placeholder="Ingrese el Usuario"
-                            style={styles.entradas}
-                            value={numero}
-                            onChangeText={setNumero}
-                            keyboardType='decimal-pad'
-                        >
-                        </TextInput>
+                        <DropDownPicker
+                             searchable={true}
+                             style={styles.dropdown}
+                             placeholder="Seleccione un id factura"
+                             open={open}
+                             value={value}
+                             onChangeValue={(value) => {
+                              setNumfactura(value);
+                             }}
+                             items={items}
+                             setOpen={setOpen}
+                             setValue={setValue}
+                             setItems={setItems}
+                        />
+                    
 
                         <TextInput
-                            placeholder="Ingrese el Usuario"
+                            placeholder="Ingrese el Numero de Orden"
                             style={styles.entradas}
-                            value={constancia}
-                            onChangeText={setConstancia}
-                            maxLength={20}
+                            value={numcons}
+                            onChangeText={setNumcons}
+                            keyboardType=  'default'
                         >
                         </TextInput>
                     </View>
@@ -50,19 +133,20 @@ export default function App() {
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Agregar"
-                                onPress={agregar}
+                                onPress={agregarConstancia}
                             ></Button>
                         </View>
 
                         <View style={styles.botonRedes}>
                             <Button
                                 title="Listar" color={"#2BB509"}
-                                onPress={listar}
+                                onPress={() => navigation.navigate("ListarVentasConstancia")}
                             ></Button>
                         </View>
                     </View>
                 </View>
             </View>
+            </ScrollView>
         </View>
     );
 }
@@ -72,16 +156,22 @@ const styles = StyleSheet.create({
       backgroundColor: '#e9ecef',
       alignItems: 'center',
       justifyContent: "center",
-      margin: 0,
+      marginTop: 20,
       padding: 10,
       width: "100%",
       height: "100%",
     },
+    contenedorscroll:{
+      minHeight: 90,
+      height: "50%",
+      marginTop: -10,
+  },
     contenedorLogin: {
       alignItems: "stretch",
       justifyContent: 'center',
-      height: 330,
+      height: 300,
       width: 360,
+      marginTop: 135,
     },
     contenedorTitulo: {
       flex: 1,
@@ -154,5 +244,10 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderColor: "#ced4da",
       borderRadius: 15,
+    },
+    dropdown: {
+    
+      zIndex: 1000
     }
   });
+  export default VentasConstancia;

@@ -169,7 +169,7 @@ const ClientesDirecciones = () => {
             <View style={styles.botonRedes}>
               <Button
                 title="Listar" color={"#2BB509"}
-               // onPress={listar}
+                onPress={() => navigation.navigate("ListarClientesDirecciones")}
               ></Button>
             </View>
 
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   contenedorLogin: {
     alignItems: "stretch",
     justifyContent: 'center',
-    height: 560,
+    height: 460,
     width: 360,
     marginTop: 135,
   },

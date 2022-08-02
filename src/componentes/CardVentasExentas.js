@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-const CardEstaciones = ({ nombre, activo, vistaprevia, tecladovirtual, nombretipo, nombreproducto, administracion }) => {
+const CardVentasExentas = ({ numerofactura, numero_orden }) => {
     return (
         <View style={styles.contenedor}>
             <View style={styles.contenedorTexto}>
@@ -11,7 +11,7 @@ const CardEstaciones = ({ nombre, activo, vistaprevia, tecladovirtual, nombretip
     );
 }
 
-export default CardEstaciones;
+export default CardVentasExentas;
 
 const styles = StyleSheet.create({
 

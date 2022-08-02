@@ -1,22 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image  } from 'react-native';
 import React from 'react';
-const CardEstaciones = ({ nombre, activo, vistaprevia, tecladovirtual, nombretipo, nombreproducto, administracion }) => {
+const CardClientes = ({ RTN, Nombre, Direccion, Telefono, Correo, Imagen, nombreImagen}) => {
     return (
         <View style={styles.contenedor}>
+            <Image
+                style={styles.imagen}
+                source={ Imagen }
+            />
             <View style={styles.contenedorTexto}>
                 <Text>{RTN}</Text>
                 <Text>{Nombre}</Text>
                 <Text>{Direccion}</Text>
                 <Text>{Telefono}</Text>
                 <Text>{Correo}</Text>
-                <Text>{Imagen}</Text>
                 <Text>{nombreImagen}</Text>
             </View>
         </View>
     );
 }
 
-export default CardEstaciones;
+export default CardClientes;
 
 const styles = StyleSheet.create({
 
