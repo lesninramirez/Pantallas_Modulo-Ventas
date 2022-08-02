@@ -18,15 +18,13 @@ export default function PantallaClientes() {
   }, [setClientes]);
 
 
-
-
   const ClientesRender = ({ item }) => {
     var imagen = "https://reactnative.dev/img/tiny_logo.png"; 
 
     return (
       <CardClientes RTN={'RTN: ' + item.RTN} Nombre={'Nombre: ' + item.Nombre} 
       Direccion={'Direccion: ' + item.Direccion} Telefono={'Telefono: ' + item.Telefono} 
-      Correo={'Correo: ' + item.Correo} imagen={item.imagen}
+      Correo={'Correo: ' + item.Correo} Imagen={imagen}
       nombreImagen={'Nombre de la Imagen: ' + item.nombreImagen} />
 
 
@@ -41,7 +39,9 @@ export default function PantallaClientes() {
     else {
       try {
         await Axios.get('clientes/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {

@@ -38,7 +38,9 @@ export default function PantallaClientesDirecciones() {
     else {
       try {
         await Axios.get('clientesdir/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {

@@ -40,7 +40,9 @@ export default function PantallaUsuarios() {
     else {
       try {
         await Axios.get('usuarios/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {

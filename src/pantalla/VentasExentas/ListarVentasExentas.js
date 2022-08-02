@@ -35,7 +35,9 @@ export default function ListarVentasExentas() {
         else {
             try {
                 await Axios.get('exentas/listar', {
-
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                      }
 
                 })
                     .then((data) => {

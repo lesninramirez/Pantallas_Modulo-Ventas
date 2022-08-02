@@ -36,7 +36,9 @@ export default function ListarVentasAnuladas() {
         else {
             try {
                 await Axios.get('anuladas/listar', {
-
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                      }
 
                 })
                     .then((data) => {

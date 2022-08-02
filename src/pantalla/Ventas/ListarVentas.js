@@ -40,7 +40,9 @@ export default function PantallaVentas() {
     else {
       try {
         await Axios.get('ventas/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
         })
           .then((data) => {
             

@@ -32,7 +32,9 @@ export default function PantallaPedido() {
     else {
       try {
         await Axios.get('pedidos/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
         })
           .then((data) => {
             

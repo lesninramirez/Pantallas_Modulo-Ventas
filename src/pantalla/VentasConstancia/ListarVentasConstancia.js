@@ -34,7 +34,9 @@ export default function ListarVentasConstancia() {
         else {
             try {
                 await Axios.get('constancia/listar', {
-
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                      }
 
                 })
                     .then((data) => {

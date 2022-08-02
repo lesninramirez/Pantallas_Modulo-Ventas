@@ -25,10 +25,10 @@ export default function PantallaEstaciones() {
   const EstacionesRender = ({ item }) => {
 
     return (
-      <CardEstaciones nombre={'Nombre de la Estación: ' + item.nombre} activo={'Activo o Inactivo: ' + item.activo} 
-      vistaprevia={'Vista Previa: ' + item.vistaprevia} tecladovirtual={'Teclado Virtual: ' + item.tecladovirtual} 
-      nombretipo={'Codigo Tipo: ' + item.nombretipo} nombreproducto={'Codigo del Producto: ' + item.nombreproducto} 
-      administracion={'Administración: ' + item.administracion} />
+      <CardEstaciones nombre={'Nombre de la Estación: ' + item.nombre} activo={'Activo o Inactivo: ' + item.activo}
+        vistaprevia={'Vista Previa: ' + item.vistaprevia} tecladovirtual={'Teclado Virtual: ' + item.tecladovirtual}
+        nombretipo={'Codigo Tipo: ' + item.nombretipo} nombreproducto={'Codigo del Producto: ' + item.nombreproducto}
+        administracion={'Administración: ' + item.administracion} />
 
 
     );
@@ -42,6 +42,9 @@ export default function PantallaEstaciones() {
     else {
       try {
         await Axios.get('estacion/listar', {
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
 
         })
@@ -104,10 +107,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  contenedorFlat:{
-    flex:1,
+  contenedorFlat: {
+    flex: 1,
     padding: 10,
-    justifyContent:"space-evenly",
+    justifyContent: "space-evenly",
     flexDirection: "row",
     width: "100%",
   },

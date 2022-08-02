@@ -34,7 +34,9 @@ export default function ListarVentasSag() {
         else {
             try {
                 await Axios.get('VentasSag/listar', {
-
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                      }
 
                 })
                     .then((data) => {

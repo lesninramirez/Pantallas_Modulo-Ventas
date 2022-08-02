@@ -54,6 +54,7 @@ const PantallasModulo = createNativeStackNavigator();
 function MyTab() {
         return (
                 <Tab.Navigator
+
                         initialRouteName="Login"
                 >
                         <Tab.Screen name="Modulo de Ventas" component={Pantallas}
@@ -77,7 +78,12 @@ export default function Navigation() {
 function Pantallas() {
         return (
                 <PantallasModulo.Navigator
-                        
+
+                initialRouteName="Login"
+
+                screenOptions={{
+                        headerShown: false,
+                }}
                 >
                         <PantallasModulo.Screen
                                 name="Stack"

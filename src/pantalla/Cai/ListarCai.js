@@ -23,18 +23,23 @@ export default function PantallaClientes() {
   const CaiRender = ({ item }) => {
 
     return (
-      <CardCai CAI={'CAI: ' + item.CAI} FechaLimite={'Fecha Limite: ' + item.FechaLimite} 
-      NumeroInicial={'Numero Inicial: ' + item.NumeroInicial} NumeroFinal={'Numero Final: ' + item.NumeroFinal} 
-      creado={'Creado en: ' + item.creado} activo={'Activo/Inactivo: ' + item.activo}  />
+      <CardCai CAI={'CAI: ' + item.CAI} FechaLimite={'Fecha Limite: ' + item.FechaLimite}
+        NumeroInicial={'Numero Inicial: ' + item.NumeroInicial} NumeroFinal={'Numero Final: ' + item.NumeroFinal}
+        creado={'Creado en: ' + item.creado} activo={'Activo/Inactivo: ' + item.activo} />
 
     );
   };
 
   const MostrarCai = async () => {
-
+    if (!token) {
+      textoMensaje = "Debe iniciar sesion";
+    }
+    else {
       try {
         await Axios.get('cai/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {
@@ -46,22 +51,23 @@ export default function PantallaClientes() {
           });
       } catch (error) {
 
+      }
     }
   }
 
 
   return (
 
-      <View style={styles.contenedor}>
+    <View style={styles.contenedor}>
 
-        <View style={styles.contenedorFlat}>
-          <FlatList
-            data={cai}
-            renderItem={CaiRender}
-          >
-          </FlatList>
-        </View>
+      <View style={styles.contenedorFlat}>
+        <FlatList
+          data={cai}
+          renderItem={CaiRender}
+        >
+        </FlatList>
       </View>
+    </View>
 
 
 
@@ -79,10 +85,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  contenedorFlat:{
-    flex:1,
+  contenedorFlat: {
+    flex: 1,
     padding: 10,
-    justifyContent:"space-evenly",
+    justifyContent: "space-evenly",
     flexDirection: "row",
     width: "100%",
   },

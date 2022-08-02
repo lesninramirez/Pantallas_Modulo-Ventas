@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Axios from './src/componentes/Axios';
 import UsuarioState from './src/contexto/UsuarioState';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Pantallas from './src/componentes/Pantallas';
 

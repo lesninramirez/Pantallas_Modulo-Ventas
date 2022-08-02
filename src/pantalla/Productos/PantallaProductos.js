@@ -40,7 +40,9 @@ export default function PantallaProductos() {
     else {
       try {
         await Axios.get('productos/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
         })
           .then((data) => {
             

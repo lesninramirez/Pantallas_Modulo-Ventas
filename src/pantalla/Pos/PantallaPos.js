@@ -37,7 +37,9 @@ export default function PantallaPos() {
     else {
       try {
         await Axios.get('rutapos/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {

@@ -39,7 +39,9 @@ export default function PantallaEmpleados() {
     else {
       try {
         await Axios.get('empleados/listar', {
-
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
 
         })
           .then((data) => {
