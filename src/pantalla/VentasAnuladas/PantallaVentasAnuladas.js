@@ -84,8 +84,6 @@ const AgregarAnuladas = () => {
               msj: "Registro guardado con éxito",
             });
           } else {
-            console.log(data);
-            textoMensaje = "";
             json.errores.forEach((element) => {
               textoMensaje += element.mensaje + ". ";
               Mensaje({ titulo: "Error en el registro", msj: textoMensaje });

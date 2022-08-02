@@ -35,10 +35,10 @@ const VentasConstancia = () => {
             let jsonitems = [];
             json.forEach((element) => {
                 jsonitems.push({
-                  label: element.NumeroFactura.toString(),
-                  value: element.NumeroFactura.toString(),
+                  label: element.idregistro.toString(),
+                  value: element.idregistro.toString(),
                 });
-                console.log(typeof element.NumeroFactura.toString());
+                console.log(typeof element.idregistro.toString());
               });
               setItems(jsonitems);
           })
@@ -75,12 +75,11 @@ const VentasConstancia = () => {
             if (json.errores.length == 0) {
               console.log("Solicitud Realizada");
               Mensaje({
-                titulo: "Registro Ventas Exentas",
+                titulo: "Registro Ventas Constancia",
                 msj: "Registro guardado con éxito",
               });
             } else {
               json.errores.forEach((element) => {
-                textoMensaje= "";
                 textoMensaje += element.mensaje + ". ";
                 Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
               });
