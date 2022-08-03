@@ -69,12 +69,13 @@ const AgregarAnuladas = () => {
       });
     }
     else{
+      alert('Prueba')
       const bodyParameters = {
         venta: venta,
         usua: usua,
         des: des
       };
-      await Axios.post("anuladas/agregar", bodyParameters)
+      await Axios.post('anuladas/agregar', bodyParameters)
         .then((data) => {
           const json = data.data;
           if (json.errores.length == 0) {
@@ -93,6 +94,7 @@ const AgregarAnuladas = () => {
         })
         .catch((error) => {
           textoMensaje = error;
+          //Mensaje({ titulo: "Error en el registro", msj: error });
         });
       console.log(textoMensaje);
     }

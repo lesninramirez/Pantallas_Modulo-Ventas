@@ -108,6 +108,7 @@ const EditarCliente = () => {
             value={rtn}
             onChangeText={setRtn}
             keyboardType=  'number-pad'
+            maxLength={15}
           >
           </TextInput>
 

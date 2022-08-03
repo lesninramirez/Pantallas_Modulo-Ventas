@@ -172,7 +172,7 @@ const Ventas = () => {
                 impuesto18: impuesto18,
                 exonerado: exonerado
                };
-               await Axios.post("/ventas/agregar", bodyParameters)
+               await Axios.post('ventas/agregar', bodyParameters)
                  .then((data) => {
                    const json = data.data;
                    if (json.errores.length == 0) {
@@ -182,15 +182,17 @@ const Ventas = () => {
                        msj: "Registro guardado con éxito",
                      });
                    } else {
-                     textoMensaje = "";
+                     //textoMensaje = "";
                      json.errores.forEach((element) => {
-                       textoMensaje += element.mensaje + ". ";
+                       //textoMensaje += element.mensaje + ". ";
                        Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
                      });
                    }
                  })
                  .catch((error) => {
-                   textoMensaje = error;
+                    textoMensaje = error;
+                    //console.log(error);
+                    Mensaje({ titulo: "Error en el registro", msj: error });
                  });
              console.log(textoMensaje);
         }

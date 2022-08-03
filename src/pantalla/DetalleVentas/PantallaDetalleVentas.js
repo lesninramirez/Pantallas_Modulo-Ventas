@@ -77,7 +77,7 @@ const AgregarDVentas = () => {
                 cantidad: cantidad,
                 prec: prec
               };
-              await Axios.post("/detalleventas/agregar", bodyParameters)
+              await Axios.post('detalleventas/agregar', bodyParameters)
                 .then((data) => {
                   const json = data.data;
                   if (json.errores.length == 0) {
@@ -87,7 +87,7 @@ const AgregarDVentas = () => {
                       msj: "Registro guardado con éxito",
                     });
                   } else {
-                    textoMensaje = "";
+                    //textoMensaje = "";
                     json.errores.forEach((element) => {
                       textoMensaje += element.mensaje + ". ";
                       Mensaje({ titulo: "Error en el registro", msj: textoMensaje });

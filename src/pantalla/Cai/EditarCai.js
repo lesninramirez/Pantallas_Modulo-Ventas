@@ -117,6 +117,7 @@ const EditarCai = () => {
             value={cai}
             onChangeText={setCai}
             autoFocus={false}
+            maxLength={15}
           >
           </TextInput>
 

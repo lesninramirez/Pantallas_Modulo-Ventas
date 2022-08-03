@@ -30,7 +30,11 @@ const AgregarCai = () => {
   const MostrarCai = async () => {
 
     if (!token) {
-      textoMensaje = "Debe iniciar sesion";
+      Mensaje({
+        titulo: "Registro Cai",
+        msj: "Datos Incompletos",
+      });
+
     }
     else {
       try {
@@ -45,7 +49,7 @@ const AgregarCai = () => {
                   label: element.idregistro.toString(),
                   value: element.idregistro.toString(),
                 });
-                console.log(typeof element.idregistro.toString());
+                //console.log(typeof element.idregistro.toString());
               });
               setItems(jsonitems);
           })
@@ -54,8 +58,8 @@ const AgregarCai = () => {
             Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
           });
       } catch (error) {
-        textoMensaje = error;
-        console.log(error);
+        //textoMensaje = error;
+        //console.log(error);
         Mensaje({ titulo: "Error en el registro", msj: error });
       }
     }
@@ -79,7 +83,7 @@ const AgregarCai = () => {
           numero_fin: numero_fin,
         };
 
-        await Axios.post("/cai/agregar", bodyParameters)
+        await Axios.post('cai/agregar', bodyParameters)
           .then((data) => {
             const json = data.data;
             if (json.errores.length == 0) {
@@ -89,7 +93,7 @@ const AgregarCai = () => {
                 msj: "Su registro fue guardado con exito",
               });
             } else {
-              textoMensaje = "";
+              //textoMensaje = "";
               json.errores.forEach((element) => {
                 textoMensaje += element.mensaje + ". ";
                 Mensaje({ titulo: "Error en el registro", msj: textoMensaje });
@@ -97,7 +101,7 @@ const AgregarCai = () => {
             }
           })
           .catch((error) => {
-            textoMensaje = error;
+            //textoMensaje = error;
           });
       console.log(textoMensaje);
 
@@ -120,7 +124,6 @@ const AgregarCai = () => {
               onChangeText={setCai}
               autoFocus={false}
               name = "codigocai"
-              //onChange={setCai}
             >
             </TextInput>
 
@@ -129,7 +132,7 @@ const AgregarCai = () => {
               style={styles.entradas}
               value={fecha_limite}
               onChangeText={setLimite}
-              //keyboardType='number-pad'
+              keyboardType='number-pad'
               maxLength={10}
             >
             </TextInput>
